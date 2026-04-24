@@ -20,3 +20,15 @@ fastlane/test_output/
 
 # macOS
 .DS_Store
+
+# Xcode user state
+**/*.xcuserstate
+
+# Xcode workspace user data
+**/xcuserdata/
+
+# Xcode shared data (only include if you explicitly share schemes)
+**/xcshareddata/
+
+# Derived data logs
+**/.derived-data-log-*
