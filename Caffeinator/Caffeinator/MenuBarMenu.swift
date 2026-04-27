@@ -21,8 +21,31 @@ struct MenuBarMenu: View {
                 wakeManager.activateIndefinitely()
             }
 
-            Button("Activate for 5 Minutes") {
+            Divider()
+
+            Button("5 Minutes") {
                 wakeManager.activate(for: 5 * 60)
+            }
+            Button("10 Minutes") {
+                wakeManager.activate(for: 10 * 60)
+            }
+            Button("15 Minutes") {
+                wakeManager.activate(for: 15 * 60)
+            }
+
+            Divider()
+
+            Button("30 Minutes") {
+                wakeManager.activate(for: 30 * 60)
+            }
+            Button("1 Hour") {
+                wakeManager.activate(for: 60 * 60)
+            }
+
+            Divider()
+
+            Button("2 Hours") {
+                wakeManager.activate(for: 2 * 60 * 60)
             }
         }
 
