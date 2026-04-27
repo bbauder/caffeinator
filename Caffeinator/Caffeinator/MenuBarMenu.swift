@@ -8,13 +8,23 @@
 import SwiftUI
 
 struct MenuBarMenu: View {
+    @EnvironmentObject private var wakeManager: WakeAssertionManager
     @Environment(\.openSettings) private var openSettings
 
     var body: some View {
-        Button("Activate") {
-            // TODO: implement activation
+        if wakeManager.isActive {
+            Button("Deactivate") {
+                wakeManager.deactivate()
+            }
+        } else {
+            Button("Activate Indefinitely") {
+                wakeManager.activateIndefinitely()
+            }
+
+            Button("Activate for 5 Minutes") {
+                wakeManager.activate(for: 5 * 60)
+            }
         }
-        .keyboardShortcut("a")
 
         Divider()
 

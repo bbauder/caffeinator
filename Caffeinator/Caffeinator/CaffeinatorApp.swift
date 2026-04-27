@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct CaffeinatorApp: App {
+    @StateObject private var wakeManager = WakeAssertionManager()
+
     var body: some Scene {
-        MenuBarExtra("Caffeinator", systemImage: "cup.and.saucer.fill") {
+        MenuBarExtra {
             MenuBarMenu()
+                .environmentObject(wakeManager)
+        } label: {
+            if let timeLabel = wakeManager.menuBarTimeLabel {
+                Text(timeLabel)
+            }
+            Image(systemName: wakeManager.menuBarIcon)
         }
 
         Settings {

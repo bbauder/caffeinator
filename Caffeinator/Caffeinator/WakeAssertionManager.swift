@@ -17,12 +17,24 @@ class WakeAssertionManager: ObservableObject {
     private var assertionID: IOPMAssertionID = 0
     private var timerTask: Task<Void, Never>?
 
+    var menuBarIcon: String {
+        if isActive {
+            return "cup.and.heat.waves.fill"
+        }
+        return "cup.and.saucer.fill"
+    }
+
+    var menuBarTimeLabel: String? {
+        guard let remaining = timeRemaining else { return nil }
+        let total = Int(remaining)
+        let m = total / 60
+        let s = total % 60
+        return String(format: "%d:%02d", m, s)
+    }
+
     func activateIndefinitely() {
         deactivate()
-        guard createAssertion() else {
-            return
-        }
-        
+        guard createAssertion() else { return }
         isActive = true
         timeRemaining = nil
     }
@@ -36,9 +48,7 @@ class WakeAssertionManager: ObservableObject {
         timerTask = Task {
             while let remaining = timeRemaining, remaining > 0 {
                 try? await Task.sleep(for: .seconds(1))
-                if Task.isCancelled {
-                    return
-                }
+                if Task.isCancelled { return }
                 timeRemaining = remaining - 1
             }
             deactivate()
@@ -59,10 +69,12 @@ class WakeAssertionManager: ObservableObject {
 
     private func createAssertion() -> Bool {
         let reason = "Caffeinator is keeping this Mac awake" as CFString
-        let result = IOPMAssertionCreateWithName(kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
-                                                 UInt32(kIOPMAssertionLevelOn),
-                                                 reason,
-                                                 &assertionID)
+        let result = IOPMAssertionCreateWithName(
+            kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
+            UInt32(kIOPMAssertionLevelOn),
+            reason,
+            &assertionID
+        )
         return result == kIOReturnSuccess
     }
 }
