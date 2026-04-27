@@ -11,43 +11,27 @@ struct MenuBarMenu: View {
     @EnvironmentObject private var wakeManager: WakeAssertionManager
     @Environment(\.openSettings) private var openSettings
 
+    private var isIndefinite: Bool {
+        wakeManager.isActive && wakeManager.selectedDuration == nil
+    }
+
     var body: some View {
-        if wakeManager.isActive {
-            Button("Deactivate") {
-                wakeManager.deactivate()
-            }
-        } else {
-            Button("Activate Indefinitely") {
-                wakeManager.activateIndefinitely()
-            }
+        Toggle("Activate Indefinitely", isOn: indefiniteBinding)
 
-            Divider()
+        Divider()
 
-            Button("5 Minutes") {
-                wakeManager.activate(for: 5 * 60)
-            }
-            Button("10 Minutes") {
-                wakeManager.activate(for: 10 * 60)
-            }
-            Button("15 Minutes") {
-                wakeManager.activate(for: 15 * 60)
-            }
+        durationToggle("5 Minutes", duration: 5 * 60)
+        durationToggle("10 Minutes", duration: 10 * 60)
+        durationToggle("15 Minutes", duration: 15 * 60)
 
-            Divider()
+        Divider()
 
-            Button("30 Minutes") {
-                wakeManager.activate(for: 30 * 60)
-            }
-            Button("1 Hour") {
-                wakeManager.activate(for: 60 * 60)
-            }
+        durationToggle("30 Minutes", duration: 30 * 60)
+        durationToggle("1 Hour", duration: 60 * 60)
 
-            Divider()
+        Divider()
 
-            Button("2 Hours") {
-                wakeManager.activate(for: 2 * 60 * 60)
-            }
-        }
+        durationToggle("2 Hours", duration: 2 * 60 * 60)
 
         Divider()
 
@@ -62,5 +46,31 @@ struct MenuBarMenu: View {
             NSApplication.shared.terminate(nil)
         }
         .keyboardShortcut("q")
+    }
+
+    private var indefiniteBinding: Binding<Bool> {
+        Binding(
+            get: { isIndefinite },
+            set: { newValue in
+                if newValue {
+                    wakeManager.activateIndefinitely()
+                } else {
+                    wakeManager.deactivate()
+                }
+            }
+        )
+    }
+
+    private func durationToggle(_ title: String, duration: TimeInterval) -> some View {
+        Toggle(title, isOn: Binding(
+            get: { wakeManager.selectedDuration == duration },
+            set: { newValue in
+                if newValue {
+                    wakeManager.activate(for: duration)
+                } else {
+                    wakeManager.deactivate()
+                }
+            }
+        ))
     }
 }

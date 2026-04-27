@@ -13,6 +13,7 @@ import IOKit.pwr_mgt
 class WakeAssertionManager: ObservableObject {
     @Published private(set) var isActive = false
     @Published private(set) var timeRemaining: TimeInterval?
+    @Published private(set) var selectedDuration: TimeInterval?
 
     private var assertionID: IOPMAssertionID = 0
     private var timerTask: Task<Void, Never>?
@@ -45,6 +46,7 @@ class WakeAssertionManager: ObservableObject {
         guard createAssertion() else { return }
         isActive = true
         timeRemaining = nil
+        selectedDuration = nil
     }
 
     func activate(for duration: TimeInterval) {
@@ -52,6 +54,7 @@ class WakeAssertionManager: ObservableObject {
         guard createAssertion() else { return }
         isActive = true
         timeRemaining = duration
+        selectedDuration = duration
 
         timerTask = Task {
             while let remaining = timeRemaining, remaining > 0 {
@@ -67,6 +70,7 @@ class WakeAssertionManager: ObservableObject {
         timerTask?.cancel()
         timerTask = nil
         timeRemaining = nil
+        selectedDuration = nil
 
         if isActive {
             IOPMAssertionRelease(assertionID)
