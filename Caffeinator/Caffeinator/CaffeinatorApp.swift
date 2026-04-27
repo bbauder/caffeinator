@@ -19,28 +19,3 @@ struct CaffeinatorApp: App {
         }
     }
 }
-
-struct MenuBarMenu: View {
-    @Environment(\.openSettings) private var openSettings
-
-    var body: some View {
-        Button("Activate") {
-            // TODO: implement activation
-        }
-        .keyboardShortcut("a")
-
-        Divider()
-
-        Button("Settings…") {
-            openSettings()
-        }
-        .keyboardShortcut(",")
-
-        Divider()
-
-        Button("Quit Caffeinator") {
-            NSApplication.shared.terminate(nil)
-        }
-        .keyboardShortcut("q")
-    }
-}
