@@ -24,6 +24,12 @@ enum L {
         return String(format: NSLocalizedString("keepAwakeForHours", comment: ""), hours)
     }
 
+    static let stopAt = NSLocalizedString("stopAt", comment: "")
+
+    static func stopAtTime(_ time: String) -> String {
+        String(format: NSLocalizedString("stopAtTime", comment: ""), time)
+    }
+
     static let settings = NSLocalizedString("settings", comment: "")
     static let quitCaffeinator = NSLocalizedString("quitCaffeinator", comment: "")
 }

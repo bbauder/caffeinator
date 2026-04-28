@@ -12,11 +12,22 @@ struct MenuBarMenu: View {
     @Environment(\.openSettings) private var openSettings
 
     private var isIndefinite: Bool {
-        wakeManager.isActive && wakeManager.selectedDuration == nil
+        wakeManager.isActive && wakeManager.selectedDuration == nil && wakeManager.selectedStopTime == nil
     }
 
     var body: some View {
         Toggle(L.keepAwakeIndefinitely, isOn: indefiniteBinding)
+
+        if let formattedTime = wakeManager.formattedStopTime {
+            Toggle(L.stopAtTime(formattedTime), isOn: Binding(
+                get: { true },
+                set: { _ in wakeManager.deactivate() }
+            ))
+        } else {
+            Button(L.stopAt) {
+                StopAtPopoverManager.shared.show(wakeManager: wakeManager)
+            }
+        }
 
         if wakeManager.isActive {
             Toggle("Off (use system defaults)", isOn: Binding(

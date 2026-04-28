@@ -3,5 +3,7 @@
 "keepAwakeForMinutes" = "Keep Awake for %d Minutes";
 "keepAwakeForOneHour" = "Keep Awake for 1 Hour";
 "keepAwakeForHours" = "Keep Awake for %d Hours";
+"stopAt" = "Stop At…";
+"stopAtTime" = "Stop At %@";
 "settings" = "Settings…";
 "quitCaffeinator" = "Quit Caffeinator";
