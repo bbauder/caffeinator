@@ -16,7 +16,3 @@ struct SettingsView: View {
         .frame(minWidth: 300, minHeight: 150)
     }
 }
-
-#Preview {
-    SettingsView()
-}
