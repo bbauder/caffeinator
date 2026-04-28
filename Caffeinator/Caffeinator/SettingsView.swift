@@ -12,13 +12,13 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Sleep Prevention") {
-                Toggle("Prevent system sleep", isOn: $settings.preventSystemSleep)
-                Toggle("Prevent display sleep", isOn: $settings.preventDisplaySleep)
-                Toggle("Prevent screensaver / lock", isOn: $settings.preventScreenSaver)
+            Section(L.settingsSleepPrevention) {
+                Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
+                Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
+                Toggle(L.settingsPreventScreenSaver, isOn: $settings.preventScreenSaver)
             }
-            Section("Menu") {
-                Toggle("Hide activation options while active", isOn: $settings.hideActivationOptionsWhileActive)
+            Section(L.settingsMenu) {
+                Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
             }
         }
         .formStyle(.grouped)
