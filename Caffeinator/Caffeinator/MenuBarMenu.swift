@@ -16,33 +16,24 @@ struct MenuBarMenu: View {
     }
 
     var body: some View {
-        Toggle("Activate Indefinitely", isOn: indefiniteBinding)
+        Toggle(L.keepAwakeIndefinitely, isOn: indefiniteBinding)
 
         Divider()
 
-        durationToggle("5 Minutes", duration: 5 * 60)
-        durationToggle("10 Minutes", duration: 10 * 60)
-        durationToggle("15 Minutes", duration: 15 * 60)
+        durationToggle(L.keepAwakeFor(minutes: 30), duration: 30 * 60)
+        durationToggle(L.keepAwakeFor(hours: 1), duration: 60 * 60)
+        durationToggle(L.keepAwakeFor(hours: 2), duration: 2 * 60 * 60)
 
         Divider()
 
-        durationToggle("30 Minutes", duration: 30 * 60)
-        durationToggle("1 Hour", duration: 60 * 60)
-
-        Divider()
-
-        durationToggle("2 Hours", duration: 2 * 60 * 60)
-
-        Divider()
-
-        Button("Settings…") {
+        Button(L.settings) {
             openSettings()
         }
         .keyboardShortcut(",")
 
         Divider()
 
-        Button("Quit Caffeinator") {
+        Button(L.quitCaffeinator) {
             NSApplication.shared.terminate(nil)
         }
         .keyboardShortcut("q")

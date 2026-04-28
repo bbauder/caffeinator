@@ -30,7 +30,10 @@ class WakeAssertionManager: ObservableObject {
     }
 
     var formattedTimeRemaining: String? {
-        guard let remaining = timeRemaining else { return nil }
+        guard let remaining = timeRemaining else {
+            return nil
+        }
+        
         let total = Int(remaining)
         let h = total / 3600
         let m = (total % 3600) / 60
@@ -43,7 +46,9 @@ class WakeAssertionManager: ObservableObject {
 
     func activateIndefinitely() {
         deactivate()
-        guard createAssertion() else { return }
+        guard createAssertion() else {
+            return
+        }
         isActive = true
         timeRemaining = nil
         selectedDuration = nil
@@ -51,7 +56,10 @@ class WakeAssertionManager: ObservableObject {
 
     func activate(for duration: TimeInterval) {
         deactivate()
-        guard createAssertion() else { return }
+        guard createAssertion() else {
+            return
+        }
+        
         isActive = true
         timeRemaining = duration
         selectedDuration = duration
@@ -59,7 +67,9 @@ class WakeAssertionManager: ObservableObject {
         timerTask = Task {
             while let remaining = timeRemaining, remaining > 0 {
                 try? await Task.sleep(for: .seconds(1))
-                if Task.isCancelled { return }
+                if Task.isCancelled {
+                    return
+                }
                 timeRemaining = remaining - 1
             }
             deactivate()
