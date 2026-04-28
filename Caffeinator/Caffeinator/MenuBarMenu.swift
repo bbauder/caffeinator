@@ -18,6 +18,15 @@ struct MenuBarMenu: View {
     var body: some View {
         Toggle(L.keepAwakeIndefinitely, isOn: indefiniteBinding)
 
+        if wakeManager.isActive {
+            Toggle("Off (use system defaults)", isOn: Binding(
+                get: { !wakeManager.isActive },
+                set: { newValue in
+                    if newValue { wakeManager.deactivate() }
+                }
+            ))
+        }
+
         Divider()
 
         durationToggle(L.keepAwakeFor(minutes: 30), duration: 30 * 60)
