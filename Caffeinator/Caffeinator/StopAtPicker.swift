@@ -12,13 +12,12 @@ import SwiftUI
 final class StopAtPopoverManager {
     static let shared = StopAtPopoverManager()
     private var popover: NSPopover?
-    private var positioningWindow: NSWindow?
 
     func show(wakeManager: WakeAssertionManager) {
-        let mouseLocation = NSEvent.mouseLocation
         dismiss()
         Task {
             NSApp.activate()
+            guard let button = Self.findStatusItemButton() else { return }
 
             let pickerView = StopAtPickerView(wakeManager: wakeManager) { [weak self] in
                 self?.dismiss()
@@ -28,26 +27,37 @@ final class StopAtPopoverManager {
             popover.contentSize = NSSize(width: 260, height: 120)
             popover.behavior = .transient
             popover.contentViewController = NSHostingController(rootView: pickerView)
-
-            let rect = NSRect(x: mouseLocation.x - 1, y: mouseLocation.y - 1, width: 2, height: 2)
-            let window = NSWindow(contentRect: rect, styleMask: .borderless, backing: .buffered, defer: false)
-            window.backgroundColor = .clear
-            window.isReleasedWhenClosed = false
-            window.level = .statusBar
-            window.orderFront(nil)
-
-            popover.show(relativeTo: window.contentView!.bounds, of: window.contentView!, preferredEdge: .minY)
+            popover.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)
 
             self.popover = popover
-            self.positioningWindow = window
         }
     }
 
     func dismiss() {
         popover?.close()
-        positioningWindow?.close()
         popover = nil
-        positioningWindow = nil
+    }
+
+    private static func findStatusItemButton() -> NSStatusBarButton? {
+        for window in NSApp.windows {
+            if let button = findButton(in: window.contentView) {
+                return button
+            }
+        }
+        return nil
+    }
+
+    private static func findButton(in view: NSView?) -> NSStatusBarButton? {
+        guard let view else { return nil }
+        if let button = view as? NSStatusBarButton {
+            return button
+        }
+        for subview in view.subviews {
+            if let button = findButton(in: subview) {
+                return button
+            }
+        }
+        return nil
     }
 }
 
