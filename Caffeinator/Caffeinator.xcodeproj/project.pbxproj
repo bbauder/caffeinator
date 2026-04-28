@@ -10,9 +10,22 @@
 		3240BC512F9ACEBA007E3890 /* Caffeinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caffeinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3296DE7C2FA14F7E009D97CF /* Exceptions for "Caffeinator" folder in "Caffeinator" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3240BC502F9ACEBA007E3890 /* Caffeinator */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3240BC532F9ACEBA007E3890 /* Caffeinator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3296DE7C2FA14F7E009D97CF /* Exceptions for "Caffeinator" folder in "Caffeinator" target */,
+			);
 			path = Caffeinator;
 			sourceTree = "<group>";
 		};
