@@ -29,6 +29,10 @@ struct MenuBarMenu: View {
             }
         }
 
+        Button("Custom Duration…") {
+            CustomDurationPopoverManager.shared.show(wakeManager: wakeManager)
+        }
+
         if wakeManager.isActive {
             Toggle("Off (use system defaults)", isOn: Binding(
                 get: { !wakeManager.isActive },
