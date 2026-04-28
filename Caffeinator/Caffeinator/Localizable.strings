@@ -5,5 +5,12 @@
 "keepAwakeForHours" = "Keep Awake for %d Hours";
 "stopAt" = "Stop At…";
 "stopAtTime" = "Stop At %@";
+"customDuration" = "Custom Duration…";
+"off" = "Off (use system defaults)";
+"hours" = "Hours: %d";
+"minutes" = "Min: %d";
+"endsAt" = "Ends at %@";
+"cancel" = "Cancel";
+"start" = "Start";
 "settings" = "Settings…";
 "quitCaffeinator" = "Quit Caffeinator";

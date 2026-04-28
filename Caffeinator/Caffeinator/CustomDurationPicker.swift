@@ -81,19 +81,19 @@ struct CustomDurationPickerView: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                Stepper("Hours: \(hours)", value: $hours, in: 0...23)
-                Stepper("Min: \(minutes)", value: $minutes, in: 0...59, step: 5)
+                Stepper(L.hours(hours), value: $hours, in: 0...23)
+                Stepper(L.minutes(minutes), value: $minutes, in: 0...59, step: 5)
             }
 
-            Text("Ends at \(endTime)")
+            Text(L.endsAt(endTime))
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
             HStack {
-                Button("Cancel") { onDismiss() }
+                Button(L.cancel) { onDismiss() }
                     .keyboardShortcut(.cancelAction)
                 Spacer()
-                Button("Start") {
+                Button(L.start) {
                     let endDate = Date.now.addingTimeInterval(duration)
                     wakeManager.activate(until: endDate)
                     onDismiss()
