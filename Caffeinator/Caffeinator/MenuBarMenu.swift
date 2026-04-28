@@ -9,28 +9,37 @@ import SwiftUI
 
 struct MenuBarMenu: View {
     @EnvironmentObject private var wakeManager: WakeAssertionManager
+    @EnvironmentObject private var settings: SettingsViewModel
     @Environment(\.openSettings) private var openSettings
 
     private var isIndefinite: Bool {
         wakeManager.isActive && wakeManager.selectedDuration == nil && wakeManager.selectedStopTime == nil
     }
 
+    private var hideInactiveOptions: Bool {
+        settings.hideActivationOptionsWhileActive && wakeManager.isActive
+    }
+
     var body: some View {
-        Toggle(L.keepAwakeIndefinitely, isOn: indefiniteBinding)
+        if !hideInactiveOptions || isIndefinite {
+            Toggle(L.keepAwakeIndefinitely, isOn: indefiniteBinding)
+        }
 
         if let formattedTime = wakeManager.formattedStopTime {
             Toggle(L.keepAwakeUntilTime(formattedTime), isOn: Binding(
                 get: { true },
                 set: { _ in wakeManager.deactivate() }
             ))
-        } else {
+        } else if !hideInactiveOptions {
             Button(L.keepAwakeUntil) {
                 StopAtPopoverManager.shared.show(wakeManager: wakeManager)
             }
         }
 
-        Button(L.customDuration) {
-            CustomDurationPopoverManager.shared.show(wakeManager: wakeManager)
+        if !hideInactiveOptions {
+            Button(L.customDuration) {
+                CustomDurationPopoverManager.shared.show(wakeManager: wakeManager)
+            }
         }
 
         if wakeManager.isActive {
@@ -42,11 +51,21 @@ struct MenuBarMenu: View {
             ))
         }
 
-        Divider()
-
-        durationToggle(L.keepAwakeFor(minutes: 30), duration: 30 * 60)
-        durationToggle(L.keepAwakeFor(hours: 1), duration: 60 * 60)
-        durationToggle(L.keepAwakeFor(hours: 2), duration: 2 * 60 * 60)
+        if !hideInactiveOptions {
+            Divider()
+            durationToggle(L.keepAwakeFor(minutes: 30), duration: 30 * 60)
+            durationToggle(L.keepAwakeFor(hours: 1), duration: 60 * 60)
+            durationToggle(L.keepAwakeFor(hours: 2), duration: 2 * 60 * 60)
+        } else if wakeManager.selectedDuration != nil {
+            Divider()
+            if wakeManager.selectedDuration == 30 * 60 {
+                durationToggle(L.keepAwakeFor(minutes: 30), duration: 30 * 60)
+            } else if wakeManager.selectedDuration == 60 * 60 {
+                durationToggle(L.keepAwakeFor(hours: 1), duration: 60 * 60)
+            } else if wakeManager.selectedDuration == 2 * 60 * 60 {
+                durationToggle(L.keepAwakeFor(hours: 2), duration: 2 * 60 * 60)
+            }
+        }
 
         Divider()
 

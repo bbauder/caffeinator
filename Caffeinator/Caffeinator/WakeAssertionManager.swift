@@ -16,6 +16,10 @@ class WakeAssertionManager: ObservableObject {
     @Published private(set) var selectedDuration: TimeInterval?
     @Published private(set) var selectedStopTime: Date?
 
+    var preventSystemSleep = true
+    var preventDisplaySleep = false
+    var preventScreenSaver = false
+
     private var assertionID: IOPMAssertionID = 0
     private var timerTask: Task<Void, Never>?
 

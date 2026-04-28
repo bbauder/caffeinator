@@ -10,11 +10,13 @@ import SwiftUI
 @main
 struct CaffeinatorApp: App {
     @StateObject private var wakeManager = WakeAssertionManager()
+    @StateObject private var settings = SettingsViewModel()
 
     var body: some Scene {
         MenuBarExtra {
             MenuBarMenu()
                 .environmentObject(wakeManager)
+                .environmentObject(settings)
         } label: {
             if let timeLabel = wakeManager.menuBarTimeLabel {
                 Text(timeLabel)
@@ -24,6 +26,7 @@ struct CaffeinatorApp: App {
 
         Settings {
             SettingsView()
+                .environmentObject(settings)
         }
     }
 }
