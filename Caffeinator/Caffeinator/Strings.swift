@@ -24,14 +24,15 @@ enum L {
         return String(format: NSLocalizedString("keepAwakeForHours", comment: ""), hours)
     }
 
-    static let stopAt = NSLocalizedString("stopAt", comment: "")
+    static let keepAwakeUntil = NSLocalizedString("keepAwakeUntil", comment: "")
 
-    static func stopAtTime(_ time: String) -> String {
-        String(format: NSLocalizedString("stopAtTime", comment: ""), time)
+    static func keepAwakeUntilTime(_ time: String) -> String {
+        String(format: NSLocalizedString("keepAwakeUntilTime", comment: ""), time)
     }
 
+    static let keepAwakeUntilLabel = NSLocalizedString("keepAwakeUntilLabel", comment: "")
     static let customDuration = NSLocalizedString("customDuration", comment: "")
-    static let off = NSLocalizedString("off", comment: "")
+    static let stopKeepingAwake = NSLocalizedString("stopKeepingAwake", comment: "")
 
     static func hours(_ count: Int) -> String {
         String(format: NSLocalizedString("hours", comment: ""), count)

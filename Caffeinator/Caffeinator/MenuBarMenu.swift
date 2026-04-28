@@ -19,12 +19,12 @@ struct MenuBarMenu: View {
         Toggle(L.keepAwakeIndefinitely, isOn: indefiniteBinding)
 
         if let formattedTime = wakeManager.formattedStopTime {
-            Toggle(L.stopAtTime(formattedTime), isOn: Binding(
+            Toggle(L.keepAwakeUntilTime(formattedTime), isOn: Binding(
                 get: { true },
                 set: { _ in wakeManager.deactivate() }
             ))
         } else {
-            Button(L.stopAt) {
+            Button(L.keepAwakeUntil) {
                 StopAtPopoverManager.shared.show(wakeManager: wakeManager)
             }
         }
@@ -34,7 +34,7 @@ struct MenuBarMenu: View {
         }
 
         if wakeManager.isActive {
-            Toggle(L.off, isOn: Binding(
+            Toggle(L.stopKeepingAwake, isOn: Binding(
                 get: { !wakeManager.isActive },
                 set: { newValue in
                     if newValue { wakeManager.deactivate() }

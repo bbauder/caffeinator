@@ -3,10 +3,11 @@
 "keepAwakeForMinutes" = "Keep Awake for %d Minutes";
 "keepAwakeForOneHour" = "Keep Awake for 1 Hour";
 "keepAwakeForHours" = "Keep Awake for %d Hours";
-"stopAt" = "Stop At…";
-"stopAtTime" = "Stop At %@";
+"keepAwakeUntil" = "Keep Awake Until…";
+"keepAwakeUntilTime" = "Keep Awake Until %@";
+"keepAwakeUntilLabel" = "Keep awake until:";
 "customDuration" = "Custom Duration…";
-"off" = "Off (use system defaults)";
+"stopKeepingAwake" = "Stop Keeping Awake";
 "hours" = "Hours: %d";
 "minutes" = "Min: %d";
 "endsAt" = "Ends at %@";

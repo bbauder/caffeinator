@@ -74,12 +74,12 @@ struct StopAtPickerView: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            DatePicker("Stop at:", selection: $selectedTime, displayedComponents: .hourAndMinute)
+            DatePicker(L.keepAwakeUntilLabel, selection: $selectedTime, displayedComponents: .hourAndMinute)
             HStack {
-                Button("Cancel") { onDismiss() }
+                Button(L.cancel) { onDismiss() }
                     .keyboardShortcut(.cancelAction)
                 Spacer()
-                Button("Start") {
+                Button(L.start) {
                     wakeManager.activate(until: selectedTime)
                     onDismiss()
                 }
