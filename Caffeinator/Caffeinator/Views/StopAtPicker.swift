@@ -18,9 +18,20 @@ struct StopAtPickerView: View {
         self._selectedTime = State(initialValue: Self.nextHalfHour())
     }
 
+    private var formattedSelectedTime: String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter.string(from: selectedTime)
+    }
+
     var body: some View {
         VStack(spacing: 12) {
             DatePicker(L.keepAwakeUntilLabel, selection: $selectedTime, displayedComponents: .hourAndMinute)
+
+            Text(L.endsAt(formattedSelectedTime))
+                .font(FontPalette.caption)
+                .foregroundStyle(.secondary)
+
             HStack {
                 Button(L.cancel) { onDismiss() }
                     .keyboardShortcut(.cancelAction)
