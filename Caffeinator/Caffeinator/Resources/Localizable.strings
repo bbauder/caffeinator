@@ -15,6 +15,7 @@
 "start" = "Start";
 "settings" = "Settings…";
 "quitCaffeinator" = "Quit Caffeinator";
+"settingsGeneral" = "General";
 "settingsSleepPrevention" = "Sleep Prevention";
 "settingsPreventSystemSleep" = "Prevent system sleep";
 "settingsPreventDisplaySleep" = "Prevent display sleep";

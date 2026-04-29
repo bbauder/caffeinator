@@ -14,17 +14,19 @@ struct SettingsView: View {
     var body: some View {
         VStack(spacing: 0) {
             Form {
+                Section(L.settingsGeneral) {
+                    Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
+                }
+
                 Section(L.settingsSleepPrevention) {
                     Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
                     Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
                     Toggle(L.settingsPreventScreenSaver, isOn: $settings.preventScreenSaver)
                 }
-                Section(L.settingsMenu) {
-                    Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
-                }
             }
             .formStyle(.grouped)
             .scrollContentBackground(.hidden)
+            .padding(.bottom, -12)
 
             HStack {
                 Spacer()
