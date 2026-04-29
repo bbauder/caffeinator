@@ -12,7 +12,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Form {
                 Section(L.settingsSleepPrevention) {
                     Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
@@ -24,6 +24,7 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
+            .scrollContentBackground(.hidden)
 
             HStack {
                 Spacer()
@@ -33,10 +34,11 @@ struct SettingsView: View {
                 }
                 .keyboardShortcut(.defaultAction)
             }
-            .padding(.horizontal)
-            .padding(.bottom)
+            .padding(.horizontal, 14)
+            .padding(.top, 4)
+            .padding(.bottom, 12)
         }
-        .frame(minWidth: 380, minHeight: 250)
+        .frame(width: 360)
         .onAppear {
             // This is a classic issue with LSUIElement/agent apps — they don't automatically activate
             // (come to the top of the z-stack) when opening windows.
