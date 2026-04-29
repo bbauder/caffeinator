@@ -33,7 +33,7 @@ struct CustomDurationPickerView: View {
             }
 
             Text(L.endsAt(endTime))
-                .font(.caption)
+                .font(FontPalette.caption)
                 .foregroundStyle(.secondary)
 
             HStack {
