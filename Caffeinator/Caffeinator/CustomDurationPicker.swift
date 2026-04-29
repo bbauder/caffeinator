@@ -15,6 +15,7 @@ final class CustomDurationPopoverManager {
 
     func show(wakeManager: WakeAssertionManager) {
         dismiss()
+
         Task {
             NSApp.activate()
             guard let button = Self.findStatusItemButton() else { return }
@@ -48,10 +49,14 @@ final class CustomDurationPopoverManager {
     }
 
     private static func findButton(in view: NSView?) -> NSStatusBarButton? {
-        guard let view else { return nil }
+        guard let view else {
+            return nil
+        }
+        
         if let button = view as? NSStatusBarButton {
             return button
         }
+        
         for subview in view.subviews {
             if let button = findButton(in: subview) {
                 return button
@@ -74,6 +79,7 @@ struct CustomDurationPickerView: View {
     private var endTime: String {
         let endDate = Date.now.addingTimeInterval(duration)
         let formatter = DateFormatter()
+
         formatter.timeStyle = .short
         return formatter.string(from: endDate)
     }

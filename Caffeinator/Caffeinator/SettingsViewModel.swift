@@ -25,12 +25,14 @@ class SettingsViewModel: ObservableObject {
 
     init() {
         let defaults = UserDefaults.standard
+        
         defaults.register(defaults: [
             "preventSystemSleep": true,
             "preventDisplaySleep": false,
             "preventScreenSaver": false,
             "hideActivationOptionsWhileActive": true,
         ])
+        
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
         preventDisplaySleep = defaults.bool(forKey: "preventDisplaySleep")
         preventScreenSaver = defaults.bool(forKey: "preventScreenSaver")
