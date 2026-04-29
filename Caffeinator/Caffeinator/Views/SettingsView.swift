@@ -9,20 +9,33 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var settings: SettingsViewModel
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        Form {
-            Section(L.settingsSleepPrevention) {
-                Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
-                Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
-                Toggle(L.settingsPreventScreenSaver, isOn: $settings.preventScreenSaver)
+        VStack {
+            Form {
+                Section(L.settingsSleepPrevention) {
+                    Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
+                    Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
+                    Toggle(L.settingsPreventScreenSaver, isOn: $settings.preventScreenSaver)
+                }
+                Section(L.settingsMenu) {
+                    Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
+                }
             }
-            Section(L.settingsMenu) {
-                Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
+            .formStyle(.grouped)
+
+            HStack {
+                Spacer()
+
+                Button(L.done) {
+                    dismiss()
+                }
+                .keyboardShortcut(.defaultAction)
             }
+            .padding(.horizontal)
+            .padding(.bottom)
         }
-        .formStyle(.grouped)
-        .scenePadding()
-        .frame(minWidth: 380, minHeight: 220)
+        .frame(minWidth: 380, minHeight: 250)
     }
 }

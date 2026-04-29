@@ -57,4 +57,5 @@ enum L {
     static let settingsPreventScreenSaver = NSLocalizedString("settingsPreventScreenSaver", comment: "")
     static let settingsMenu = NSLocalizedString("settingsMenu", comment: "")
     static let settingsHideActivationOptions = NSLocalizedString("settingsHideActivationOptions", comment: "")
+    static let done = NSLocalizedString("done", comment: "")
 }
