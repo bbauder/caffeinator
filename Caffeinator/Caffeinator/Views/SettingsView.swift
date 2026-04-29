@@ -37,5 +37,11 @@ struct SettingsView: View {
             .padding(.bottom)
         }
         .frame(minWidth: 380, minHeight: 250)
+        .onAppear {
+            // This is a classic issue with LSUIElement/agent apps — they don't automatically activate
+            // (come to the top of the z-stack) when opening windows.
+            // The standard fix is to call NSApp​.activate() when the Settings view appears.
+            NSApplication.shared.activate()
+        }
     }
 }
