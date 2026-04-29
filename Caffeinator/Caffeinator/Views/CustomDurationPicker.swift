@@ -26,7 +26,7 @@ struct CustomDurationPickerView: View {
     }
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             HStack {
                 Stepper(L.hours(hours), value: $hours, in: 0...23)
                 Stepper(L.minutes(minutes), value: $minutes, in: 0...59, step: 5)
@@ -48,8 +48,10 @@ struct CustomDurationPickerView: View {
                 .keyboardShortcut(.defaultAction)
                 .disabled(duration == 0)
             }
+            .padding(.top, 4)
         }
-        .padding()
-        .frame(width: 280)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .frame(width: 260)
     }
 }

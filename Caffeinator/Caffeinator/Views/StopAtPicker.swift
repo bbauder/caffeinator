@@ -25,7 +25,7 @@ struct StopAtPickerView: View {
     }
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             DatePicker(L.keepAwakeUntilLabel, selection: $selectedTime, displayedComponents: .hourAndMinute)
 
             Text(L.endsAt(formattedSelectedTime))
@@ -42,9 +42,11 @@ struct StopAtPickerView: View {
                 }
                 .keyboardShortcut(.defaultAction)
             }
+            .padding(.top, 4)
         }
-        .padding()
-        .frame(width: 240)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .frame(width: 260)
     }
 
     static func nextHalfHour(from date: Date = .now) -> Date {
