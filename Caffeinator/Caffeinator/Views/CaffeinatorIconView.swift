@@ -102,10 +102,35 @@ struct CaffeinatorIconView: View {
 
     // MARK: - Steam
 
+//    // This version draws straight steam lines
+//    private func drawSteam(in context: inout GraphicsContext, metrics: CupMetrics) {
+//        guard isActive else {
+//            return
+//        }
+//
+//        let heights = Self.steamHeights[steamFrame]
+//        let unitHeight = metrics.steamRegionHeight / 4
+//
+//        for i in 0..<3 {
+//            let x = metrics.steamXPositions[i]
+//            let lineHeight = unitHeight * heights[i]
+//
+//            // Straight lines
+//            var path = Path()
+//            path.move(to: CGPoint(x: x, y: metrics.steamBaseY))
+//            path.addLine(to: CGPoint(x: x, y: metrics.steamBaseY - lineHeight))
+//
+//            context.opacity = 0.75
+//            context.stroke(
+//                path,
+//                with: .foreground,
+//                style: StrokeStyle(lineWidth: metrics.lineWidth * 0.7, lineCap: .round)
+//            )
+//            context.opacity = 1.0
+//        }
+//    }
     private func drawSteam(in context: inout GraphicsContext, metrics: CupMetrics) {
-        guard isActive else {
-            return
-        }
+        guard isActive else { return }
 
         let heights = Self.steamHeights[steamFrame]
         let unitHeight = metrics.steamRegionHeight / 4
@@ -114,15 +139,47 @@ struct CaffeinatorIconView: View {
             let x = metrics.steamXPositions[i]
             let lineHeight = unitHeight * heights[i]
 
-            var path = Path()
-            path.move(to: CGPoint(x: x, y: metrics.steamBaseY))
-            path.addLine(to: CGPoint(x: x, y: metrics.steamBaseY - lineHeight))
+            let yStart = metrics.steamBaseY
+            let yEnd = metrics.steamBaseY - lineHeight
 
+            // --- Gentle S-curve steam ---
+            var path = Path()
+            path.move(to: CGPoint(x: x, y: yStart))
+
+            // Spread control points farther apart so short lines still curve
+            let p1 = yStart - (lineHeight * 0.18)
+            let p2 = yStart - (lineHeight * 0.85)
+
+            // Height-normalized amplitude (short lines get a boost)
+            let baseAmp: CGFloat = 1.0
+            let heightFactor = max(1.0, lineHeight / (unitHeight * 2))
+
+            // Outer lines get more wiggle, middle stays elegant
+            let amplitude: CGFloat = switch i {
+                case 0: baseAmp * 1.4 * heightFactor   // left
+                case 1: baseAmp * 1.0 * heightFactor   // middle
+                case 2: baseAmp * 1.4 * heightFactor   // right
+                default: baseAmp
+            }
+
+            // Slight frame-based variation (keeps it alive but calm)
+            let frameOffset = CGFloat(steamFrame) * 0.25
+
+            // Control points for a soft, balanced S-curve
+            let c1 = CGPoint(x: x + amplitude * 1.05, y: p1 + frameOffset)
+            let c2 = CGPoint(x: x - amplitude * 0.95, y: p2 - frameOffset)
+
+            path.addCurve(to: CGPoint(x: x, y: yEnd), control1: c1, control2: c2)
+
+            // Draw with existing style
             context.opacity = 0.75
             context.stroke(
                 path,
                 with: .foreground,
-                style: StrokeStyle(lineWidth: metrics.lineWidth * 0.7, lineCap: .round)
+                style: StrokeStyle(
+                    lineWidth: metrics.lineWidth * 0.7,
+                    lineCap: .round
+                )
             )
             context.opacity = 1.0
         }
