@@ -43,15 +43,76 @@ struct CaffeinatorIconView: View {
     // MARK: - Cup Outline
 
     private func drawCupOutline(in context: inout GraphicsContext, metrics: CupMetrics) {
-        let cupPath = Path(roundedRect: metrics.cupRect, cornerRadius: metrics.cornerRadius)
+        let rect = metrics.cupRect
 
+        // Subtle inward taper at the top (3–4% is enough)
+        let topInset = rect.width * 0.035
+
+        let tapered = CGRect(
+            x: rect.minX + topInset,
+            y: rect.minY,
+            width: rect.width - topInset * 2,
+            height: rect.height
+        )
+
+        // --- Custom bowl path with asymmetric corner radii ---
+        var cupPath = Path()
+
+        let rTop: CGFloat = metrics.cornerRadius * 0.35     // tighter top corners
+        let rBottom: CGFloat = metrics.cornerRadius * 1.25  // softer bottom corners
+
+        let topLeft     = CGPoint(x: tapered.minX, y: tapered.minY)
+        let topRight    = CGPoint(x: tapered.maxX, y: tapered.minY)
+        let bottomRight = CGPoint(x: tapered.maxX, y: tapered.maxY)
+        let bottomLeft  = CGPoint(x: tapered.minX, y: tapered.maxY)
+
+        // Start at top-left corner (after radius)
+        cupPath.move(to: CGPoint(x: topLeft.x + rTop, y: topLeft.y))
+
+        // Top edge
+        cupPath.addLine(to: CGPoint(x: topRight.x - rTop, y: topRight.y))
+
+        // Top-right corner
+        cupPath.addQuadCurve(
+            to: CGPoint(x: topRight.x, y: topRight.y + rTop),
+            control: topRight
+        )
+
+        // Right wall
+        cupPath.addLine(to: CGPoint(x: bottomRight.x, y: bottomRight.y - rBottom))
+
+        // Bottom-right corner
+        cupPath.addQuadCurve(
+            to: CGPoint(x: bottomRight.x - rBottom, y: bottomRight.y),
+            control: bottomRight
+        )
+
+        // Bottom edge
+        cupPath.addLine(to: CGPoint(x: bottomLeft.x + rBottom, y: bottomLeft.y))
+
+        // Bottom-left corner
+        cupPath.addQuadCurve(
+            to: CGPoint(x: bottomLeft.x, y: bottomLeft.y - rBottom),
+            control: bottomLeft
+        )
+
+        // Left wall
+        cupPath.addLine(to: CGPoint(x: topLeft.x, y: topLeft.y + rTop))
+
+        // Top-left corner
+        cupPath.addQuadCurve(
+            to: CGPoint(x: topLeft.x + rTop, y: topLeft.y),
+            control: topLeft
+        )
+
+        // Stroke the bowl
         context.stroke(
             cupPath,
             with: .foreground,
             lineWidth: metrics.lineWidth
         )
 
-        // Handle: subtle, minimal, tuned for menu bar clarity
+        // --- Handle (unchanged) ---
         var handle = Path()
         handle.addArc(
             center: metrics.handleCenter,
