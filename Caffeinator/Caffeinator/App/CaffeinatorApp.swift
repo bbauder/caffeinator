@@ -9,24 +9,25 @@ import SwiftUI
 
 @main
 struct CaffeinatorApp: App {
-    @StateObject private var wakeManager = WakeAssertionManager()
-    @StateObject private var settings = SettingsViewModel()
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     var body: some Scene {
-        MenuBarExtra {
-            MenuBarMenu()
-                .environmentObject(wakeManager)
-                .environmentObject(settings)
-        } label: {
-            if let timeLabel = wakeManager.menuBarTimeLabel {
-                Text(timeLabel)
-            }
-            Image(systemName: wakeManager.menuBarIcon)
-        }
-
         Settings {
             SettingsView()
-                .environmentObject(settings)
+                .environmentObject(delegate.settings)
         }
+    }
+}
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    let wakeManager = WakeAssertionManager()
+    let settings = SettingsViewModel()
+    private var statusItemController: StatusItemController?
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        statusItemController = StatusItemController(
+            wakeManager: wakeManager,
+            settings: settings
+        )
     }
 }

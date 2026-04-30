@@ -22,7 +22,17 @@ class WakeAssertionManager: ObservableObject {
 
     private var assertionID: IOPMAssertionID = 0
     private var timerTask: Task<Void, Never>?
+    private var totalDuration: TimeInterval?
 
+    /* Original version using standard images:
+        var menuBarIcon: String {
+            if isActive {
+                return "cup.and.heat.waves.fill"
+            }
+            return "cup.and.saucer.fill"
+        }
+    */
+    
     var menuBarIcon: String {
         if isActive {
             return "cup.and.heat.waves.fill"
@@ -31,15 +41,27 @@ class WakeAssertionManager: ObservableObject {
     }
 
     var menuBarTimeLabel: String? {
-        formattedTimeRemaining
+        return formattedTimeRemaining
     }
 
     var formattedTimeRemaining: String? {
-        StringUtilities.formatTimeRemaining(timeRemaining)
+        return StringUtilities.formatTimeRemaining(timeRemaining)
     }
 
     var formattedStopTime: String? {
-        StringUtilities.formatStopTime(selectedStopTime)
+        return StringUtilities.formatStopTime(selectedStopTime)
+    }
+
+    var fillLevel: Double {
+        if !isActive {
+            return 0
+        }
+        guard let remaining = timeRemaining,
+              let total = totalDuration,
+              total > 0 else {
+            return 1.0
+        }
+        return max(remaining / total, 0)
     }
 
     func activateIndefinitely() {
@@ -62,6 +84,7 @@ class WakeAssertionManager: ObservableObject {
         isActive = true
         timeRemaining = duration
         selectedDuration = duration
+        totalDuration = duration
 
         startCountdown()
     }
@@ -74,9 +97,14 @@ class WakeAssertionManager: ObservableObject {
             targetDate = Calendar.current.date(byAdding: .day, value: 1, to: targetDate)!
         }
 
-        guard createAssertion() else { return }
+        guard createAssertion() else {
+            return
+        }
+
         isActive = true
-        timeRemaining = targetDate.timeIntervalSince(Date.now)
+        let duration = targetDate.timeIntervalSince(Date.now)
+        timeRemaining = duration
+        totalDuration = duration
         selectedStopTime = targetDate
 
         startCountdown()
@@ -88,6 +116,7 @@ class WakeAssertionManager: ObservableObject {
         timeRemaining = nil
         selectedDuration = nil
         selectedStopTime = nil
+        totalDuration = nil
 
         if isActive {
             IOPMAssertionRelease(assertionID)
