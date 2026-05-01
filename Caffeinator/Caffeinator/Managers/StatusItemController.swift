@@ -26,7 +26,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     // MARK: - Setup
 
     private func setupStatusItem() {
-        statusItem = NSStatusBar.system.statusItem(withLength: 60)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         guard let button = statusItem.button else {
             return
@@ -45,7 +45,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         wakeManager.$isActive
             .receive(on: RunLoop.main)
             .sink { isActive in
-                self.statusItem.length = isActive ? 60 : 20
+                let indefiniteMode = self.wakeManager.menuBarTimeLabel == nil
+                self.statusItem.length = isActive && !indefiniteMode ? 60 : 20
             }
             .store(in: &cancellables)
         
@@ -202,6 +203,7 @@ private struct StatusBarIconView: View {
         HStack(spacing: 4) {
             CaffeinatorIconView(fillLevel: fill, isActive: isActive)
                 .frame(width: 18, height: 18)
+                .offset(y: -1)   // improved baseline alignment
 
             if let timeLabel = wakeManager.menuBarTimeLabel {
                 Text(timeLabel)
