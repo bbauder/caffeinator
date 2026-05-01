@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItemController: StatusItemController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        wakeManager.settings = settings
         statusItemController = StatusItemController(
             wakeManager: wakeManager,
             settings: settings
