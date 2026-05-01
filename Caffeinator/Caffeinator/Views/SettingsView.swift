@@ -19,6 +19,7 @@ struct SettingsView: View {
             Form {
                 Section(L.settingsGeneral) {
                     Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
+                    Toggle(L.settingsShowRecents, isOn: $settings.showRecentDurations)
                 }
 
                 Section(L.settingsSleepPrevention) {

@@ -63,6 +63,8 @@ class WakeAssertionManager: ObservableObject {
         isActive = true
         timeRemaining = nil
         selectedDuration = nil
+
+        settings?.recordMRU(.indefinitely)
     }
 
     func activate(for duration: TimeInterval) {
@@ -74,6 +76,7 @@ class WakeAssertionManager: ObservableObject {
         selectedDuration = duration
         totalDuration = duration
 
+        settings?.recordMRU(.duration(duration))
         startCountdown()
     }
 
@@ -93,6 +96,10 @@ class WakeAssertionManager: ObservableObject {
         totalDuration = duration
         selectedStopTime = targetDate
 
+        let components = Calendar.current.dateComponents([.hour, .minute], from: targetDate)
+        if let hour = components.hour, let minute = components.minute {
+            settings?.recordMRU(.untilTime(hour: hour, minute: minute))
+        }
         startCountdown()
     }
 

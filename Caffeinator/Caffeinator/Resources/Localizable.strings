@@ -23,3 +23,14 @@
 "settingsMenu" = "Menu";
 "settingsHideActivationOptions" = "Hide activation options while active";
 "done" = "Done";
+"settingsWindowTitle" = "Caffeinator Settings";
+"keepAwake" = "Keep Awake";
+"recents" = "Recents";
+"indefinitely" = "Indefinitely";
+"forOneMinute" = "For 1 Minute";
+"forMinutes" = "For %d Minutes";
+"forOneHour" = "For 1 Hour";
+"forHours" = "For %d Hours";
+"until" = "Until…";
+"untilTime" = "Until %@";
+"settingsShowRecents" = "Show recent durations in menu";

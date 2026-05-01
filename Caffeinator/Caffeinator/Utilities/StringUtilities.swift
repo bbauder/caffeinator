@@ -36,4 +36,20 @@ struct StringUtilities {
 
         return formatter.string(from: date)
     }
+
+    static func formatDuration(_ seconds: TimeInterval) -> String {
+        let total = Int(seconds)
+        let h = total / 3600
+        let m = (total % 3600) / 60
+
+        if h > 0 && m > 0 {
+            let hourPart = h == 1 ? "1 Hour" : "\(h) Hours"
+            let minPart = m == 1 ? "1 Minute" : "\(m) Minutes"
+            return "\(hourPart) \(minPart)"
+        } else if h > 0 {
+            return h == 1 ? "1 Hour" : "\(h) Hours"
+        } else {
+            return m == 1 ? "1 Minute" : "\(m) Minutes"
+        }
+    }
 }

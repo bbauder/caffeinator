@@ -59,4 +59,31 @@ enum L {
     static let settingsMenu = NSLocalizedString("settingsMenu", comment: "")
     static let settingsHideActivationOptions = NSLocalizedString("settingsHideActivationOptions", comment: "")
     static let done = NSLocalizedString("done", comment: "")
+    static let settingsWindowTitle = NSLocalizedString("settingsWindowTitle", comment: "")
+    static let keepAwake = NSLocalizedString("keepAwake", comment: "")
+
+    static let recents = NSLocalizedString("recents", comment: "")
+    static let indefinitely = NSLocalizedString("indefinitely", comment: "")
+
+    static func forMinutes(_ count: Int) -> String {
+        if count == 1 {
+            return NSLocalizedString("forOneMinute", comment: "")
+        }
+        return String(format: NSLocalizedString("forMinutes", comment: ""), count)
+    }
+
+    static func forHours(_ count: Int) -> String {
+        if count == 1 {
+            return NSLocalizedString("forOneHour", comment: "")
+        }
+        return String(format: NSLocalizedString("forHours", comment: ""), count)
+    }
+
+    static let until = NSLocalizedString("until", comment: "")
+
+    static func untilTime(_ time: String) -> String {
+        String(format: NSLocalizedString("untilTime", comment: ""), time)
+    }
+
+    static let settingsShowRecents = NSLocalizedString("settingsShowRecents", comment: "")
 }
