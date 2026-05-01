@@ -12,6 +12,9 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
+        // We dynamically size the Settings window: Let the Form's intrinsic content size dictate
+        // the window's size. We use .fixed​Size() so the VStack takes only the space it needs.
+        // The NSWindow auto-size's itself to fit.
         VStack(spacing: 0) {
             Form {
                 Section(L.settingsGeneral) {
@@ -40,7 +43,8 @@ struct SettingsView: View {
             .padding(.top, 4)
             .padding(.bottom, 12)
         }
-        .frame(width: 360)
+        .fixedSize()
+        .padding(20)
         .onAppear {
             // This is a classic issue with LSUIElement/agent apps — they don't automatically activate
             // (come to the top of the z-stack) when opening windows.

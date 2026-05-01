@@ -14,6 +14,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     private let wakeManager: WakeAssertionManager
     private let settings: SettingsViewModel
     private var cancellables = Set<AnyCancellable>()
+    private var settingsWindow: NSWindow?
 
     init(wakeManager: WakeAssertionManager, settings: SettingsViewModel) {
         self.wakeManager = wakeManager
@@ -183,7 +184,25 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     @objc private func openSettings() {
         NSApp.activate(ignoringOtherApps: true)
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+
+        // Create an NSWindow with NSHosting​Controller wrapping Settings​View,
+        // reusing an existing window if one is already visible.
+        if let existing = settingsWindow, existing.isVisible {
+            existing.makeKeyAndOrderFront(nil)
+            return
+        }
+
+        let view = SettingsView()
+            .environmentObject(settings)
+        let hostingController = NSHostingController(rootView: view)
+
+        let window = NSWindow(contentViewController: hostingController)
+        window.title = "Settings"
+        window.styleMask = [.titled, .closable]
+        window.center()
+        window.makeKeyAndOrderFront(nil)
+
+        settingsWindow = window
     }
 
     @objc private func quitApp() {

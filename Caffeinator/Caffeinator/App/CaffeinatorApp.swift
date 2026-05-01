@@ -13,8 +13,9 @@ struct CaffeinatorApp: App {
 
     var body: some Scene {
         Settings {
-            SettingsView()
-                .environmentObject(delegate.settings)
+            // Required to satisfy the App protocol requirement.
+            // We manage the Settings window manually via AppKit (see StatusItemController)
+            EmptyView()
         }
     }
 }
