@@ -112,20 +112,43 @@ struct CaffeinatorIconView: View {
             lineWidth: metrics.lineWidth
         )
 
-        // --- Handle (unchanged) ---
+        // --- Refined Handle (B1: warm, ceramic, subtle) ---
         var handle = Path()
+
+        // Slightly taller, slightly narrower
+        let outerR = metrics.handleOuterRadius
+        let innerR = metrics.handleInnerRadius
+
+        let cx = metrics.handleCenter.x
+        let cy = metrics.handleCenter.y
+
+        // Outer arc (upright, ceramic)
         handle.addArc(
-            center: metrics.handleCenter,
-            radius: metrics.handleRadius,
-            startAngle: .degrees(-50),
-            endAngle: .degrees(50),
+            center: CGPoint(x: cx, y: cy),
+            radius: outerR,
+            startAngle: .degrees(-35),
+            endAngle: .degrees(35),
             clockwise: false
         )
+
+        // Inner arc (returns back to start)
+        handle.addArc(
+            center: CGPoint(x: cx, y: cy),
+            radius: innerR,
+            startAngle: .degrees(35),
+            endAngle: .degrees(-35),
+            clockwise: true
+        )
+
+        handle.closeSubpath()
 
         context.stroke(
             handle,
             with: .foreground,
-            style: StrokeStyle(lineWidth: metrics.lineWidth * 0.9, lineCap: .round)
+            style: StrokeStyle(
+                lineWidth: metrics.lineWidth * 1.1,
+                lineCap: .round
+            )
         )
     }
 
@@ -258,6 +281,8 @@ private struct CupMetrics {
     let steamBaseY: CGFloat
     let steamRegionHeight: CGFloat
     let steamXPositions: [CGFloat]
+    let handleOuterRadius: CGFloat
+    let handleInnerRadius: CGFloat
 
     init(size: CGSize) {
         let w = size.width
@@ -269,17 +294,22 @@ private struct CupMetrics {
 
         // Slightly wider base, more vertical room for fill
         let cupW = w * 0.62
-        let cupH = h * 0.58
+        let cupH = h * 0.59
         let cupX = (w - cupW) / 2
         let cupY = h - cupH
 
         cupRect = CGRect(x: cupX, y: cupY, width: cupW, height: cupH)
 
-        // Handle: small, subtle, doesn’t clutter at 18×18
+        // Base radius
         handleRadius = w * 0.11
+
+        // Refined B1 geometry
+        handleOuterRadius = handleRadius * 1.10     // slightly taller
+        handleInnerRadius = handleRadius * 0.90     // slightly narrower
+
         handleCenter = CGPoint(
-            x: cupRect.maxX + handleRadius * 0.25,
-            y: cupRect.minY + cupH * 0.42
+            x: cupRect.maxX + handleRadius * 0.12,  // closer to bowl
+            y: cupRect.minY + cupH * 0.42           // same vertical alignment
         )
 
         // Steam geometry
