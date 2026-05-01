@@ -13,11 +13,13 @@ struct MenuBarMenu: View {
     @Environment(\.openSettings) private var openSettings
 
     private var isIndefinite: Bool {
-        wakeManager.isActive && wakeManager.selectedDuration == nil && wakeManager.selectedStopTime == nil
+        return wakeManager.isActive &&
+               wakeManager.selectedDuration == nil &&
+               wakeManager.selectedStopTime == nil
     }
 
     private var hideInactiveOptions: Bool {
-        settings.hideActivationOptionsWhileActive && wakeManager.isActive
+        return settings.hideActivationOptionsWhileActive && wakeManager.isActive
     }
 
     var body: some View {
@@ -53,11 +55,13 @@ struct MenuBarMenu: View {
 
         if !hideInactiveOptions {
             Divider()
+
             durationToggle(L.keepAwakeFor(minutes: 30), duration: 30 * 60)
             durationToggle(L.keepAwakeFor(hours: 1), duration: 60 * 60)
             durationToggle(L.keepAwakeFor(hours: 2), duration: 2 * 60 * 60)
         } else if wakeManager.selectedDuration != nil {
             Divider()
+
             if wakeManager.selectedDuration == 30 * 60 {
                 durationToggle(L.keepAwakeFor(minutes: 30), duration: 30 * 60)
             } else if wakeManager.selectedDuration == 60 * 60 {

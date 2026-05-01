@@ -156,6 +156,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     private func addDurationItem(to menu: NSMenu, title: String, duration: TimeInterval) {
         let item = NSMenuItem(title: title, action: #selector(toggleDuration(_:)), keyEquivalent: "")
+
         item.target = self
         item.tag = Int(duration)
         item.state = wakeManager.selectedDuration == duration ? .on : .off
@@ -183,25 +184,31 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     private func isMRUEntryActive(_ entry: MRUEntry) -> Bool {
-        guard wakeManager.isActive else { return false }
+        guard wakeManager.isActive else {
+            return false
+        }
+
         switch entry {
-        case .indefinitely:
-            return wakeManager.selectedDuration == nil && wakeManager.selectedStopTime == nil
-        case .duration(let seconds):
-            return wakeManager.selectedDuration == seconds
-        case .untilTime(let hour, let minute):
-            guard let stopTime = wakeManager.selectedStopTime else { return false }
-            let components = Calendar.current.dateComponents([.hour, .minute], from: stopTime)
-            return components.hour == hour && components.minute == minute
+            case .indefinitely:
+                return wakeManager.selectedDuration == nil && wakeManager.selectedStopTime == nil
+            case .duration(let seconds):
+                return wakeManager.selectedDuration == seconds
+            case .untilTime(let hour, let minute):
+                guard let stopTime = wakeManager.selectedStopTime else {
+                    return false
+                }
+                
+                let components = Calendar.current.dateComponents([.hour, .minute], from: stopTime)
+                return components.hour == hour && components.minute == minute
         }
     }
 
     // MARK: - Actions
 
     @objc private func toggleIndefinite() {
-        let isIndefinite = wakeManager.isActive
-            && wakeManager.selectedDuration == nil
-            && wakeManager.selectedStopTime == nil
+        let isIndefinite = wakeManager.isActive &&
+                           wakeManager.selectedDuration == nil &&
+                           wakeManager.selectedStopTime == nil
 
         if isIndefinite {
             wakeManager.deactivate()
@@ -233,37 +240,41 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     @objc private func activateMRU(_ sender: NSMenuItem) {
-        guard let entry = sender.representedObject as? MRUEntry else { return }
+        guard let entry = sender.representedObject as? MRUEntry else {
+            return
+        }
+
         switch entry {
-        case .indefinitely:
-            let isIndefinite = wakeManager.isActive
-                && wakeManager.selectedDuration == nil
-                && wakeManager.selectedStopTime == nil
-            if isIndefinite {
-                wakeManager.deactivate()
-            } else {
-                wakeManager.activateIndefinitely()
-            }
-        case .duration(let seconds):
-            if wakeManager.selectedDuration == seconds {
-                wakeManager.deactivate()
-            } else {
-                wakeManager.activate(for: seconds)
-            }
-        case .untilTime(let hour, let minute):
-            if let stopTime = wakeManager.selectedStopTime {
-                let components = Calendar.current.dateComponents([.hour, .minute], from: stopTime)
-                if components.hour == hour && components.minute == minute {
+            case .indefinitely:
+                let isIndefinite = wakeManager.isActive &&
+                                   wakeManager.selectedDuration == nil &&
+                                   wakeManager.selectedStopTime == nil
+                if isIndefinite {
                     wakeManager.deactivate()
-                    return
+                } else {
+                    wakeManager.activateIndefinitely()
                 }
-            }
-            var components = Calendar.current.dateComponents([.year, .month, .day], from: Date.now)
-            components.hour = hour
-            components.minute = minute
-            if let date = Calendar.current.date(from: components) {
-                wakeManager.activate(until: date)
-            }
+            case .duration(let seconds):
+                if wakeManager.selectedDuration == seconds {
+                    wakeManager.deactivate()
+                } else {
+                    wakeManager.activate(for: seconds)
+                }
+            case .untilTime(let hour, let minute):
+                if let stopTime = wakeManager.selectedStopTime {
+                    let components = Calendar.current.dateComponents([.hour, .minute], from: stopTime)
+                    if components.hour == hour && components.minute == minute {
+                        wakeManager.deactivate()
+                        return
+                    }
+                }
+
+                var components = Calendar.current.dateComponents([.year, .month, .day], from: Date.now)
+                components.hour = hour
+                components.minute = minute
+                if let date = Calendar.current.date(from: components) {
+                    wakeManager.activate(until: date)
+                }
         }
     }
 

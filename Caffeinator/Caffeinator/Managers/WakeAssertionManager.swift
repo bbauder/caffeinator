@@ -17,7 +17,9 @@ class WakeAssertionManager: ObservableObject {
     @Published private(set) var selectedStopTime: Date?
 
     var settings: SettingsViewModel? {
-        didSet { observeSettings() }
+        didSet {
+            observeSettings()
+        }
     }
 
     private var systemSleepAssertionID: IOPMAssertionID = 0
@@ -48,11 +50,13 @@ class WakeAssertionManager: ObservableObject {
         if !isActive {
             return 0
         }
+
         guard let remaining = timeRemaining,
               let total = totalDuration,
               total > 0 else {
             return 1.0
         }
+
         return max(remaining / total, 0)
     }
 
@@ -121,7 +125,10 @@ class WakeAssertionManager: ObservableObject {
 
     private func observeSettings() {
         cancellables.removeAll()
-        guard let settings else { return }
+        
+        guard let settings else {
+            return
+        }
 
         settings.$preventSystemSleep
             .dropFirst()
@@ -152,9 +159,8 @@ class WakeAssertionManager: ObservableObject {
         }
 
         if s.preventSystemSleep && !hasSystemSleepAssertion {
-            hasSystemSleepAssertion = createAssertion(
-                type: kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
-                id: &systemSleepAssertionID
+            hasSystemSleepAssertion = createAssertion(type: kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
+                                                      id: &systemSleepAssertionID
             )
         } else if !s.preventSystemSleep && hasSystemSleepAssertion {
             IOPMAssertionRelease(systemSleepAssertionID)
@@ -163,9 +169,8 @@ class WakeAssertionManager: ObservableObject {
         }
 
         if s.preventDisplaySleep && !hasDisplaySleepAssertion {
-            hasDisplaySleepAssertion = createAssertion(
-                type: kIOPMAssertionTypeNoDisplaySleep as CFString,
-                id: &displaySleepAssertionID
+            hasDisplaySleepAssertion = createAssertion(type: kIOPMAssertionTypeNoDisplaySleep as CFString,
+                                                       id: &displaySleepAssertionID
             )
         } else if !s.preventDisplaySleep && hasDisplaySleepAssertion {
             IOPMAssertionRelease(displaySleepAssertionID)
@@ -174,9 +179,8 @@ class WakeAssertionManager: ObservableObject {
         }
 
         if s.preventScreenSaver && !hasScreensaverAssertion {
-            hasScreensaverAssertion = createAssertion(
-                type: kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
-                id: &screensaverAssertionID
+            hasScreensaverAssertion = createAssertion(type: kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
+                                                      id: &screensaverAssertionID
             )
         } else if !s.preventScreenSaver && hasScreensaverAssertion {
             IOPMAssertionRelease(screensaverAssertionID)
@@ -193,23 +197,20 @@ class WakeAssertionManager: ObservableObject {
         }
 
         if s.preventSystemSleep {
-            hasSystemSleepAssertion = createAssertion(
-                type: kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
-                id: &systemSleepAssertionID
+            hasSystemSleepAssertion = createAssertion(type: kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
+                                                      id: &systemSleepAssertionID
             )
         }
 
         if s.preventDisplaySleep {
-            hasDisplaySleepAssertion = createAssertion(
-                type: kIOPMAssertionTypeNoDisplaySleep as CFString,
-                id: &displaySleepAssertionID
+            hasDisplaySleepAssertion = createAssertion(type: kIOPMAssertionTypeNoDisplaySleep as CFString,
+                                                       id: &displaySleepAssertionID
             )
         }
 
         if s.preventScreenSaver {
-            hasScreensaverAssertion = createAssertion(
-                type: kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
-                id: &screensaverAssertionID
+            hasScreensaverAssertion = createAssertion(type: kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
+                                                      id: &screensaverAssertionID
             )
         }
     }
@@ -247,12 +248,12 @@ class WakeAssertionManager: ObservableObject {
 
     private func createAssertion(type: CFString, id: inout IOPMAssertionID) -> Bool {
         let reason = "Caffeinator is keeping this Mac awake" as CFString
-        let result = IOPMAssertionCreateWithName(
-            type,
-            UInt32(kIOPMAssertionLevelOn),
-            reason,
-            &id
+        let result = IOPMAssertionCreateWithName(type,
+                                                 UInt32(kIOPMAssertionLevelOn),
+                                                 reason,
+                                                 &id
         )
+
         return result == kIOReturnSuccess
     }
 }

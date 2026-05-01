@@ -18,7 +18,9 @@ final class CustomDurationPopoverManager {
 
         Task {
             NSApp.activate()
-            guard let button = Self.findStatusItemButton() else { return }
+            guard let button = Self.findStatusItemButton() else {
+                return
+            }
 
             let pickerView = CustomDurationPickerView(wakeManager: wakeManager) { [weak self] in
                 self?.dismiss()

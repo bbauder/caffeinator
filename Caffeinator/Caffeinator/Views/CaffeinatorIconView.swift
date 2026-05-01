@@ -17,11 +17,9 @@ struct CaffeinatorIconView: View {
     private let timer = Timer.publish(every: 0.66, on: .main, in: .common).autoconnect()
 
     // Three-line steam pattern, three distinct frames
-    private static let steamHeights: [[CGFloat]] = [
-        [1, 2, 1],
-        [3, 2, 3],
-        [4, 4, 4]
-    ]
+    private static let steamHeights: [[CGFloat]] = [ [1, 2, 1],
+                                                     [3, 2, 3],
+                                                     [4, 4, 4] ]
 
     var body: some View {
         Canvas { context, size in
@@ -48,12 +46,10 @@ struct CaffeinatorIconView: View {
         // Subtle inward taper at the top (3–4% is enough)
         let topInset = rect.width * 0.035
 
-        let tapered = CGRect(
-            x: rect.minX + topInset,
-            y: rect.minY,
-            width: rect.width - topInset * 2,
-            height: rect.height
-        )
+        let tapered = CGRect(x: rect.minX + topInset,
+                             y: rect.minY,
+                             width: rect.width - topInset * 2,
+                             height: rect.height)
 
         // --- Custom bowl path with asymmetric corner radii ---
         var cupPath = Path()
@@ -73,44 +69,34 @@ struct CaffeinatorIconView: View {
         cupPath.addLine(to: CGPoint(x: topRight.x - rTop, y: topRight.y))
 
         // Top-right corner
-        cupPath.addQuadCurve(
-            to: CGPoint(x: topRight.x, y: topRight.y + rTop),
-            control: topRight
-        )
+        cupPath.addQuadCurve(to: CGPoint(x: topRight.x, y: topRight.y + rTop),
+                             control: topRight)
 
         // Right wall
         cupPath.addLine(to: CGPoint(x: bottomRight.x, y: bottomRight.y - rBottom))
 
         // Bottom-right corner
-        cupPath.addQuadCurve(
-            to: CGPoint(x: bottomRight.x - rBottom, y: bottomRight.y),
-            control: bottomRight
-        )
+        cupPath.addQuadCurve(to: CGPoint(x: bottomRight.x - rBottom, y: bottomRight.y),
+                             control: bottomRight)
 
         // Bottom edge
         cupPath.addLine(to: CGPoint(x: bottomLeft.x + rBottom, y: bottomLeft.y))
 
         // Bottom-left corner
-        cupPath.addQuadCurve(
-            to: CGPoint(x: bottomLeft.x, y: bottomLeft.y - rBottom),
-            control: bottomLeft
-        )
+        cupPath.addQuadCurve(to: CGPoint(x: bottomLeft.x, y: bottomLeft.y - rBottom),
+                             control: bottomLeft)
 
         // Left wall
         cupPath.addLine(to: CGPoint(x: topLeft.x, y: topLeft.y + rTop))
 
         // Top-left corner
-        cupPath.addQuadCurve(
-            to: CGPoint(x: topLeft.x + rTop, y: topLeft.y),
-            control: topLeft
-        )
+        cupPath.addQuadCurve(to: CGPoint(x: topLeft.x + rTop, y: topLeft.y),
+                             control: topLeft)
 
         // Stroke the bowl
-        context.stroke(
-            cupPath,
-            with: .foreground,
-            lineWidth: metrics.lineWidth
-        )
+        context.stroke(cupPath,
+                       with: .foreground,
+                       lineWidth: metrics.lineWidth)
 
         // --- Refined Handle (B1: warm, ceramic, subtle) ---
         var handle = Path()
@@ -123,33 +109,25 @@ struct CaffeinatorIconView: View {
         let cy = metrics.handleCenter.y
 
         // Outer arc (upright, ceramic)
-        handle.addArc(
-            center: CGPoint(x: cx, y: cy),
-            radius: outerR,
-            startAngle: .degrees(-35),
-            endAngle: .degrees(35),
-            clockwise: false
-        )
+        handle.addArc(center: CGPoint(x: cx, y: cy),
+                      radius: outerR,
+                      startAngle: .degrees(-35),
+                      endAngle: .degrees(35),
+                      clockwise: false)
 
         // Inner arc (returns back to start)
-        handle.addArc(
-            center: CGPoint(x: cx, y: cy),
-            radius: innerR,
-            startAngle: .degrees(35),
-            endAngle: .degrees(-35),
-            clockwise: true
-        )
+        handle.addArc(center: CGPoint(x: cx, y: cy),
+                      radius: innerR,
+                      startAngle: .degrees(35),
+                      endAngle: .degrees(-35),
+                      clockwise: true)
 
         handle.closeSubpath()
 
-        context.stroke(
-            handle,
-            with: .foreground,
-            style: StrokeStyle(
-                lineWidth: metrics.lineWidth * 1.1,
-                lineCap: .round
-            )
-        )
+        context.stroke(handle,
+                       with: .foreground,
+                       style: StrokeStyle(lineWidth: metrics.lineWidth * 1.1,
+                                          lineCap: .round))
     }
 
     // MARK: - Coffee Fill
@@ -168,12 +146,10 @@ struct CaffeinatorIconView: View {
         let fillHeight = interior.height * CGFloat(clamped)
 
         // Slight horizontal expansion to eliminate the visible gap
-        let fillRect = CGRect(
-            x: interior.minX - metrics.lineWidth * 0.2,
-            y: interior.maxY - fillHeight,
-            width: interior.width + metrics.lineWidth * 0.4,
-            height: fillHeight
-        )
+        let fillRect = CGRect(x: interior.minX - metrics.lineWidth * 0.2,
+                              y: interior.maxY - fillHeight,
+                              width: interior.width + metrics.lineWidth * 0.4,
+                              height: fillHeight)
 
         context.drawLayer { layer in
             layer.clip(to: interiorPath)
@@ -186,33 +162,6 @@ struct CaffeinatorIconView: View {
 
     // MARK: - Steam
 
-//    // This version draws straight steam lines
-//    private func drawSteam(in context: inout GraphicsContext, metrics: CupMetrics) {
-//        guard isActive else {
-//            return
-//        }
-//
-//        let heights = Self.steamHeights[steamFrame]
-//        let unitHeight = metrics.steamRegionHeight / 4
-//
-//        for i in 0..<3 {
-//            let x = metrics.steamXPositions[i]
-//            let lineHeight = unitHeight * heights[i]
-//
-//            // Straight lines
-//            var path = Path()
-//            path.move(to: CGPoint(x: x, y: metrics.steamBaseY))
-//            path.addLine(to: CGPoint(x: x, y: metrics.steamBaseY - lineHeight))
-//
-//            context.opacity = 0.75
-//            context.stroke(
-//                path,
-//                with: .foreground,
-//                style: StrokeStyle(lineWidth: metrics.lineWidth * 0.7, lineCap: .round)
-//            )
-//            context.opacity = 1.0
-//        }
-//    }
     private func drawSteam(in context: inout GraphicsContext, metrics: CupMetrics) {
         guard isActive else { return }
 
@@ -238,7 +187,7 @@ struct CaffeinatorIconView: View {
             let baseAmp: CGFloat = 1.0
             let heightFactor = max(1.0, lineHeight / (unitHeight * 2))
 
-            // Outer lines get more wiggle, middle stays elegant
+            // Outer lines get more wiggle, middle stays swirly like an 'S'
             let amplitude: CGFloat = switch i {
                 case 0: baseAmp * 1.4 * heightFactor   // left
                 case 1: baseAmp * 1.0 * heightFactor   // middle
@@ -257,14 +206,10 @@ struct CaffeinatorIconView: View {
 
             // Draw with existing style
             context.opacity = 0.75
-            context.stroke(
-                path,
-                with: .foreground,
-                style: StrokeStyle(
-                    lineWidth: metrics.lineWidth * 0.7,
-                    lineCap: .round
-                )
-            )
+            context.stroke(path,
+                           with: .foreground,
+                           style: StrokeStyle(lineWidth: metrics.lineWidth * 0.7,
+                                              lineCap: .round))
             context.opacity = 1.0
         }
     }

@@ -15,6 +15,7 @@ final class StopAtPopoverManager {
 
     func show(wakeManager: WakeAssertionManager) {
         dismiss()
+
         Task {
             NSApp.activate()
             guard let button = Self.findStatusItemButton() else {

@@ -11,6 +11,7 @@ struct CustomDurationPickerView: View {
     @ObservedObject var wakeManager: WakeAssertionManager
     @State private var hours = 1
     @State private var minutes = 0
+
     var onDismiss: () -> Void
 
     private var duration: TimeInterval {
