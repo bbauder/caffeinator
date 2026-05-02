@@ -36,6 +36,10 @@ class SettingsViewModel: ObservableObject {
         didSet { UserDefaults.standard.set(showRecentDurations, forKey: "showRecentDurations") }
     }
 
+    var hasAnySystemEnabled: Bool {
+        preventSystemSleep || preventDisplaySleep || preventScreenSaver
+    }
+
     @Published private(set) var mruEntries: [MRUEntry] = []
 
     private static let maxMRU = 3

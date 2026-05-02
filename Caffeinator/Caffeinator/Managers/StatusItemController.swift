@@ -206,6 +206,12 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     // MARK: - Actions
 
+    private func requireSystemEnabled() -> Bool {
+        if settings.hasAnySystemEnabled { return true }
+        openSettings()
+        return false
+    }
+
     @objc private func toggleIndefinite() {
         let isIndefinite = wakeManager.isActive &&
                            wakeManager.selectedDuration == nil &&
@@ -214,6 +220,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         if isIndefinite {
             wakeManager.deactivate()
         } else {
+            guard requireSystemEnabled() else { return }
             wakeManager.activateIndefinitely()
         }
     }
@@ -223,10 +230,12 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     @objc private func showStopAtPicker() {
+        guard requireSystemEnabled() else { return }
         StopAtPopoverManager.shared.show(wakeManager: wakeManager)
     }
 
     @objc private func showCustomDurationPicker() {
+        guard requireSystemEnabled() else { return }
         CustomDurationPopoverManager.shared.show(wakeManager: wakeManager)
     }
 
@@ -236,6 +245,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         if wakeManager.selectedDuration == duration {
             wakeManager.deactivate()
         } else {
+            guard requireSystemEnabled() else { return }
             wakeManager.activate(for: duration)
         }
     }
@@ -253,12 +263,14 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 if isIndefinite {
                     wakeManager.deactivate()
                 } else {
+                    guard requireSystemEnabled() else { return }
                     wakeManager.activateIndefinitely()
                 }
             case .duration(let seconds):
                 if wakeManager.selectedDuration == seconds {
                     wakeManager.deactivate()
                 } else {
+                    guard requireSystemEnabled() else { return }
                     wakeManager.activate(for: seconds)
                 }
             case .untilTime(let hour, let minute):
@@ -270,6 +282,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                     }
                 }
 
+                guard requireSystemEnabled() else { return }
                 var components = Calendar.current.dateComponents([.year, .month, .day], from: Date.now)
                 components.hour = hour
                 components.minute = minute

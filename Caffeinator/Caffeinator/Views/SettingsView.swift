@@ -23,6 +23,24 @@ struct SettingsView: View {
                 }
 
                 Section(L.settingsSleepPrevention) {
+                    if !settings.hasAnySystemEnabled {
+                        HStack(alignment: .top, spacing: 8) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundStyle(.yellow)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(L.settingsNoSystemsEnabledTitle)
+                                    .fontWeight(.semibold)
+                                Text(L.settingsNoSystemsEnabledMessage)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .font(.callout)
+                        .padding(12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.yellow.opacity(0.10), in: RoundedRectangle(cornerRadius: 8))
+                        .padding(.bottom, 6)
+                    }
+
                     Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
                     Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
                     Toggle(L.settingsPreventScreenSaver, isOn: $settings.preventScreenSaver)

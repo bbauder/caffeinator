@@ -34,3 +34,5 @@
 "until" = "Until…";
 "untilTime" = "Until %@";
 "settingsShowRecents" = "Show recent durations in menu";
+"settingsNoSystemsEnabledTitle" = "No sleep prevention systems are enabled.";
+"settingsNoSystemsEnabledMessage" = "Caffeinator cannot keep your Mac awake until at least one system is turned on.";

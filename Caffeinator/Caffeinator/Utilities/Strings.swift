@@ -86,4 +86,6 @@ enum L {
     }
 
     static let settingsShowRecents = NSLocalizedString("settingsShowRecents", comment: "")
+    static let settingsNoSystemsEnabledTitle = NSLocalizedString("settingsNoSystemsEnabledTitle", comment: "")
+    static let settingsNoSystemsEnabledMessage = NSLocalizedString("settingsNoSystemsEnabledMessage", comment: "")
 }
