@@ -166,7 +166,8 @@ struct CaffeinatorIconView: View {
     private func drawSteam(in context: inout GraphicsContext, metrics: CupMetrics) {
         guard isActive else { return }
 
-        let heights = Self.steamHeights[steamFrame]
+        let frame = animateSteam ? steamFrame : 1
+        let heights = Self.steamHeights[frame]
         let unitHeight = metrics.steamRegionHeight / 4
 
         for i in 0..<3 {

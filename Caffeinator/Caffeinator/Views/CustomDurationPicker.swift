@@ -42,8 +42,7 @@ struct CustomDurationPickerView: View {
                     .keyboardShortcut(.cancelAction)
                 Spacer()
                 Button(L.start) {
-                    let endDate = Date.now.addingTimeInterval(duration)
-                    wakeManager.activate(until: endDate)
+                    wakeManager.activate(for: duration)
                     onDismiss()
                 }
                 .keyboardShortcut(.defaultAction)
