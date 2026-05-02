@@ -74,7 +74,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     private func rebuildMenu(_ menu: NSMenu) {
         menu.removeAllItems()
 
-        let hideInactive = settings.hideActivationOptionsWhileActive && wakeManager.isActive
+        let hideInactive = settings.hideActivationOptionsWhileActive &&
+                           wakeManager.isActive
 
         // MRU section
         if !hideInactive && settings.showRecentDurations {
@@ -109,9 +110,9 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             let keepAwakeItem = NSMenuItem(title: L.keepAwake, action: nil, keyEquivalent: "")
             let keepAwakeSubmenu = NSMenu()
 
-            let isIndefinite = wakeManager.isActive
-                && wakeManager.selectedDuration == nil
-                && wakeManager.selectedStopTime == nil
+            let isIndefinite = wakeManager.isActive &&
+                               wakeManager.selectedDuration == nil &&
+                               wakeManager.selectedStopTime == nil
 
             let indefiniteItem = NSMenuItem(title: L.indefinitely, action: #selector(toggleIndefinite), keyEquivalent: "")
             indefiniteItem.target = self
