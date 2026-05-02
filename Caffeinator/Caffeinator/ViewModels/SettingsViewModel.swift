@@ -36,6 +36,14 @@ class SettingsViewModel: ObservableObject {
         didSet { UserDefaults.standard.set(showRecentDurations, forKey: "showRecentDurations") }
     }
 
+    @Published var showCountdown: Bool {
+        didSet { UserDefaults.standard.set(showCountdown, forKey: "showCountdown") }
+    }
+
+    @Published var animateIcon: Bool {
+        didSet { UserDefaults.standard.set(animateIcon, forKey: "animateIcon") }
+    }
+
     var hasAnySystemEnabled: Bool {
         preventSystemSleep || preventDisplaySleep || preventScreenSaver
     }
@@ -52,6 +60,8 @@ class SettingsViewModel: ObservableObject {
                                      "preventScreenSaver": false,
                                      "hideActivationOptionsWhileActive": true,
                                      "showRecentDurations": true,
+                                     "showCountdown": true,
+                                     "animateIcon": true,
                                     ])
 
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
@@ -59,6 +69,8 @@ class SettingsViewModel: ObservableObject {
         preventScreenSaver = defaults.bool(forKey: "preventScreenSaver")
         hideActivationOptionsWhileActive = defaults.bool(forKey: "hideActivationOptionsWhileActive")
         showRecentDurations = defaults.bool(forKey: "showRecentDurations")
+        showCountdown = defaults.bool(forKey: "showCountdown")
+        animateIcon = defaults.bool(forKey: "animateIcon")
 
         if let data = defaults.data(forKey: "mruEntries"),
            let decoded = try? JSONDecoder().decode([MRUEntry].self, from: data) {

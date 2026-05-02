@@ -12,6 +12,7 @@ import Combine
 struct CaffeinatorIconView: View {
     var fillLevel: Double
     var isActive: Bool = false
+    var animateSteam: Bool = true
 
     @State private var steamFrame = 0
     private let timer = Timer.publish(every: 0.66, on: .main, in: .common).autoconnect()
@@ -32,7 +33,7 @@ struct CaffeinatorIconView: View {
         .offset(y: -2)
         .foregroundStyle(.primary)
         .onReceive(timer) { _ in
-            if isActive {
+            if isActive && animateSteam {
                 steamFrame = (steamFrame + 1) % 3
             }
         }

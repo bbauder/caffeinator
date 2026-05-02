@@ -20,6 +20,8 @@ struct SettingsView: View {
                 Section(L.settingsGeneral) {
                     Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
                     Toggle(L.settingsShowRecents, isOn: $settings.showRecentDurations)
+                    Toggle(L.settingsShowCountdown, isOn: $settings.showCountdown)
+                    Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)
                 }
 
                 Section(L.settingsSleepPrevention) {

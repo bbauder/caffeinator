@@ -37,17 +37,17 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         button.title = ""
         button.imagePosition = .imageOnly
 
-        let iconView = StatusBarIconView(wakeManager: wakeManager)
+        let iconView = StatusBarIconView(wakeManager: wakeManager, settings: settings)
         let hostingView = NSHostingView(rootView: iconView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
 
         button.addSubview(hostingView)
 
-        wakeManager.$isActive
+        Publishers.CombineLatest(wakeManager.$isActive, settings.$showCountdown)
             .receive(on: RunLoop.main)
-            .sink { isActive in
-                let indefiniteMode = self.wakeManager.menuBarTimeLabel == nil
-                self.statusItem.length = isActive && !indefiniteMode ? 60 : 20
+            .sink { isActive, showCountdown in
+                let hasCountdown = showCountdown && self.wakeManager.menuBarTimeLabel != nil
+                self.statusItem.length = isActive && hasCountdown ? 60 : 20
             }
             .store(in: &cancellables)
         
@@ -324,17 +324,18 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
 private struct StatusBarIconView: View {
     @ObservedObject var wakeManager: WakeAssertionManager
+    @ObservedObject var settings: SettingsViewModel
 
     var body: some View {
         let isActive = wakeManager.isActive
         let fill = isActive ? wakeManager.fillLevel : 0
 
         HStack(spacing: 4) {
-            CaffeinatorIconView(fillLevel: fill, isActive: isActive)
+            CaffeinatorIconView(fillLevel: fill, isActive: isActive, animateSteam: settings.animateIcon)
                 .frame(width: 18, height: 18)
-                .offset(y: -1)   // improved baseline alignment
+                .offset(y: -1)
 
-            if let timeLabel = wakeManager.menuBarTimeLabel {
+            if settings.showCountdown, let timeLabel = wakeManager.menuBarTimeLabel {
                 Text(timeLabel)
                     .font(FontPalette.monospacedDigit)
             }
