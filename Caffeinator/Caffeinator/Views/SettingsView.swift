@@ -18,10 +18,10 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             Form {
                 Section(L.settingsGeneral) {
-                    Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
                     Toggle(L.settingsShowRecents, isOn: $settings.showRecentDurations)
                     Toggle(L.settingsShowCountdown, isOn: $settings.showCountdown)
                     Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)
+                    Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
                 }
 
                 Section(L.settingsSleepPrevention) {

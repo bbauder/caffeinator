@@ -93,8 +93,8 @@ class WakeAssertionManager: ObservableObject {
         }
 
         createAssertions()
-
         isActive = true
+
         let duration = targetDate.timeIntervalSince(Date.now)
         timeRemaining = duration
         totalDuration = duration
