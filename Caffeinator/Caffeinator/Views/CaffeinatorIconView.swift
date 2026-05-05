@@ -99,36 +99,62 @@ struct CaffeinatorIconView: View {
                        with: .foreground,
                        lineWidth: metrics.lineWidth)
 
-        // --- Refined Handle (B1: warm, ceramic, subtle) ---
+        // --- Connected Handle (Apple‑ceramic style) ---
         var handle = Path()
 
-        // Slightly taller, slightly narrower
         let outerR = metrics.handleOuterRadius
         let innerR = metrics.handleInnerRadius
-
         let cx = metrics.handleCenter.x
         let cy = metrics.handleCenter.y
 
-        // Outer arc (upright, ceramic)
-        handle.addArc(center: CGPoint(x: cx, y: cy),
-                      radius: outerR,
-                      startAngle: .degrees(-35),
-                      endAngle: .degrees(35),
-                      clockwise: false)
+        // Angles for the arc span
+        let startDeg: CGFloat = -35
+        let endDeg: CGFloat = 35
 
-        // Inner arc (returns back to start)
-        handle.addArc(center: CGPoint(x: cx, y: cy),
-                      radius: innerR,
-                      startAngle: .degrees(35),
-                      endAngle: .degrees(-35),
-                      clockwise: true)
+        // Compute the two connection points on the bowl
+        let topAttach = CGPoint(
+            x: metrics.cupRect.maxX,
+            y: cy - outerR * 0.55
+        )
 
-        handle.closeSubpath()
+        let bottomAttach = CGPoint(
+            x: metrics.cupRect.maxX,
+            y: cy + outerR * 0.55
+        )
 
-        context.stroke(handle,
-                       with: .foreground,
-                       style: StrokeStyle(lineWidth: metrics.lineWidth * 1.1,
-                                          lineCap: .round))
+        // --- Top connector ---
+        handle.move(to: topAttach)
+
+        // Outer arc
+        handle.addArc(
+            center: CGPoint(x: cx, y: cy),
+            radius: outerR,
+            startAngle: .degrees(startDeg),
+            endAngle: .degrees(endDeg),
+            clockwise: false
+        )
+
+        // --- Bottom connector ---
+        handle.addLine(to: bottomAttach)
+
+        // Inner arc (back toward top)
+        handle.addArc(
+            center: CGPoint(x: cx, y: cy),
+            radius: innerR,
+            startAngle: .degrees(endDeg),
+            endAngle: .degrees(startDeg),
+            clockwise: true
+        )
+
+        // Stroke only (no fill)
+        context.stroke(
+            handle,
+            with: .foreground,
+            style: StrokeStyle(
+                lineWidth: metrics.lineWidth * 1.1,
+                lineCap: .round
+            )
+        )
     }
 
     // MARK: - Coffee Fill
