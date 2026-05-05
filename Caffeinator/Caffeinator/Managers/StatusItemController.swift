@@ -123,6 +123,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             addDurationItem(to: keepAwakeSubmenu, title: L.forHours(1), duration: 60 * 60)
             addDurationItem(to: keepAwakeSubmenu, title: L.forHours(2), duration: 2 * 60 * 60)
 
+            keepAwakeSubmenu.addItem(.separator())
+            
             let customItem = NSMenuItem(title: L.customDuration, action: #selector(showCustomDurationPicker), keyEquivalent: "")
             customItem.target = self
             keepAwakeSubmenu.addItem(customItem)
