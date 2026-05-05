@@ -32,8 +32,12 @@ struct SettingsView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(L.settingsNoSystemsEnabledTitle)
                                     .fontWeight(.semibold)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .multilineTextAlignment(.leading)
                                 Text(L.settingsNoSystemsEnabledMessage)
                                     .foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .multilineTextAlignment(.leading)
                             }
                         }
                         .font(.callout)
@@ -64,7 +68,8 @@ struct SettingsView: View {
             .padding(.top, 4)
             .padding(.bottom, 12)
         }
-        .fixedSize()
+        .frame(width: 420)
+        .fixedSize(horizontal: false, vertical: true)
         .padding(20)
         .onAppear {
             // This is a known issue with LSUIElement/agent apps — they don't automatically activate
