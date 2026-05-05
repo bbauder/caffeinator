@@ -32,11 +32,9 @@ struct SettingsView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(L.settingsNoSystemsEnabledTitle)
                                     .fontWeight(.semibold)
-                                    .fixedSize(horizontal: false, vertical: true)
                                     .multilineTextAlignment(.leading)
                                 Text(L.settingsNoSystemsEnabledMessage)
                                     .foregroundStyle(.secondary)
-                                    .fixedSize(horizontal: false, vertical: true)
                                     .multilineTextAlignment(.leading)
                             }
                         }
