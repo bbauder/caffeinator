@@ -46,8 +46,19 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         Publishers.CombineLatest(wakeManager.$isActive, settings.$showCountdown)
             .receive(on: RunLoop.main)
             .sink { isActive, showCountdown in
-                let hasCountdown = showCountdown && self.wakeManager.menuBarTimeLabel != nil
-                self.statusItem.length = isActive && hasCountdown ? 60 : 20
+                // Compute the width of our NSStatusItem button in the menu bar.
+                // Three cases to handle, and we do this dynamically rather than hardcode constant widths.
+                // - Cup only
+                // - Cup with long countdown text (ex: "23:39:05")
+                // - Cup with other/typical countdown text (ex: 1:59:46, 4:15)
+                if isActive && showCountdown, let label = self.wakeManager.menuBarTimeLabel {
+                    let font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
+                    let width = (label as NSString).size(withAttributes: [.font: font]).width
+                    self.statusItem.length = ceil(width) + 26
+                } else {
+                    // Cup only, it's safe to hardcode
+                    self.statusItem.length = 20
+                }
             }
             .store(in: &cancellables)
         
