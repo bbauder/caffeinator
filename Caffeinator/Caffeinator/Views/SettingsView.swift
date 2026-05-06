@@ -27,7 +27,7 @@ struct SettingsView: View {
                     }
 
                     Section(L.settingsSleepPrevention) {
-                        if !settings.hasAnySystemEnabled {
+                        if !settings.isAnySystemEnabled {
                             HStack(alignment: .top, spacing: 8) {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .foregroundStyle(.yellow)

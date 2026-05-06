@@ -264,7 +264,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     // MARK: - Actions
 
     private func requireSystemEnabled() -> Bool {
-        if settings.hasAnySystemEnabled { return true }
+        if settings.isAnySystemEnabled { return true }
         openSettings()
         return false
     }

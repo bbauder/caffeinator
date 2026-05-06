@@ -20,31 +20,45 @@ enum MRUEntry: Codable, Equatable {
 @MainActor
 class SettingsViewModel: ObservableObject {
     @Published var preventSystemSleep: Bool {
-        didSet { UserDefaults.standard.set(preventSystemSleep, forKey: "preventSystemSleep") }
+        didSet {
+            UserDefaults.standard.set(preventSystemSleep, forKey: "preventSystemSleep")
+        }
     }
 
     @Published var preventDisplaySleep: Bool {
-        didSet { UserDefaults.standard.set(preventDisplaySleep, forKey: "preventDisplaySleep") }
+        didSet {
+            UserDefaults.standard.set(preventDisplaySleep, forKey: "preventDisplaySleep")
+        }
     }
 
     @Published var preventScreenSaver: Bool {
-        didSet { UserDefaults.standard.set(preventScreenSaver, forKey: "preventScreenSaver") }
+        didSet {
+            UserDefaults.standard.set(preventScreenSaver, forKey: "preventScreenSaver")
+        }
     }
 
     @Published var hideActivationOptionsWhileActive: Bool {
-        didSet { UserDefaults.standard.set(hideActivationOptionsWhileActive, forKey: "hideActivationOptionsWhileActive") }
+        didSet {
+            UserDefaults.standard.set(hideActivationOptionsWhileActive, forKey: "hideActivationOptionsWhileActive")
+        }
     }
 
     @Published var showRecentDurations: Bool {
-        didSet { UserDefaults.standard.set(showRecentDurations, forKey: "showRecentDurations") }
+        didSet {
+            UserDefaults.standard.set(showRecentDurations, forKey: "showRecentDurations")
+        }
     }
 
     @Published var showCountdown: Bool {
-        didSet { UserDefaults.standard.set(showCountdown, forKey: "showCountdown") }
+        didSet {
+            UserDefaults.standard.set(showCountdown, forKey: "showCountdown")
+        }
     }
 
     @Published var animateIcon: Bool {
-        didSet { UserDefaults.standard.set(animateIcon, forKey: "animateIcon") }
+        didSet {
+            UserDefaults.standard.set(animateIcon, forKey: "animateIcon")
+        }
     }
 
     @Published var autoDisableOnLowBattery: Bool {
@@ -60,16 +74,22 @@ class SettingsViewModel: ObservableObject {
     }
 
     @Published var lowBatteryThreshold: Int {
-        didSet { UserDefaults.standard.set(lowBatteryThreshold, forKey: "lowBatteryThreshold") }
+        didSet {
+            UserDefaults.standard.set(lowBatteryThreshold, forKey: "lowBatteryThreshold")
+        }
     }
 
     @Published var launchAtLogin: Bool {
         didSet {
-            guard launchAtLogin != oldValue else { return }
+            guard launchAtLogin != oldValue else {
+                return
+            }
+            
             if isRunningFromDerivedData {
                 launchAtLogin = false
                 return
             }
+
             do {
                 if launchAtLogin {
                     try SMAppService.mainApp.register()
@@ -82,20 +102,19 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    weak var wakeManager: WakeAssertionManager?
+    @Published private(set) var mruEntries: [MRUEntry] = []
 
     var isRunningFromDerivedData: Bool {
         Bundle.main.bundlePath.contains("DerivedData")
     }
 
-    var hasAnySystemEnabled: Bool {
+    var isAnySystemEnabled: Bool {
         preventSystemSleep || preventDisplaySleep || preventScreenSaver
     }
 
-    @Published private(set) var mruEntries: [MRUEntry] = []
-
     private var batteryTask: Task<Void, Never>?
     private static let maxMRU = 3
+    weak var wakeManager: WakeAssertionManager?
 
     init() {
         let defaults = UserDefaults.standard
@@ -135,7 +154,9 @@ class SettingsViewModel: ObservableObject {
     }
 
     func recordMRU(_ entry: MRUEntry) {
-        mruEntries.removeAll { $0 == entry }
+        mruEntries.removeAll {
+            $0 == entry
+        }
         mruEntries.insert(entry, at: 0)
 
         if mruEntries.count > Self.maxMRU {
@@ -168,7 +189,9 @@ class SettingsViewModel: ObservableObject {
         guard autoDisableOnLowBattery,
               let wakeManager, wakeManager.isActive,
               let level = currentBatteryLevel(),
-              level < lowBatteryThreshold else { return }
+              level < lowBatteryThreshold else {
+            return
+        }
 
         wakeManager.deactivate()
         sendLowBatteryNotification()
@@ -195,6 +218,7 @@ class SettingsViewModel: ObservableObject {
         let content = UNMutableNotificationContent()
         content.title = L.autoDisableNotificationTitle
         content.body = L.autoDisableNotificationBody(lowBatteryThreshold)
+
         let request = UNNotificationRequest(identifier: "autoDisableLowBattery", content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request) { _ in }
     }
