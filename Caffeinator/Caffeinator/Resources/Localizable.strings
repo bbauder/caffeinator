@@ -38,3 +38,13 @@
 "settingsNoSystemsEnabledMessage" = "Caffeinator cannot keep your Mac awake until at least one system is turned on.";
 "settingsShowCountdown" = "Show countdown next to menu bar icon";
 "settingsAnimateIconWhileActive" = "Animate menu bar icon while active";
+"tooltipActive" = "Caffeinator: Keeping Awake";
+"tooltipIdle" = "Caffeinator: Idle";
+"tooltipSystemSleep" = "System Sleep: %@";
+"tooltipDisplaySleep" = "Display Sleep: %@";
+"tooltipLockScreen" = "Lock Screen: %@";
+"tooltipPrevented" = "Prevented";
+"tooltipAllowed" = "Allowed";
+"tooltipTimeRemaining" = "Time Remaining: %@";
+"tooltipIndefinite" = "Indefinite";
+"tooltipUntil" = "Until %@";

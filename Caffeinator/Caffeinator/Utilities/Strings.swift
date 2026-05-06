@@ -90,4 +90,30 @@ enum L {
     static let settingsNoSystemsEnabledMessage = NSLocalizedString("settingsNoSystemsEnabledMessage", comment: "")
     static let settingsShowCountdown = NSLocalizedString("settingsShowCountdown", comment: "")
     static let settingsAnimateIconWhileActive = NSLocalizedString("settingsAnimateIconWhileActive", comment: "")
+
+    static let tooltipActive = NSLocalizedString("tooltipActive", comment: "")
+    static let tooltipIdle = NSLocalizedString("tooltipIdle", comment: "")
+    static let tooltipPrevented = NSLocalizedString("tooltipPrevented", comment: "")
+    static let tooltipAllowed = NSLocalizedString("tooltipAllowed", comment: "")
+    static let tooltipIndefinite = NSLocalizedString("tooltipIndefinite", comment: "")
+
+    static func tooltipSystemSleep(_ status: String) -> String {
+        String(format: NSLocalizedString("tooltipSystemSleep", comment: ""), status)
+    }
+
+    static func tooltipDisplaySleep(_ status: String) -> String {
+        String(format: NSLocalizedString("tooltipDisplaySleep", comment: ""), status)
+    }
+
+    static func tooltipLockScreen(_ status: String) -> String {
+        String(format: NSLocalizedString("tooltipLockScreen", comment: ""), status)
+    }
+
+    static func tooltipTimeRemaining(_ value: String) -> String {
+        String(format: NSLocalizedString("tooltipTimeRemaining", comment: ""), value)
+    }
+
+    static func tooltipUntil(_ time: String) -> String {
+        String(format: NSLocalizedString("tooltipUntil", comment: ""), time)
+    }
 }

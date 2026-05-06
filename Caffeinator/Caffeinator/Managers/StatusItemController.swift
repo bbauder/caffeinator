@@ -70,6 +70,50 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         let menu = NSMenu()
         menu.delegate = self
         statusItem.menu = menu
+
+        wakeManager.$isActive.map { _ in () }
+            .merge(with: wakeManager.$timeRemaining.map { _ in () })
+            .merge(with: wakeManager.$selectedStopTime.map { _ in () })
+            .merge(with: settings.$preventSystemSleep.map { _ in () })
+            .merge(with: settings.$preventDisplaySleep.map { _ in () })
+            .merge(with: settings.$preventScreenSaver.map { _ in () })
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in
+                self?.updateTooltip()
+            }
+            .store(in: &cancellables)
+
+        updateTooltip()
+    }
+
+    // MARK: - Tooltip
+
+    private func updateTooltip() {
+        statusItem.button?.toolTip = buildTooltip()
+    }
+
+    private func buildTooltip() -> String {
+        let status: (Bool) -> String = { $0 ? L.tooltipPrevented : L.tooltipAllowed }
+
+        var lines: [String] = []
+
+        lines.append(wakeManager.isActive ? L.tooltipActive : L.tooltipIdle)
+        lines.append("")
+        lines.append(L.tooltipSystemSleep(status(settings.preventSystemSleep)))
+        lines.append(L.tooltipDisplaySleep(status(settings.preventDisplaySleep)))
+        lines.append(L.tooltipLockScreen(status(settings.preventScreenSaver)))
+
+        if wakeManager.isActive {
+            if let stopTime = wakeManager.formattedStopTime {
+                lines.append(L.tooltipTimeRemaining(L.tooltipUntil(stopTime)))
+            } else if let countdown = wakeManager.formattedTimeRemaining {
+                lines.append(L.tooltipTimeRemaining(countdown))
+            } else {
+                lines.append(L.tooltipTimeRemaining(L.tooltipIndefinite))
+            }
+        }
+
+        return lines.joined(separator: "\n")
     }
 
     // MARK: - NSMenuDelegate
