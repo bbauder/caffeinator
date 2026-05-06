@@ -15,15 +15,15 @@ struct StringUtilities {
         }
 
         let total = Int(remaining)
-        let h = total / 3600
-        let m = (total % 3600) / 60
-        let s = total % 60
+        let hours = total / 3600
+        let minutes = (total % 3600) / 60
+        let seconds = total % 60
 
-        if h > 0 {
-            return String(format: "%d:%02d:%02d", h, m, s)
+        if hours > 0 {
+            return String(format: "%d:%02d:%02d", hours, minutes, seconds)
         }
 
-        return String(format: "%d:%02d", m, s)
+        return String(format: "%d:%02d", minutes, seconds)
     }
 
     static func formatStopTime(_ date: Date?) -> String? {
@@ -39,17 +39,17 @@ struct StringUtilities {
 
     static func formatDuration(_ seconds: TimeInterval) -> String {
         let total = Int(seconds)
-        let h = total / 3600
-        let m = (total % 3600) / 60
+        let hours = total / 3600
+        let minutes = (total % 3600) / 60
 
-        if h > 0 && m > 0 {
-            let hourPart = h == 1 ? "1 Hour" : "\(h) Hours"
-            let minPart = m == 1 ? "1 Minute" : "\(m) Minutes"
+        if hours > 0 && minutes > 0 {
+            let hourPart = hours == 1 ? "1 Hour" : "\(hours) Hours"
+            let minPart = minutes == 1 ? "1 Minute" : "\(minutes) Minutes"
             return "\(hourPart) \(minPart)"
-        } else if h > 0 {
-            return h == 1 ? "1 Hour" : "\(h) Hours"
+        } else if hours > 0 {
+            return hours == 1 ? "1 Hour" : "\(hours) Hours"
         } else {
-            return m == 1 ? "1 Minute" : "\(m) Minutes"
+            return minutes == 1 ? "1 Minute" : "\(minutes) Minutes"
         }
     }
 }
