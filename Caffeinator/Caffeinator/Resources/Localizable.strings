@@ -19,7 +19,10 @@
 "settingsAppearance" = "Appearance";
 "settingsSleepPrevention" = "Sleep Prevention";
 "settingsAutoDisable" = "Auto-Disable";
-"settingsAutoDisablePlaceholder" = "Auto-disable options coming soon…";
+"settingsDisableOnLowBattery" = "Stop Keeping Awake when battery is below:";
+"settingsThreshold" = "Threshold:";
+"autoDisableNotificationTitle" = "Caffeinator disabled to save battery";
+"autoDisableNotificationBody" = "Battery dropped below %d%%. Your Mac can now sleep normally.";
 "settingsPreventSystemSleep" = "Prevent system sleep";
 "settingsPreventDisplaySleep" = "Prevent display sleep";
 "settingsPreventAutoLock" = "Prevent auto‑lock";

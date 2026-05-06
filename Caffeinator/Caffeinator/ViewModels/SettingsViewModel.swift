@@ -7,7 +7,9 @@
 
 import Combine
 import Foundation
+import IOKit.ps
 import ServiceManagement
+import UserNotifications
 
 enum MRUEntry: Codable, Equatable {
     case indefinitely
@@ -45,6 +47,22 @@ class SettingsViewModel: ObservableObject {
         didSet { UserDefaults.standard.set(animateIcon, forKey: "animateIcon") }
     }
 
+    @Published var autoDisableOnLowBattery: Bool {
+        didSet {
+            UserDefaults.standard.set(autoDisableOnLowBattery, forKey: "autoDisableOnLowBattery")
+            if autoDisableOnLowBattery {
+                requestNotificationPermission()
+                startBatteryMonitoring()
+            } else {
+                stopBatteryMonitoring()
+            }
+        }
+    }
+
+    @Published var lowBatteryThreshold: Int {
+        didSet { UserDefaults.standard.set(lowBatteryThreshold, forKey: "lowBatteryThreshold") }
+    }
+
     @Published var launchAtLogin: Bool {
         didSet {
             guard launchAtLogin != oldValue else { return }
@@ -64,6 +82,8 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    weak var wakeManager: WakeAssertionManager?
+
     var isRunningFromDerivedData: Bool {
         Bundle.main.bundlePath.contains("DerivedData")
     }
@@ -74,6 +94,7 @@ class SettingsViewModel: ObservableObject {
 
     @Published private(set) var mruEntries: [MRUEntry] = []
 
+    private var batteryTask: Task<Void, Never>?
     private static let maxMRU = 3
 
     init() {
@@ -86,6 +107,8 @@ class SettingsViewModel: ObservableObject {
                                      "showRecentDurations": true,
                                      "showCountdown": true,
                                      "animateIcon": true,
+                                     "autoDisableOnLowBattery": false,
+                                     "lowBatteryThreshold": 20,
                                     ])
 
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
@@ -95,6 +118,8 @@ class SettingsViewModel: ObservableObject {
         showRecentDurations = defaults.bool(forKey: "showRecentDurations")
         showCountdown = defaults.bool(forKey: "showCountdown")
         animateIcon = defaults.bool(forKey: "animateIcon")
+        autoDisableOnLowBattery = defaults.bool(forKey: "autoDisableOnLowBattery")
+        lowBatteryThreshold = defaults.integer(forKey: "lowBatteryThreshold")
 
         let derivedData = Bundle.main.bundlePath.contains("DerivedData")
         launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled
@@ -102,6 +127,10 @@ class SettingsViewModel: ObservableObject {
         if let data = defaults.data(forKey: "mruEntries"),
            let decoded = try? JSONDecoder().decode([MRUEntry].self, from: data) {
             mruEntries = decoded
+        }
+
+        if autoDisableOnLowBattery {
+            startBatteryMonitoring()
         }
     }
 
@@ -116,5 +145,57 @@ class SettingsViewModel: ObservableObject {
         if let data = try? JSONEncoder().encode(mruEntries) {
             UserDefaults.standard.set(data, forKey: "mruEntries")
         }
+    }
+
+    // MARK: - Battery Monitoring
+
+    private func startBatteryMonitoring() {
+        batteryTask?.cancel()
+        batteryTask = Task {
+            while !Task.isCancelled {
+                checkBattery()
+                try? await Task.sleep(for: .seconds(60))
+            }
+        }
+    }
+
+    private func stopBatteryMonitoring() {
+        batteryTask?.cancel()
+        batteryTask = nil
+    }
+
+    private func checkBattery() {
+        guard autoDisableOnLowBattery,
+              let wakeManager, wakeManager.isActive,
+              let level = currentBatteryLevel(),
+              level < lowBatteryThreshold else { return }
+
+        wakeManager.deactivate()
+        sendLowBatteryNotification()
+    }
+
+    private func currentBatteryLevel() -> Int? {
+        guard let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue(),
+              let sources = IOPSCopyPowerSourcesList(snapshot)?.takeRetainedValue() as? [CFTypeRef],
+              let source = sources.first,
+              let description = IOPSGetPowerSourceDescription(snapshot, source)?.takeUnretainedValue() as? [String: Any],
+              let capacity = description[kIOPSCurrentCapacityKey] as? Int else {
+            return nil
+        }
+        return capacity
+    }
+
+    // MARK: - Notifications
+
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
+    }
+
+    private func sendLowBatteryNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = L.autoDisableNotificationTitle
+        content.body = L.autoDisableNotificationBody(lowBatteryThreshold)
+        let request = UNNotificationRequest(identifier: "autoDisableLowBattery", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request) { _ in }
     }
 }

@@ -55,7 +55,13 @@ enum L {
     static let settingsAppearance = NSLocalizedString("settingsAppearance", comment: "")
     static let settingsSleepPrevention = NSLocalizedString("settingsSleepPrevention", comment: "")
     static let settingsAutoDisable = NSLocalizedString("settingsAutoDisable", comment: "")
-    static let settingsAutoDisablePlaceholder = NSLocalizedString("settingsAutoDisablePlaceholder", comment: "")
+    static let settingsDisableOnLowBattery = NSLocalizedString("settingsDisableOnLowBattery", comment: "")
+    static let settingsThreshold = NSLocalizedString("settingsThreshold", comment: "")
+    static let autoDisableNotificationTitle = NSLocalizedString("autoDisableNotificationTitle", comment: "")
+
+    static func autoDisableNotificationBody(_ threshold: Int) -> String {
+        String(format: NSLocalizedString("autoDisableNotificationBody", comment: ""), threshold)
+    }
     static let settingsPreventSystemSleep = NSLocalizedString("settingsPreventSystemSleep", comment: "")
     static let settingsPreventDisplaySleep = NSLocalizedString("settingsPreventDisplaySleep", comment: "")
     static let settingsPreventAutoLock = NSLocalizedString("settingsPreventAutoLock", comment: "")

@@ -53,9 +53,45 @@ struct SettingsView: View {
                     }
 
                     Section(L.settingsAutoDisable) {
-                        Text(L.settingsAutoDisablePlaceholder)
-                            .foregroundStyle(.secondary)
-                            .font(.callout)
+                        Toggle(L.settingsDisableOnLowBattery, isOn: $settings.autoDisableOnLowBattery)
+                        HStack(spacing: 6) {
+                            Text(L.settingsThreshold)
+                                .foregroundStyle(.secondary)
+                            Slider(
+                                value: Binding(
+                                    get: { Double(settings.lowBatteryThreshold) },
+                                    set: { settings.lowBatteryThreshold = Int($0.rounded()) }
+                                ),
+                                in: 5...50
+                            )
+                            Text("\(settings.lowBatteryThreshold)%")
+                                .monospacedDigit()
+                                .frame(width: 36, alignment: .trailing)
+                            HStack(spacing: 2) {
+                                Button {
+                                    if settings.lowBatteryThreshold > 5 {
+                                        settings.lowBatteryThreshold -= 1
+                                    }
+                                } label: {
+                                    Image(systemName: "chevron.left")
+                                        .font(.caption2.weight(.semibold))
+                                        .frame(width: 16, height: 16)
+                                }
+                                Button {
+                                    if settings.lowBatteryThreshold < 50 {
+                                        settings.lowBatteryThreshold += 1
+                                    }
+                                } label: {
+                                    Image(systemName: "chevron.right")
+                                        .font(.caption2.weight(.semibold))
+                                        .frame(width: 16, height: 16)
+                                }
+                            }
+                            .buttonStyle(.borderless)
+                        }
+                        .padding(.leading, 20)
+                        .padding(.top, 4)
+                        .disabled(!settings.autoDisableOnLowBattery)
                     }
                 }
                 .formStyle(.grouped)
@@ -75,7 +111,7 @@ struct SettingsView: View {
             .padding(.top, 4)
             .padding(.bottom, 12)
         }
-        .frame(width: 420, height: 520)
+        .frame(width: 480, height: 520)
         .padding(20)
         .onAppear {
             NSApplication.shared.activate()
