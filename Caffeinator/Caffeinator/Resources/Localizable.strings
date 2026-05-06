@@ -16,7 +16,10 @@
 "settings" = "Settings…";
 "quitCaffeinator" = "Quit Caffeinator";
 "settingsGeneral" = "General";
+"settingsAppearance" = "Appearance";
 "settingsSleepPrevention" = "Sleep Prevention";
+"settingsAutoDisable" = "Auto-Disable";
+"settingsAutoDisablePlaceholder" = "Auto-disable options coming soon…";
 "settingsPreventSystemSleep" = "Prevent system sleep";
 "settingsPreventDisplaySleep" = "Prevent display sleep";
 "settingsPreventAutoLock" = "Prevent auto‑lock";

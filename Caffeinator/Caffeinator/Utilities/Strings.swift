@@ -52,7 +52,10 @@ enum L {
     static let quitCaffeinator = NSLocalizedString("quitCaffeinator", comment: "")
 
     static let settingsGeneral = NSLocalizedString("settingsGeneral", comment: "")
+    static let settingsAppearance = NSLocalizedString("settingsAppearance", comment: "")
     static let settingsSleepPrevention = NSLocalizedString("settingsSleepPrevention", comment: "")
+    static let settingsAutoDisable = NSLocalizedString("settingsAutoDisable", comment: "")
+    static let settingsAutoDisablePlaceholder = NSLocalizedString("settingsAutoDisablePlaceholder", comment: "")
     static let settingsPreventSystemSleep = NSLocalizedString("settingsPreventSystemSleep", comment: "")
     static let settingsPreventDisplaySleep = NSLocalizedString("settingsPreventDisplaySleep", comment: "")
     static let settingsPreventAutoLock = NSLocalizedString("settingsPreventAutoLock", comment: "")

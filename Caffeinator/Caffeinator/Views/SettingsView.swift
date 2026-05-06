@@ -12,47 +12,55 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        // We dynamically size the Settings window: Let the Form's intrinsic content size dictate
-        // the window's size. We use .fixed​Size() so the VStack takes only the space it needs.
-        // The NSWindow auto-sizes itself to fit.
         VStack(spacing: 0) {
-            Form {
-                Section(L.settingsGeneral) {
-                    Toggle(L.settingsLaunchAtLogin, isOn: $settings.launchAtLogin)
-                    Toggle(L.settingsShowRecents, isOn: $settings.showRecentDurations)
-                    Toggle(L.settingsShowCountdown, isOn: $settings.showCountdown)
-                    Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)
-                    Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
-                }
-
-                Section(L.settingsSleepPrevention) {
-                    if !settings.hasAnySystemEnabled {
-                        HStack(alignment: .top, spacing: 8) {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                                .foregroundStyle(.yellow)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(L.settingsNoSystemsEnabledTitle)
-                                    .fontWeight(.semibold)
-                                    .multilineTextAlignment(.leading)
-                                Text(L.settingsNoSystemsEnabledMessage)
-                                    .foregroundStyle(.secondary)
-                                    .multilineTextAlignment(.leading)
-                            }
-                        }
-                        .font(.callout)
-                        .padding(12)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(.yellow.opacity(0.10), in: RoundedRectangle(cornerRadius: 8))
-                        .padding(.bottom, 6)
+            ScrollView(.vertical) {
+                Form {
+                    Section(L.settingsGeneral) {
+                        Toggle(L.settingsLaunchAtLogin, isOn: $settings.launchAtLogin)
+                        Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
                     }
 
-                    Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
-                    Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
-                    Toggle(L.settingsPreventAutoLock, isOn: $settings.preventScreenSaver)
+                    Section(L.settingsAppearance) {
+                        Toggle(L.settingsShowRecents, isOn: $settings.showRecentDurations)
+                        Toggle(L.settingsShowCountdown, isOn: $settings.showCountdown)
+                        Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)
+                    }
+
+                    Section(L.settingsSleepPrevention) {
+                        if !settings.hasAnySystemEnabled {
+                            HStack(alignment: .top, spacing: 8) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundStyle(.yellow)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(L.settingsNoSystemsEnabledTitle)
+                                        .fontWeight(.semibold)
+                                        .multilineTextAlignment(.leading)
+                                    Text(L.settingsNoSystemsEnabledMessage)
+                                        .foregroundStyle(.secondary)
+                                        .multilineTextAlignment(.leading)
+                                }
+                            }
+                            .font(.callout)
+                            .padding(12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(.yellow.opacity(0.10), in: RoundedRectangle(cornerRadius: 8))
+                            .padding(.bottom, 6)
+                        }
+
+                        Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
+                        Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
+                        Toggle(L.settingsPreventAutoLock, isOn: $settings.preventScreenSaver)
+                    }
+
+                    Section(L.settingsAutoDisable) {
+                        Text(L.settingsAutoDisablePlaceholder)
+                            .foregroundStyle(.secondary)
+                            .font(.callout)
+                    }
                 }
+                .formStyle(.grouped)
+                .scrollContentBackground(.hidden)
             }
-            .formStyle(.grouped)
-            .scrollContentBackground(.hidden)
             .padding(.bottom, -12)
 
             HStack {
@@ -67,13 +75,9 @@ struct SettingsView: View {
             .padding(.top, 4)
             .padding(.bottom, 12)
         }
-        .frame(width: 420)
-        .fixedSize(horizontal: false, vertical: true)
+        .frame(width: 420, height: 520)
         .padding(20)
         .onAppear {
-            // This is a known issue with LSUIElement/agent apps — they don't automatically activate
-            // (come to the top of the z-stack) when opening windows.
-            // The standard fix is to call NSApp​.activate() when the Settings view appears.
             NSApplication.shared.activate()
         }
     }
