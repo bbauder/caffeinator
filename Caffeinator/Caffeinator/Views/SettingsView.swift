@@ -18,6 +18,7 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             Form {
                 Section(L.settingsGeneral) {
+                    Toggle(L.settingsLaunchAtLogin, isOn: $settings.launchAtLogin)
                     Toggle(L.settingsShowRecents, isOn: $settings.showRecentDurations)
                     Toggle(L.settingsShowCountdown, isOn: $settings.showCountdown)
                     Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)

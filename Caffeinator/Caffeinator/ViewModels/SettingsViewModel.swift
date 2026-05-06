@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import ServiceManagement
 
 enum MRUEntry: Codable, Equatable {
     case indefinitely
@@ -44,6 +45,29 @@ class SettingsViewModel: ObservableObject {
         didSet { UserDefaults.standard.set(animateIcon, forKey: "animateIcon") }
     }
 
+    @Published var launchAtLogin: Bool {
+        didSet {
+            guard launchAtLogin != oldValue else { return }
+            if isRunningFromDerivedData {
+                launchAtLogin = false
+                return
+            }
+            do {
+                if launchAtLogin {
+                    try SMAppService.mainApp.register()
+                } else {
+                    try SMAppService.mainApp.unregister()
+                }
+            } catch {
+                launchAtLogin = SMAppService.mainApp.status == .enabled
+            }
+        }
+    }
+
+    var isRunningFromDerivedData: Bool {
+        Bundle.main.bundlePath.contains("DerivedData")
+    }
+
     var hasAnySystemEnabled: Bool {
         preventSystemSleep || preventDisplaySleep || preventScreenSaver
     }
@@ -71,6 +95,9 @@ class SettingsViewModel: ObservableObject {
         showRecentDurations = defaults.bool(forKey: "showRecentDurations")
         showCountdown = defaults.bool(forKey: "showCountdown")
         animateIcon = defaults.bool(forKey: "animateIcon")
+
+        let derivedData = Bundle.main.bundlePath.contains("DerivedData")
+        launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled
 
         if let data = defaults.data(forKey: "mruEntries"),
            let decoded = try? JSONDecoder().decode([MRUEntry].self, from: data) {

@@ -90,6 +90,7 @@ enum L {
     static let settingsNoSystemsEnabledMessage = NSLocalizedString("settingsNoSystemsEnabledMessage", comment: "")
     static let settingsShowCountdown = NSLocalizedString("settingsShowCountdown", comment: "")
     static let settingsAnimateIconWhileActive = NSLocalizedString("settingsAnimateIconWhileActive", comment: "")
+    static let settingsLaunchAtLogin = NSLocalizedString("settingsLaunchAtLogin", comment: "")
 
     static let tooltipActive = NSLocalizedString("tooltipActive", comment: "")
     static let tooltipIdle = NSLocalizedString("tooltipIdle", comment: "")
