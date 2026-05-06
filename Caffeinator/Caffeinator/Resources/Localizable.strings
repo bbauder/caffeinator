@@ -55,3 +55,8 @@
 "tooltipTimeRemaining" = "Time Remaining: %@";
 "tooltipIndefinite" = "Indefinite";
 "tooltipUntil" = "Until %@";
+"durationOneHour" = "1 Hour";
+"durationHours" = "%d Hours";
+"durationOneMinute" = "1 Minute";
+"durationMinutes" = "%d Minutes";
+"durationHoursMinutes" = "%@ %@";

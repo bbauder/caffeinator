@@ -43,13 +43,11 @@ struct StringUtilities {
         let minutes = (total % 3600) / 60
 
         if hours > 0 && minutes > 0 {
-            let hourPart = hours == 1 ? "1 Hour" : "\(hours) Hours"
-            let minPart = minutes == 1 ? "1 Minute" : "\(minutes) Minutes"
-            return "\(hourPart) \(minPart)"
+            return L.durationHoursMinutes(L.durationHours(hours), L.durationMinutes(minutes))
         } else if hours > 0 {
-            return hours == 1 ? "1 Hour" : "\(hours) Hours"
+            return L.durationHours(hours)
         } else {
-            return minutes == 1 ? "1 Minute" : "\(minutes) Minutes"
+            return L.durationMinutes(minutes)
         }
     }
 }

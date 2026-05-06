@@ -126,4 +126,22 @@ enum L {
     static func tooltipUntil(_ time: String) -> String {
         String(format: NSLocalizedString("tooltipUntil", comment: ""), time)
     }
+
+    static func durationHours(_ count: Int) -> String {
+        if count == 1 {
+            return NSLocalizedString("durationOneHour", comment: "")
+        }
+        return String(format: NSLocalizedString("durationHours", comment: ""), count)
+    }
+
+    static func durationMinutes(_ count: Int) -> String {
+        if count == 1 {
+            return NSLocalizedString("durationOneMinute", comment: "")
+        }
+        return String(format: NSLocalizedString("durationMinutes", comment: ""), count)
+    }
+
+    static func durationHoursMinutes(_ hourPart: String, _ minPart: String) -> String {
+        String(format: NSLocalizedString("durationHoursMinutes", comment: ""), hourPart, minPart)
+    }
 }
