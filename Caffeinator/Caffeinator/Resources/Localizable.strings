@@ -19,7 +19,7 @@
 "settingsSleepPrevention" = "Sleep Prevention";
 "settingsPreventSystemSleep" = "Prevent system sleep";
 "settingsPreventDisplaySleep" = "Prevent display sleep";
-"settingsPreventScreenSaver" = "Prevent screensaver / lock";
+"settingsPreventAutoLock" = "Prevent auto‑lock";
 "settingsMenu" = "Menu";
 "settingsHideActivationOptions" = "Hide activation options while active";
 "done" = "Done";
@@ -42,7 +42,7 @@
 "tooltipIdle" = "Caffeinator: Idle";
 "tooltipSystemSleep" = "System Sleep: %@";
 "tooltipDisplaySleep" = "Display Sleep: %@";
-"tooltipLockScreen" = "Lock Screen: %@";
+"tooltipAutoLock" = "Auto‑Lock: %@";
 "tooltipPrevented" = "Prevented";
 "tooltipAllowed" = "Allowed";
 "tooltipTimeRemaining" = "Time Remaining: %@";

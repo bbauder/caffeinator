@@ -101,7 +101,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         lines.append("")
         lines.append(L.tooltipSystemSleep(status(settings.preventSystemSleep)))
         lines.append(L.tooltipDisplaySleep(status(settings.preventDisplaySleep)))
-        lines.append(L.tooltipLockScreen(status(settings.preventScreenSaver)))
+        lines.append(L.tooltipAutoLock(status(settings.preventScreenSaver)))
 
         if wakeManager.isActive {
             if let stopTime = wakeManager.formattedStopTime {

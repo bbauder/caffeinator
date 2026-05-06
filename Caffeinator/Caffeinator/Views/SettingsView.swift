@@ -47,7 +47,7 @@ struct SettingsView: View {
 
                     Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
                     Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
-                    Toggle(L.settingsPreventScreenSaver, isOn: $settings.preventScreenSaver)
+                    Toggle(L.settingsPreventAutoLock, isOn: $settings.preventScreenSaver)
                 }
             }
             .formStyle(.grouped)

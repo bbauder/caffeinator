@@ -55,7 +55,7 @@ enum L {
     static let settingsSleepPrevention = NSLocalizedString("settingsSleepPrevention", comment: "")
     static let settingsPreventSystemSleep = NSLocalizedString("settingsPreventSystemSleep", comment: "")
     static let settingsPreventDisplaySleep = NSLocalizedString("settingsPreventDisplaySleep", comment: "")
-    static let settingsPreventScreenSaver = NSLocalizedString("settingsPreventScreenSaver", comment: "")
+    static let settingsPreventAutoLock = NSLocalizedString("settingsPreventAutoLock", comment: "")
     static let settingsMenu = NSLocalizedString("settingsMenu", comment: "")
     static let settingsHideActivationOptions = NSLocalizedString("settingsHideActivationOptions", comment: "")
     static let done = NSLocalizedString("done", comment: "")
@@ -105,8 +105,8 @@ enum L {
         String(format: NSLocalizedString("tooltipDisplaySleep", comment: ""), status)
     }
 
-    static func tooltipLockScreen(_ status: String) -> String {
-        String(format: NSLocalizedString("tooltipLockScreen", comment: ""), status)
+    static func tooltipAutoLock(_ status: String) -> String {
+        String(format: NSLocalizedString("tooltipAutoLock", comment: ""), status)
     }
 
     static func tooltipTimeRemaining(_ value: String) -> String {
