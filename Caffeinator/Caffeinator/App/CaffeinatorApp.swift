@@ -23,7 +23,8 @@ struct CaffeinatorApp: App {
 class AppDelegate: NSObject, NSApplicationDelegate {
     let wakeManager = WakeAssertionManager()
     let notificationManager = NotificationManager()
-    lazy var settings = SettingsViewModel(notificationManager: notificationManager)
+    let batteryMonitor = BatteryMonitor()
+    lazy var settings = SettingsViewModel(notificationManager: notificationManager, batteryMonitor: batteryMonitor)
     private var statusItemController: StatusItemController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {

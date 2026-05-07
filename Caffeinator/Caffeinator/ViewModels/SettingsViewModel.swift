@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import IOKit.ps
 import ServiceManagement
 
 enum MRUEntry: Codable, Equatable {
@@ -65,9 +64,9 @@ class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(autoDisableOnLowBattery, forKey: "autoDisableOnLowBattery")
             if autoDisableOnLowBattery {
                 notificationManager.requestPermission()
-                startBatteryMonitoring()
+                batteryMonitor.startMonitoring(threshold: lowBatteryThreshold)
             } else {
-                stopBatteryMonitoring()
+                batteryMonitor.stopMonitoring()
             }
         }
     }
@@ -124,13 +123,14 @@ class SettingsViewModel: ObservableObject {
     }
 
     let notificationManager: NotificationManager
-    private var batteryTask: Task<Void, Never>?
+    let batteryMonitor: BatteryMonitor
     private var powerSourceRunLoopSource: CFRunLoopSource?
     private static let maxMRU = 3
     weak var wakeManager: WakeAssertionManager?
 
-    init(notificationManager: NotificationManager) {
+    init(notificationManager: NotificationManager, batteryMonitor: BatteryMonitor) {
         self.notificationManager = notificationManager
+        self.batteryMonitor = batteryMonitor
         let defaults = UserDefaults.standard
 
         defaults.register(defaults: ["preventSystemSleep": true,
@@ -164,8 +164,14 @@ class SettingsViewModel: ObservableObject {
             mruEntries = decoded
         }
 
+        batteryMonitor.onLowBattery = { [weak self] in
+            guard let self else { return }
+            self.wakeManager?.deactivate()
+            self.notificationManager.sendLowBatteryNotification(threshold: self.lowBatteryThreshold)
+        }
+
         if autoDisableOnLowBattery {
-            startBatteryMonitoring()
+            batteryMonitor.startMonitoring(threshold: lowBatteryThreshold)
         }
         if autoDisableOnUnpluggedPower {
             startPowerSourceMonitoring()
@@ -187,47 +193,6 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Battery Monitoring
-
-    private func startBatteryMonitoring() {
-        batteryTask?.cancel()
-
-        batteryTask = Task {
-            while !Task.isCancelled {
-                checkBattery()
-                try? await Task.sleep(for: .seconds(60))
-            }
-        }
-    }
-
-    private func stopBatteryMonitoring() {
-        batteryTask?.cancel()
-        batteryTask = nil
-    }
-
-    private func checkBattery() {
-        guard autoDisableOnLowBattery,
-              let wakeManager, wakeManager.isActive,
-              let level = currentBatteryLevel(),
-              level < lowBatteryThreshold else {
-            return
-        }
-
-        wakeManager.deactivate()
-        notificationManager.sendLowBatteryNotification(threshold: lowBatteryThreshold)
-    }
-
-    private func currentBatteryLevel() -> Int? {
-        guard let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue(),
-              let sources = IOPSCopyPowerSourcesList(snapshot)?.takeRetainedValue() as? [CFTypeRef],
-              let source = sources.first,
-              let description = IOPSGetPowerSourceDescription(snapshot, source)?.takeUnretainedValue() as? [String: Any],
-              let capacity = description[kIOPSCurrentCapacityKey] as? Int else {
-            return nil
-        }
-        return capacity
-    }
-
     // MARK: - Power Source Monitoring
 
     private func startPowerSourceMonitoring() {
@@ -235,7 +200,10 @@ class SettingsViewModel: ObservableObject {
 
         let context = Unmanaged.passUnretained(self).toOpaque()
         guard let source = IOPSNotificationCreateRunLoopSource({ context in
-            guard let context else { return }
+            guard let context else {
+                return
+            }
+
             let vm = Unmanaged<SettingsViewModel>.fromOpaque(context).takeUnretainedValue()
             MainActor.assumeIsolated {
                 vm.handlePowerSourceChange()
@@ -255,7 +223,9 @@ class SettingsViewModel: ObservableObject {
 
     private func handlePowerSourceChange() {
         guard autoDisableOnUnpluggedPower,
-              let wakeManager, wakeManager.isActive else { return }
+              let wakeManager, wakeManager.isActive else {
+            return
+        }
 
         let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue()
         let powerType = IOPSGetProvidingPowerSourceType(snapshot)?.takeUnretainedValue() as String?
