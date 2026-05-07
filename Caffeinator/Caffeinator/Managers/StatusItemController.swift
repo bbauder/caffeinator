@@ -289,6 +289,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             guard requireSystemEnabled() else {
                 return
             }
+
             wakeManager.activateIndefinitely()
         }
     }

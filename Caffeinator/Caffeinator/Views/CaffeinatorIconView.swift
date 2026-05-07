@@ -190,7 +190,9 @@ struct CaffeinatorIconView: View {
     // MARK: - Steam
 
     private func drawSteam(in context: inout GraphicsContext, metrics: CupMetrics) {
-        guard isActive else { return }
+        guard isActive else {
+            return
+        }
 
         let frame = animateSteam ? steamFrame : 1
         let heights = Self.steamHeights[frame]
