@@ -8,45 +8,37 @@
 import SwiftUI
 
 struct InfoButton: View {
-    var help: String?
     var popoverText: String?
 
     @State private var showPopover = false
+    @State private var isHovering = false
 
     var body: some View {
-        let icon = Image(systemName: "info.circle")
-            .font(.system(size: 12))
-            .foregroundStyle(.secondary)
-            .frame(width: 16, height: 16, alignment: .center)
-
         if let popoverText {
             Button {
                 showPopover.toggle()
             } label: {
-                icon
+                Image(systemName: "info.circle")
+                    .font(.system(size: 12))
+                    .foregroundStyle(.secondary)
+                    .opacity(isHovering ? 0.95 : 0.75)
+                    .scaleEffect(isHovering ? 1.08 : 1.0)
+                    .frame(width: 16, height: 16, alignment: .center)
+                    .animation(.easeOut(duration: 0.12), value: isHovering)
             }
             .buttonStyle(.borderless)
+            .onHover { isHovering = $0 }
             .popover(isPresented: $showPopover) {
                 Text(popoverText)
                     .padding()
-                    .frame(maxWidth: 280)
+                    .frame(maxWidth: 260, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .modifier(OptionalHelp(text: help))
         } else {
-            icon
-                .modifier(OptionalHelp(text: help))
-        }
-    }
-}
-
-private struct OptionalHelp: ViewModifier {
-    let text: String?
-
-    func body(content: Content) -> some View {
-        if let text {
-            content.help(text)
-        } else {
-            content
+            Image(systemName: "info.circle")
+                .font(.system(size: 12))
+                .foregroundStyle(.secondary)
+                .frame(width: 16, height: 16, alignment: .center)
         }
     }
 }
