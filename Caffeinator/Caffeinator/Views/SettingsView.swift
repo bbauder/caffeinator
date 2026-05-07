@@ -102,6 +102,7 @@ struct SettingsView: View {
                 Spacer()
 
                 Button(L.done) {
+                    // Dismiss when the user hits Return--default button
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
@@ -114,6 +115,10 @@ struct SettingsView: View {
         .padding(20)
         .onAppear {
             NSApplication.shared.activate()
+        }
+        .onExitCommand {
+            // Dismiss when the user hits Esc
+            dismiss()
         }
     }
 }
