@@ -19,70 +19,55 @@ enum MRUEntry: Codable, Equatable {
 class SettingsViewModel: ObservableObject {
     @Published var preventSystemSleep: Bool {
         didSet {
-            persistence.preventSystemSleep = preventSystemSleep
+            updateSystemSleepPrevention()
         }
     }
 
     @Published var preventDisplaySleep: Bool {
         didSet {
-            persistence.preventDisplaySleep = preventDisplaySleep
-            if declareUserActivity, let wakeManager, wakeManager.isActive {
-                userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
-            }
+            updateDisplaySleepPrevention()
         }
     }
 
     @Published var preventScreenSaver: Bool {
         didSet {
-            persistence.preventScreenSaver = preventScreenSaver
+            updateScreenSaverPrevention()
         }
     }
 
     @Published var hideActivationOptionsWhileActive: Bool {
         didSet {
-            persistence.hideActivationOptionsWhileActive = hideActivationOptionsWhileActive
+            updateHideActivationOptions()
         }
     }
 
     @Published var showRecentDurations: Bool {
         didSet {
-            persistence.showRecentDurations = showRecentDurations
+            updateShowRecentDurations()
         }
     }
 
     @Published var showCountdown: Bool {
         didSet {
-            persistence.showCountdown = showCountdown
+            updateShowCountdown()
         }
     }
 
     @Published var animateIcon: Bool {
         didSet {
-            persistence.animateIcon = animateIcon
+            updateAnimateIcon()
         }
     }
 
     @Published var declareUserActivity: Bool {
         didSet {
-            persistence.declareUserActivity = declareUserActivity
-            userActivityManager.isEnabled = declareUserActivity
-            if declareUserActivity, let wakeManager, wakeManager.isActive {
-                userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
-            } else {
-                userActivityManager.stop()
-            }
+            updateUserActivity()
         }
     }
 
     @Published var autoDisableOnLowBattery: Bool {
         didSet {
-            persistence.autoDisableOnLowBattery = autoDisableOnLowBattery
-            if autoDisableOnLowBattery {
-                notificationManager.requestPermission()
-                batteryMonitor.startMonitoring(threshold: lowBatteryThreshold)
-            } else {
-                batteryMonitor.stopMonitoring()
-            }
+            updateLowBatteryMonitoring()
         }
     }
 
@@ -94,20 +79,13 @@ class SettingsViewModel: ObservableObject {
 
     @Published var autoDisableNotificationsEnabled: Bool {
         didSet {
-            persistence.autoDisableNotificationsEnabled = autoDisableNotificationsEnabled
-            notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
+            updateNotificationPreferences()
         }
     }
 
     @Published var autoDisableOnUnpluggedPower: Bool {
         didSet {
-            persistence.autoDisableOnUnpluggedPower = autoDisableOnUnpluggedPower
-            if autoDisableOnUnpluggedPower {
-                notificationManager.requestPermission()
-                powerSourceMonitor.startMonitoring()
-            } else {
-                powerSourceMonitor.stopMonitoring()
-            }
+            updateUnplugMonitoring()
         }
     }
 
@@ -240,6 +218,82 @@ class SettingsViewModel: ObservableObject {
                     self.userActivityManager.stop()
                 }
             }
+    }
+
+    // MARK: - Setting Updates
+
+    private func updateSystemSleepPrevention() {
+        persistence.preventSystemSleep = preventSystemSleep
+    }
+
+    private func updateDisplaySleepPrevention() {
+        persistence.preventDisplaySleep = preventDisplaySleep
+
+        if declareUserActivity,
+           let wakeManager,
+           wakeManager.isActive {
+            userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
+        }
+    }
+
+    private func updateScreenSaverPrevention() {
+        persistence.preventScreenSaver = preventScreenSaver
+    }
+
+    private func updateHideActivationOptions() {
+        persistence.hideActivationOptionsWhileActive = hideActivationOptionsWhileActive
+    }
+
+    private func updateShowRecentDurations() {
+        persistence.showRecentDurations = showRecentDurations
+    }
+
+    private func updateShowCountdown() {
+        persistence.showCountdown = showCountdown
+    }
+
+    private func updateAnimateIcon() {
+        persistence.animateIcon = animateIcon
+    }
+
+    private func updateUserActivity() {
+        persistence.declareUserActivity = declareUserActivity
+        userActivityManager.isEnabled = declareUserActivity
+
+        if declareUserActivity,
+           let wakeManager,
+           wakeManager.isActive {
+            userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
+        } else {
+            userActivityManager.stop()
+        }
+    }
+
+    private func updateLowBatteryMonitoring() {
+        persistence.autoDisableOnLowBattery = autoDisableOnLowBattery
+
+        if autoDisableOnLowBattery {
+            notificationManager.requestPermission()
+            batteryMonitor.startMonitoring(threshold: lowBatteryThreshold)
+        } else {
+            batteryMonitor.stopMonitoring()
+        }
+    }
+
+    private func updateUnplugMonitoring() {
+        persistence.autoDisableOnUnpluggedPower = autoDisableOnUnpluggedPower
+
+        if autoDisableOnUnpluggedPower {
+            notificationManager.requestPermission()
+            powerSourceMonitor.startMonitoring()
+        } else {
+            powerSourceMonitor.stopMonitoring()
+        }
+    }
+
+    private func updateNotificationPreferences() {
+        persistence.autoDisableNotificationsEnabled = autoDisableNotificationsEnabled
+        notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
     }
 
     func recordMRU(_ entry: MRUEntry) {
