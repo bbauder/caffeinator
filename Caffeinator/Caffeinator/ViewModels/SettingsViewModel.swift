@@ -77,6 +77,13 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var autoDisableNotificationsEnabled: Bool {
+        didSet {
+            UserDefaults.standard.set(autoDisableNotificationsEnabled, forKey: "autoDisableNotificationsEnabled")
+            notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
+        }
+    }
+
     @Published var autoDisableOnUnpluggedPower: Bool {
         didSet {
             UserDefaults.standard.set(autoDisableOnUnpluggedPower, forKey: "autoDisableOnUnpluggedPower")
@@ -144,6 +151,7 @@ class SettingsViewModel: ObservableObject {
                                      "autoDisableOnLowBattery": false,
                                      "lowBatteryThreshold": 20,
                                      "autoDisableOnUnpluggedPower": false,
+                                     "autoDisableNotificationsEnabled": true,
                                     ])
 
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
@@ -156,9 +164,12 @@ class SettingsViewModel: ObservableObject {
         autoDisableOnLowBattery = defaults.bool(forKey: "autoDisableOnLowBattery")
         lowBatteryThreshold = defaults.integer(forKey: "lowBatteryThreshold")
         autoDisableOnUnpluggedPower = defaults.bool(forKey: "autoDisableOnUnpluggedPower")
+        autoDisableNotificationsEnabled = defaults.bool(forKey: "autoDisableNotificationsEnabled")
 
         let derivedData = Bundle.main.bundlePath.contains("DerivedData")
         launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled
+
+        notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
 
         if let data = defaults.data(forKey: "mruEntries"),
            let decoded = try? JSONDecoder().decode([MRUEntry].self, from: data) {

@@ -97,6 +97,8 @@ enum L {
         String(format: NSLocalizedString("untilTime", comment: ""), time)
     }
 
+    static let settingsNotifications = NSLocalizedString("settingsNotifications", comment: "")
+    static let settingsAutoDisableNotificationsEnabled = NSLocalizedString("settingsAutoDisableNotificationsEnabled", comment: "")
     static let settingsShowRecents = NSLocalizedString("settingsShowRecents", comment: "")
     static let settingsNoSystemsEnabledTitle = NSLocalizedString("settingsNoSystemsEnabledTitle", comment: "")
     static let settingsNoSystemsEnabledMessage = NSLocalizedString("settingsNoSystemsEnabledMessage", comment: "")

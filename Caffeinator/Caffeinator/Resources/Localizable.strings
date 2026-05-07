@@ -63,3 +63,5 @@
 "settingsDisableOnUnpluggedPower" = "Stop Keeping Awake when power is unplugged";
 "notificationStoppedTitle" = "Stopped Keeping Awake";
 "notificationUnpluggedBody" = "Stopped Keeping Awake because power was unplugged.";
+"settingsNotifications" = "Notifications";
+"settingsAutoDisableNotificationsEnabled" = "Send notifications for Auto-Disable events";

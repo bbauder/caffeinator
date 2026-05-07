@@ -94,6 +94,10 @@ struct SettingsView: View {
                         .disabled(!settings.autoDisableOnLowBattery)
                         Toggle(L.settingsDisableOnUnpluggedPower, isOn: $settings.autoDisableOnUnpluggedPower)
                     }
+
+                    Section(L.settingsNotifications) {
+                        Toggle(L.settingsAutoDisableNotificationsEnabled, isOn: $settings.autoDisableNotificationsEnabled)
+                    }
                 }
                 .formStyle(.grouped)
                 .scrollContentBackground(.hidden)

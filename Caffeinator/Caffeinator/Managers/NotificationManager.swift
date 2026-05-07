@@ -10,11 +10,17 @@ import UserNotifications
 @MainActor
 class NotificationManager {
 
+    var notificationsEnabled: Bool = true
+
     func requestPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
     }
 
     func sendLowBatteryNotification(threshold: Int) {
+        guard notificationsEnabled else {
+            return
+        }
+
         let content = UNMutableNotificationContent()
         content.title = L.autoDisableNotificationTitle
         content.body = L.autoDisableNotificationBody(threshold)
@@ -24,6 +30,10 @@ class NotificationManager {
     }
 
     func sendUnpluggedNotification() {
+        guard notificationsEnabled else {
+            return
+        }
+
         let content = UNMutableNotificationContent()
         content.title = L.notificationStoppedTitle
         content.body = L.notificationUnpluggedBody
