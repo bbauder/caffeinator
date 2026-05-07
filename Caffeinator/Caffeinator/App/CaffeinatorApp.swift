@@ -25,10 +25,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let notificationManager = NotificationManager()
     let batteryMonitor = BatteryMonitor()
     let powerSourceMonitor = PowerSourceMonitor()
+    let userActivityManager = UserActivityManager()
     private var statusItemController: StatusItemController?
     lazy var settings = SettingsViewModel(notificationManager: notificationManager,
                                           batteryMonitor: batteryMonitor,
-                                          powerSourceMonitor: powerSourceMonitor)
+                                          powerSourceMonitor: powerSourceMonitor,
+                                          userActivityManager: userActivityManager)
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         wakeManager.settings = settings

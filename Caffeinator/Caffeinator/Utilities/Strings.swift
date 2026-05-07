@@ -68,6 +68,7 @@ enum L {
     static let settingsPreventSystemSleep = NSLocalizedString("settingsPreventSystemSleep", comment: "")
     static let settingsPreventDisplaySleep = NSLocalizedString("settingsPreventDisplaySleep", comment: "")
     static let settingsPreventAutoLock = NSLocalizedString("settingsPreventAutoLock", comment: "")
+    static let settingsDeclareUserActivity = NSLocalizedString("settingsDeclareUserActivity", comment: "")
     static let settingsMenu = NSLocalizedString("settingsMenu", comment: "")
     static let settingsHideActivationOptions = NSLocalizedString("settingsHideActivationOptions", comment: "")
     static let done = NSLocalizedString("done", comment: "")

@@ -26,6 +26,7 @@
 "settingsPreventSystemSleep" = "Prevent system sleep";
 "settingsPreventDisplaySleep" = "Prevent display sleep";
 "settingsPreventAutoLock" = "Prevent auto‑lock";
+"settingsDeclareUserActivity" = "Declare user activity (like caffeinate -u)";
 "settingsMenu" = "Menu";
 "settingsHideActivationOptions" = "Hide activation options while active";
 "done" = "Done";

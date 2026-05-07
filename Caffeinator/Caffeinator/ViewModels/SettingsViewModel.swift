@@ -26,6 +26,9 @@ class SettingsViewModel: ObservableObject {
     @Published var preventDisplaySleep: Bool {
         didSet {
             UserDefaults.standard.set(preventDisplaySleep, forKey: "preventDisplaySleep")
+            if declareUserActivity, let wakeManager, wakeManager.isActive {
+                userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
+            }
         }
     }
 
@@ -56,6 +59,18 @@ class SettingsViewModel: ObservableObject {
     @Published var animateIcon: Bool {
         didSet {
             UserDefaults.standard.set(animateIcon, forKey: "animateIcon")
+        }
+    }
+
+    @Published var declareUserActivity: Bool {
+        didSet {
+            UserDefaults.standard.set(declareUserActivity, forKey: "declareUserActivity")
+            userActivityManager.isEnabled = declareUserActivity
+            if declareUserActivity, let wakeManager, wakeManager.isActive {
+                userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
+            } else {
+                userActivityManager.stop()
+            }
         }
     }
 
@@ -132,13 +147,21 @@ class SettingsViewModel: ObservableObject {
     let notificationManager: NotificationManager
     let batteryMonitor: BatteryMonitor
     let powerSourceMonitor: PowerSourceMonitor
+    let userActivityManager: UserActivityManager
     private static let maxMRU = 3
-    weak var wakeManager: WakeAssertionManager?
+    private var wakeManagerCancellable: AnyCancellable?
 
-    init(notificationManager: NotificationManager, batteryMonitor: BatteryMonitor, powerSourceMonitor: PowerSourceMonitor) {
+    weak var wakeManager: WakeAssertionManager? {
+        didSet {
+            observeWakeManager()
+        }
+    }
+
+    init(notificationManager: NotificationManager, batteryMonitor: BatteryMonitor, powerSourceMonitor: PowerSourceMonitor, userActivityManager: UserActivityManager) {
         self.notificationManager = notificationManager
         self.batteryMonitor = batteryMonitor
         self.powerSourceMonitor = powerSourceMonitor
+        self.userActivityManager = userActivityManager
         let defaults = UserDefaults.standard
 
         defaults.register(defaults: ["preventSystemSleep": true,
@@ -152,6 +175,7 @@ class SettingsViewModel: ObservableObject {
                                      "lowBatteryThreshold": 20,
                                      "autoDisableOnUnpluggedPower": false,
                                      "autoDisableNotificationsEnabled": true,
+                                     "declareUserActivity": false,
                                     ])
 
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
@@ -165,11 +189,13 @@ class SettingsViewModel: ObservableObject {
         lowBatteryThreshold = defaults.integer(forKey: "lowBatteryThreshold")
         autoDisableOnUnpluggedPower = defaults.bool(forKey: "autoDisableOnUnpluggedPower")
         autoDisableNotificationsEnabled = defaults.bool(forKey: "autoDisableNotificationsEnabled")
+        declareUserActivity = defaults.bool(forKey: "declareUserActivity")
 
         let derivedData = Bundle.main.bundlePath.contains("DerivedData")
         launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled
 
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
+        userActivityManager.isEnabled = declareUserActivity
 
         if let data = defaults.data(forKey: "mruEntries"),
            let decoded = try? JSONDecoder().decode([MRUEntry].self, from: data) {
@@ -204,6 +230,26 @@ class SettingsViewModel: ObservableObject {
         if autoDisableOnUnpluggedPower {
             powerSourceMonitor.startMonitoring()
         }
+    }
+
+    // MARK: - Wake Manager Observation
+
+    private func observeWakeManager() {
+        wakeManagerCancellable = nil
+        guard let wakeManager else { return }
+
+        wakeManagerCancellable = wakeManager.$isActive
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isActive in
+                guard let self else { return }
+                if isActive {
+                    if self.declareUserActivity {
+                        self.userActivityManager.start(preventDisplaySleep: self.preventDisplaySleep)
+                    }
+                } else {
+                    self.userActivityManager.stop()
+                }
+            }
     }
 
     func recordMRU(_ entry: MRUEntry) {

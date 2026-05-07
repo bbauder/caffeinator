@@ -50,6 +50,7 @@ struct SettingsView: View {
                         Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
                         Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
                         Toggle(L.settingsPreventAutoLock, isOn: $settings.preventScreenSaver)
+                        Toggle(L.settingsDeclareUserActivity, isOn: $settings.declareUserActivity)
                     }
 
                     Section(L.settingsAutoDisable) {
