@@ -21,10 +21,10 @@ struct InfoButton: View {
                 Image(systemName: "info.circle")
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
-                    .opacity(isHovering ? 0.95 : 0.75)
+                    .opacity(isHovering ? 1.0 : 0.80)
                     .scaleEffect(isHovering ? 1.25 : 1.0)
                     .frame(width: 16, height: 16, alignment: .center)
-                    .animation(.easeOut(duration: 0.12), value: isHovering)
+                    .animation(.easeOut(duration: 0.15), value: isHovering)
             }
             .buttonStyle(.borderless)
             .onHover { isHovering = $0 }
