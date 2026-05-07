@@ -66,3 +66,13 @@
 "notificationUnpluggedBody" = "Stopped Keeping Awake because power was unplugged.";
 "settingsNotifications" = "Notifications";
 "settingsAutoDisableNotificationsEnabled" = "Send notifications for Auto-Disable events";
+"settingsPreventSystemSleepHelp" = "Prevents your Mac from sleeping automatically while Keep Awake is active.";
+"settingsPreventDisplaySleepHelp" = "Keeps the display on while Keep Awake is active.";
+"settingsPreventScreenSaverHelp" = "Prevents the screen saver and auto‑lock from activating.";
+"settingsDeclareUserActivityHelp" = "Simulates user input to keep the display awake, similar to caffeinate -u.";
+"settingsDeclareUserActivityPopover" = "Periodically declares user activity via IOPMAssertionDeclareUserActivity. This resets the idle timer as if you moved the mouse, which can prevent display sleep even when other assertions alone are not enough. Only active when Prevent Display Sleep is also enabled.";
+"settingsLowBatteryHelp" = "Automatically stops Keep Awake when battery drops below the threshold.";
+"settingsUnplugHelp" = "Automatically stops Keep Awake when AC power is disconnected.";
+"settingsRecentDurationsHelp" = "Shows your most recently used durations at the top of the menu.";
+"settingsCountdownHelp" = "Displays remaining time next to the menu bar icon.";
+"settingsAnimateIconHelp" = "Animates the menu bar icon while Keep Awake is active.";

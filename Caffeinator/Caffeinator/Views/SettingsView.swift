@@ -21,9 +21,18 @@ struct SettingsView: View {
                     }
 
                     Section(L.settingsAppearance) {
-                        Toggle(L.settingsShowRecents, isOn: $settings.showRecentDurations)
-                        Toggle(L.settingsShowCountdown, isOn: $settings.showCountdown)
-                        Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)
+                        HStack {
+                            Toggle(L.settingsShowRecents, isOn: $settings.showRecentDurations)
+                            InfoButton(help: L.settingsRecentDurationsHelp)
+                        }
+                        HStack {
+                            Toggle(L.settingsShowCountdown, isOn: $settings.showCountdown)
+                            InfoButton(help: L.settingsCountdownHelp)
+                        }
+                        HStack {
+                            Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)
+                            InfoButton(help: L.settingsAnimateIconHelp)
+                        }
                     }
 
                     Section(L.settingsSleepPrevention) {
@@ -47,14 +56,30 @@ struct SettingsView: View {
                             .padding(.bottom, 6)
                         }
 
-                        Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
-                        Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
-                        Toggle(L.settingsPreventAutoLock, isOn: $settings.preventScreenSaver)
-                        Toggle(L.settingsDeclareUserActivity, isOn: $settings.declareUserActivity)
+                        HStack {
+                            Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
+                            InfoButton(help: L.settingsPreventSystemSleepHelp)
+                        }
+                        HStack {
+                            Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
+                            InfoButton(help: L.settingsPreventDisplaySleepHelp)
+                        }
+                        HStack {
+                            Toggle(L.settingsPreventAutoLock, isOn: $settings.preventScreenSaver)
+                            InfoButton(help: L.settingsPreventScreenSaverHelp)
+                        }
+                        HStack {
+                            Toggle(L.settingsDeclareUserActivity, isOn: $settings.declareUserActivity)
+                            InfoButton(help: L.settingsDeclareUserActivityHelp,
+                                       popoverText: L.settingsDeclareUserActivityPopover)
+                        }
                     }
 
                     Section(L.settingsAutoDisable) {
-                        Toggle(L.settingsDisableOnLowBattery, isOn: $settings.autoDisableOnLowBattery)
+                        HStack {
+                            Toggle(L.settingsDisableOnLowBattery, isOn: $settings.autoDisableOnLowBattery)
+                            InfoButton(help: L.settingsLowBatteryHelp)
+                        }
                         HStack(spacing: 6) {
                             Text(L.settingsThreshold)
                                 .foregroundStyle(.secondary)
@@ -93,7 +118,10 @@ struct SettingsView: View {
                         .padding(.leading, 20)
                         .padding(.top, 4)
                         .disabled(!settings.autoDisableOnLowBattery)
-                        Toggle(L.settingsDisableOnUnpluggedPower, isOn: $settings.autoDisableOnUnpluggedPower)
+                        HStack {
+                            Toggle(L.settingsDisableOnUnpluggedPower, isOn: $settings.autoDisableOnUnpluggedPower)
+                            InfoButton(help: L.settingsUnplugHelp)
+                        }
                     }
 
                     Section(L.settingsNotifications) {
