@@ -79,6 +79,18 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var autoDisableOnUnpluggedPower: Bool {
+        didSet {
+            UserDefaults.standard.set(autoDisableOnUnpluggedPower, forKey: "autoDisableOnUnpluggedPower")
+            if autoDisableOnUnpluggedPower {
+                requestNotificationPermission()
+                startPowerSourceMonitoring()
+            } else {
+                stopPowerSourceMonitoring()
+            }
+        }
+    }
+
     @Published var launchAtLogin: Bool {
         didSet {
             guard launchAtLogin != oldValue else {
@@ -113,6 +125,7 @@ class SettingsViewModel: ObservableObject {
     }
 
     private var batteryTask: Task<Void, Never>?
+    private var powerSourceRunLoopSource: CFRunLoopSource?
     private static let maxMRU = 3
     weak var wakeManager: WakeAssertionManager?
 
@@ -128,6 +141,7 @@ class SettingsViewModel: ObservableObject {
                                      "animateIcon": true,
                                      "autoDisableOnLowBattery": false,
                                      "lowBatteryThreshold": 20,
+                                     "autoDisableOnUnpluggedPower": false,
                                     ])
 
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
@@ -139,6 +153,7 @@ class SettingsViewModel: ObservableObject {
         animateIcon = defaults.bool(forKey: "animateIcon")
         autoDisableOnLowBattery = defaults.bool(forKey: "autoDisableOnLowBattery")
         lowBatteryThreshold = defaults.integer(forKey: "lowBatteryThreshold")
+        autoDisableOnUnpluggedPower = defaults.bool(forKey: "autoDisableOnUnpluggedPower")
 
         let derivedData = Bundle.main.bundlePath.contains("DerivedData")
         launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled
@@ -150,6 +165,9 @@ class SettingsViewModel: ObservableObject {
 
         if autoDisableOnLowBattery {
             startBatteryMonitoring()
+        }
+        if autoDisableOnUnpluggedPower {
+            startPowerSourceMonitoring()
         }
     }
 
@@ -209,6 +227,44 @@ class SettingsViewModel: ObservableObject {
         return capacity
     }
 
+    // MARK: - Power Source Monitoring
+
+    private func startPowerSourceMonitoring() {
+        stopPowerSourceMonitoring()
+
+        let context = Unmanaged.passUnretained(self).toOpaque()
+        guard let source = IOPSNotificationCreateRunLoopSource({ context in
+            guard let context else { return }
+            let vm = Unmanaged<SettingsViewModel>.fromOpaque(context).takeUnretainedValue()
+            MainActor.assumeIsolated {
+                vm.handlePowerSourceChange()
+            }
+        }, context)?.takeRetainedValue() else { return }
+
+        powerSourceRunLoopSource = source
+        CFRunLoopAddSource(CFRunLoopGetMain(), source, .defaultMode)
+    }
+
+    private func stopPowerSourceMonitoring() {
+        if let source = powerSourceRunLoopSource {
+            CFRunLoopRemoveSource(CFRunLoopGetMain(), source, .defaultMode)
+            powerSourceRunLoopSource = nil
+        }
+    }
+
+    private func handlePowerSourceChange() {
+        guard autoDisableOnUnpluggedPower,
+              let wakeManager, wakeManager.isActive else { return }
+
+        let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue()
+        let powerType = IOPSGetProvidingPowerSourceType(snapshot)?.takeUnretainedValue() as String?
+
+        if powerType == kIOPSBatteryPowerValue as String {
+            wakeManager.deactivate()
+            sendUnpluggedNotification()
+        }
+    }
+
     // MARK: - Notifications
 
     private func requestNotificationPermission() {
@@ -221,6 +277,15 @@ class SettingsViewModel: ObservableObject {
         content.body = L.autoDisableNotificationBody(lowBatteryThreshold)
 
         let request = UNNotificationRequest(identifier: "autoDisableLowBattery", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request) { _ in }
+    }
+
+    private func sendUnpluggedNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = L.notificationStoppedTitle
+        content.body = L.notificationUnpluggedBody
+
+        let request = UNNotificationRequest(identifier: "autoDisableUnplugged", content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request) { _ in }
     }
 }

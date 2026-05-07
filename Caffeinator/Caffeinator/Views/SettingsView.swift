@@ -92,6 +92,7 @@ struct SettingsView: View {
                         .padding(.leading, 20)
                         .padding(.top, 4)
                         .disabled(!settings.autoDisableOnLowBattery)
+                        Toggle(L.settingsDisableOnUnpluggedPower, isOn: $settings.autoDisableOnUnpluggedPower)
                     }
                 }
                 .formStyle(.grouped)

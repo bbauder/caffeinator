@@ -56,6 +56,9 @@ enum L {
     static let settingsSleepPrevention = NSLocalizedString("settingsSleepPrevention", comment: "")
     static let settingsAutoDisable = NSLocalizedString("settingsAutoDisable", comment: "")
     static let settingsDisableOnLowBattery = NSLocalizedString("settingsDisableOnLowBattery", comment: "")
+    static let settingsDisableOnUnpluggedPower = NSLocalizedString("settingsDisableOnUnpluggedPower", comment: "")
+    static let notificationStoppedTitle = NSLocalizedString("notificationStoppedTitle", comment: "")
+    static let notificationUnpluggedBody = NSLocalizedString("notificationUnpluggedBody", comment: "")
     static let settingsThreshold = NSLocalizedString("settingsThreshold", comment: "")
     static let autoDisableNotificationTitle = NSLocalizedString("autoDisableNotificationTitle", comment: "")
 
