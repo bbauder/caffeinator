@@ -82,9 +82,9 @@ class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(autoDisableOnUnpluggedPower, forKey: "autoDisableOnUnpluggedPower")
             if autoDisableOnUnpluggedPower {
                 notificationManager.requestPermission()
-                startPowerSourceMonitoring()
+                powerSourceMonitor.startMonitoring()
             } else {
-                stopPowerSourceMonitoring()
+                powerSourceMonitor.stopMonitoring()
             }
         }
     }
@@ -124,13 +124,14 @@ class SettingsViewModel: ObservableObject {
 
     let notificationManager: NotificationManager
     let batteryMonitor: BatteryMonitor
-    private var powerSourceRunLoopSource: CFRunLoopSource?
+    let powerSourceMonitor: PowerSourceMonitor
     private static let maxMRU = 3
     weak var wakeManager: WakeAssertionManager?
 
-    init(notificationManager: NotificationManager, batteryMonitor: BatteryMonitor) {
+    init(notificationManager: NotificationManager, batteryMonitor: BatteryMonitor, powerSourceMonitor: PowerSourceMonitor) {
         self.notificationManager = notificationManager
         self.batteryMonitor = batteryMonitor
+        self.powerSourceMonitor = powerSourceMonitor
         let defaults = UserDefaults.standard
 
         defaults.register(defaults: ["preventSystemSleep": true,
@@ -165,16 +166,32 @@ class SettingsViewModel: ObservableObject {
         }
 
         batteryMonitor.onLowBattery = { [weak self] in
-            guard let self else { return }
+            guard let self else {
+                return
+            }
+
             self.wakeManager?.deactivate()
             self.notificationManager.sendLowBatteryNotification(threshold: self.lowBatteryThreshold)
+        }
+
+        powerSourceMonitor.onUnplugged = { [weak self] in
+            guard let self else {
+                return
+            }
+            guard self.autoDisableOnUnpluggedPower,
+                  let wakeManager = self.wakeManager, wakeManager.isActive else {
+                return
+            }
+
+            wakeManager.deactivate()
+            self.notificationManager.sendUnpluggedNotification()
         }
 
         if autoDisableOnLowBattery {
             batteryMonitor.startMonitoring(threshold: lowBatteryThreshold)
         }
         if autoDisableOnUnpluggedPower {
-            startPowerSourceMonitoring()
+            powerSourceMonitor.startMonitoring()
         }
     }
 
@@ -190,49 +207,6 @@ class SettingsViewModel: ObservableObject {
 
         if let data = try? JSONEncoder().encode(mruEntries) {
             UserDefaults.standard.set(data, forKey: "mruEntries")
-        }
-    }
-
-    // MARK: - Power Source Monitoring
-
-    private func startPowerSourceMonitoring() {
-        stopPowerSourceMonitoring()
-
-        let context = Unmanaged.passUnretained(self).toOpaque()
-        guard let source = IOPSNotificationCreateRunLoopSource({ context in
-            guard let context else {
-                return
-            }
-
-            let vm = Unmanaged<SettingsViewModel>.fromOpaque(context).takeUnretainedValue()
-            MainActor.assumeIsolated {
-                vm.handlePowerSourceChange()
-            }
-        }, context)?.takeRetainedValue() else { return }
-
-        powerSourceRunLoopSource = source
-        CFRunLoopAddSource(CFRunLoopGetMain(), source, .defaultMode)
-    }
-
-    private func stopPowerSourceMonitoring() {
-        if let source = powerSourceRunLoopSource {
-            CFRunLoopRemoveSource(CFRunLoopGetMain(), source, .defaultMode)
-            powerSourceRunLoopSource = nil
-        }
-    }
-
-    private func handlePowerSourceChange() {
-        guard autoDisableOnUnpluggedPower,
-              let wakeManager, wakeManager.isActive else {
-            return
-        }
-
-        let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue()
-        let powerType = IOPSGetProvidingPowerSourceType(snapshot)?.takeUnretainedValue() as String?
-
-        if powerType == kIOPSBatteryPowerValue as String {
-            wakeManager.deactivate()
-            notificationManager.sendUnpluggedNotification()
         }
     }
 }
