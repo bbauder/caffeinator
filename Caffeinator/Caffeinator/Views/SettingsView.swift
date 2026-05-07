@@ -114,7 +114,7 @@ struct SettingsView: View {
                 .keyboardShortcut(.defaultAction)
             }
             .padding(.horizontal, 14)
-            .padding(.top, 4)
+            .padding(.top, 12)
             .padding(.bottom, 12)
         }
         .frame(width: 480, height: 520)
