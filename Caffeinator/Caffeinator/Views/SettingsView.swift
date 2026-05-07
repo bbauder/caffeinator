@@ -97,7 +97,6 @@ struct SettingsView: View {
                 .formStyle(.grouped)
                 .scrollContentBackground(.hidden)
             }
-            .padding(.bottom, -12)
 
             HStack {
                 Spacer()

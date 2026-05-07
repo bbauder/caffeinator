@@ -172,6 +172,7 @@ class SettingsViewModel: ObservableObject {
 
     private func startBatteryMonitoring() {
         batteryTask?.cancel()
+
         batteryTask = Task {
             while !Task.isCancelled {
                 checkBattery()
