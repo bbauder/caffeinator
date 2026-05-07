@@ -17,15 +17,19 @@ class UserActivityManager {
 
     func start(preventDisplaySleep: Bool) {
         stop()
-        guard isEnabled, preventDisplaySleep else { return }
+
+        guard isEnabled,
+              preventDisplaySleep else {
+            return
+        }
 
         task = Task {
             var assertionID: IOPMAssertionID = 0
+
             while !Task.isCancelled {
-                IOPMAssertionDeclareUserActivity(
-                    "Caffeinator user activity" as CFString,
-                    kIOPMUserActiveLocal,
-                    &assertionID
+                IOPMAssertionDeclareUserActivity("Caffeinator user activity" as CFString,
+                                                 kIOPMUserActiveLocal,
+                                                 &assertionID
                 )
                 try? await Task.sleep(for: .seconds(30))
             }

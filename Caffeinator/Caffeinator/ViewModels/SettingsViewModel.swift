@@ -157,7 +157,10 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    init(notificationManager: NotificationManager, batteryMonitor: BatteryMonitor, powerSourceMonitor: PowerSourceMonitor, userActivityManager: UserActivityManager) {
+    init(notificationManager: NotificationManager,
+         batteryMonitor: BatteryMonitor,
+         powerSourceMonitor: PowerSourceMonitor,
+         userActivityManager: UserActivityManager) {
         self.notificationManager = notificationManager
         self.batteryMonitor = batteryMonitor
         self.powerSourceMonitor = powerSourceMonitor
@@ -236,12 +239,18 @@ class SettingsViewModel: ObservableObject {
 
     private func observeWakeManager() {
         wakeManagerCancellable = nil
-        guard let wakeManager else { return }
+
+        guard let wakeManager else {
+            return
+        }
 
         wakeManagerCancellable = wakeManager.$isActive
             .receive(on: RunLoop.main)
             .sink { [weak self] isActive in
-                guard let self else { return }
+                guard let self else {
+                    return
+                }
+
                 if isActive {
                     if self.declareUserActivity {
                         self.userActivityManager.start(preventDisplaySleep: self.preventDisplaySleep)
