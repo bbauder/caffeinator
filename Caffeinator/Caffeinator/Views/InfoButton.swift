@@ -22,7 +22,7 @@ struct InfoButton: View {
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
                     .opacity(isHovering ? 0.95 : 0.75)
-                    .scaleEffect(isHovering ? 1.08 : 1.0)
+                    .scaleEffect(isHovering ? 1.25 : 1.0)
                     .frame(width: 16, height: 16, alignment: .center)
                     .animation(.easeOut(duration: 0.12), value: isHovering)
             }
