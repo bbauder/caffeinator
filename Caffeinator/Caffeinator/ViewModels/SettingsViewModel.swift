@@ -9,7 +9,6 @@ import Combine
 import Foundation
 import IOKit.ps
 import ServiceManagement
-import UserNotifications
 
 enum MRUEntry: Codable, Equatable {
     case indefinitely
@@ -65,7 +64,7 @@ class SettingsViewModel: ObservableObject {
         didSet {
             UserDefaults.standard.set(autoDisableOnLowBattery, forKey: "autoDisableOnLowBattery")
             if autoDisableOnLowBattery {
-                requestNotificationPermission()
+                notificationManager.requestPermission()
                 startBatteryMonitoring()
             } else {
                 stopBatteryMonitoring()
@@ -83,7 +82,7 @@ class SettingsViewModel: ObservableObject {
         didSet {
             UserDefaults.standard.set(autoDisableOnUnpluggedPower, forKey: "autoDisableOnUnpluggedPower")
             if autoDisableOnUnpluggedPower {
-                requestNotificationPermission()
+                notificationManager.requestPermission()
                 startPowerSourceMonitoring()
             } else {
                 stopPowerSourceMonitoring()
@@ -124,12 +123,14 @@ class SettingsViewModel: ObservableObject {
         preventSystemSleep || preventDisplaySleep || preventScreenSaver
     }
 
+    let notificationManager: NotificationManager
     private var batteryTask: Task<Void, Never>?
     private var powerSourceRunLoopSource: CFRunLoopSource?
     private static let maxMRU = 3
     weak var wakeManager: WakeAssertionManager?
 
-    init() {
+    init(notificationManager: NotificationManager) {
+        self.notificationManager = notificationManager
         let defaults = UserDefaults.standard
 
         defaults.register(defaults: ["preventSystemSleep": true,
@@ -213,7 +214,7 @@ class SettingsViewModel: ObservableObject {
         }
 
         wakeManager.deactivate()
-        sendLowBatteryNotification()
+        notificationManager.sendLowBatteryNotification(threshold: lowBatteryThreshold)
     }
 
     private func currentBatteryLevel() -> Int? {
@@ -261,31 +262,7 @@ class SettingsViewModel: ObservableObject {
 
         if powerType == kIOPSBatteryPowerValue as String {
             wakeManager.deactivate()
-            sendUnpluggedNotification()
+            notificationManager.sendUnpluggedNotification()
         }
-    }
-
-    // MARK: - Notifications
-
-    private func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
-    }
-
-    private func sendLowBatteryNotification() {
-        let content = UNMutableNotificationContent()
-        content.title = L.autoDisableNotificationTitle
-        content.body = L.autoDisableNotificationBody(lowBatteryThreshold)
-
-        let request = UNNotificationRequest(identifier: "autoDisableLowBattery", content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request) { _ in }
-    }
-
-    private func sendUnpluggedNotification() {
-        let content = UNMutableNotificationContent()
-        content.title = L.notificationStoppedTitle
-        content.body = L.notificationUnpluggedBody
-
-        let request = UNNotificationRequest(identifier: "autoDisableUnplugged", content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request) { _ in }
     }
 }
