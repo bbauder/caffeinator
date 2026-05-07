@@ -19,13 +19,13 @@ enum MRUEntry: Codable, Equatable {
 class SettingsViewModel: ObservableObject {
     @Published var preventSystemSleep: Bool {
         didSet {
-            UserDefaults.standard.set(preventSystemSleep, forKey: "preventSystemSleep")
+            persistence.preventSystemSleep = preventSystemSleep
         }
     }
 
     @Published var preventDisplaySleep: Bool {
         didSet {
-            UserDefaults.standard.set(preventDisplaySleep, forKey: "preventDisplaySleep")
+            persistence.preventDisplaySleep = preventDisplaySleep
             if declareUserActivity, let wakeManager, wakeManager.isActive {
                 userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
             }
@@ -34,37 +34,37 @@ class SettingsViewModel: ObservableObject {
 
     @Published var preventScreenSaver: Bool {
         didSet {
-            UserDefaults.standard.set(preventScreenSaver, forKey: "preventScreenSaver")
+            persistence.preventScreenSaver = preventScreenSaver
         }
     }
 
     @Published var hideActivationOptionsWhileActive: Bool {
         didSet {
-            UserDefaults.standard.set(hideActivationOptionsWhileActive, forKey: "hideActivationOptionsWhileActive")
+            persistence.hideActivationOptionsWhileActive = hideActivationOptionsWhileActive
         }
     }
 
     @Published var showRecentDurations: Bool {
         didSet {
-            UserDefaults.standard.set(showRecentDurations, forKey: "showRecentDurations")
+            persistence.showRecentDurations = showRecentDurations
         }
     }
 
     @Published var showCountdown: Bool {
         didSet {
-            UserDefaults.standard.set(showCountdown, forKey: "showCountdown")
+            persistence.showCountdown = showCountdown
         }
     }
 
     @Published var animateIcon: Bool {
         didSet {
-            UserDefaults.standard.set(animateIcon, forKey: "animateIcon")
+            persistence.animateIcon = animateIcon
         }
     }
 
     @Published var declareUserActivity: Bool {
         didSet {
-            UserDefaults.standard.set(declareUserActivity, forKey: "declareUserActivity")
+            persistence.declareUserActivity = declareUserActivity
             userActivityManager.isEnabled = declareUserActivity
             if declareUserActivity, let wakeManager, wakeManager.isActive {
                 userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
@@ -76,7 +76,7 @@ class SettingsViewModel: ObservableObject {
 
     @Published var autoDisableOnLowBattery: Bool {
         didSet {
-            UserDefaults.standard.set(autoDisableOnLowBattery, forKey: "autoDisableOnLowBattery")
+            persistence.autoDisableOnLowBattery = autoDisableOnLowBattery
             if autoDisableOnLowBattery {
                 notificationManager.requestPermission()
                 batteryMonitor.startMonitoring(threshold: lowBatteryThreshold)
@@ -88,20 +88,20 @@ class SettingsViewModel: ObservableObject {
 
     @Published var lowBatteryThreshold: Int {
         didSet {
-            UserDefaults.standard.set(lowBatteryThreshold, forKey: "lowBatteryThreshold")
+            persistence.lowBatteryThreshold = lowBatteryThreshold
         }
     }
 
     @Published var autoDisableNotificationsEnabled: Bool {
         didSet {
-            UserDefaults.standard.set(autoDisableNotificationsEnabled, forKey: "autoDisableNotificationsEnabled")
+            persistence.autoDisableNotificationsEnabled = autoDisableNotificationsEnabled
             notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
         }
     }
 
     @Published var autoDisableOnUnpluggedPower: Bool {
         didSet {
-            UserDefaults.standard.set(autoDisableOnUnpluggedPower, forKey: "autoDisableOnUnpluggedPower")
+            persistence.autoDisableOnUnpluggedPower = autoDisableOnUnpluggedPower
             if autoDisableOnUnpluggedPower {
                 notificationManager.requestPermission()
                 powerSourceMonitor.startMonitoring()
@@ -144,6 +144,7 @@ class SettingsViewModel: ObservableObject {
         preventSystemSleep || preventDisplaySleep || preventScreenSaver
     }
 
+    let persistence: SettingsPersistenceManager
     let notificationManager: NotificationManager
     let batteryMonitor: BatteryMonitor
     let powerSourceMonitor: PowerSourceMonitor
@@ -157,53 +158,34 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    init(notificationManager: NotificationManager,
+    init(persistence: SettingsPersistenceManager,
+         notificationManager: NotificationManager,
          batteryMonitor: BatteryMonitor,
          powerSourceMonitor: PowerSourceMonitor,
          userActivityManager: UserActivityManager) {
+        self.persistence = persistence
         self.notificationManager = notificationManager
         self.batteryMonitor = batteryMonitor
         self.powerSourceMonitor = powerSourceMonitor
         self.userActivityManager = userActivityManager
-        let defaults = UserDefaults.standard
 
-        defaults.register(defaults: ["preventSystemSleep": true,
-                                     "preventDisplaySleep": false,
-                                     "preventScreenSaver": false,
-                                     "hideActivationOptionsWhileActive": true,
-                                     "showRecentDurations": true,
-                                     "showCountdown": true,
-                                     "animateIcon": true,
-                                     "autoDisableOnLowBattery": false,
-                                     "lowBatteryThreshold": 20,
-                                     "autoDisableOnUnpluggedPower": false,
-                                     "autoDisableNotificationsEnabled": true,
-                                     "declareUserActivity": false,
-                                    ])
-
-        preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
-        preventDisplaySleep = defaults.bool(forKey: "preventDisplaySleep")
-        preventScreenSaver = defaults.bool(forKey: "preventScreenSaver")
-        hideActivationOptionsWhileActive = defaults.bool(forKey: "hideActivationOptionsWhileActive")
-        showRecentDurations = defaults.bool(forKey: "showRecentDurations")
-        showCountdown = defaults.bool(forKey: "showCountdown")
-        animateIcon = defaults.bool(forKey: "animateIcon")
-        autoDisableOnLowBattery = defaults.bool(forKey: "autoDisableOnLowBattery")
-        lowBatteryThreshold = defaults.integer(forKey: "lowBatteryThreshold")
-        autoDisableOnUnpluggedPower = defaults.bool(forKey: "autoDisableOnUnpluggedPower")
-        autoDisableNotificationsEnabled = defaults.bool(forKey: "autoDisableNotificationsEnabled")
-        declareUserActivity = defaults.bool(forKey: "declareUserActivity")
-
-        let derivedData = Bundle.main.bundlePath.contains("DerivedData")
-        launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled
+        preventSystemSleep = persistence.preventSystemSleep
+        preventDisplaySleep = persistence.preventDisplaySleep
+        preventScreenSaver = persistence.preventScreenSaver
+        hideActivationOptionsWhileActive = persistence.hideActivationOptionsWhileActive
+        showRecentDurations = persistence.showRecentDurations
+        showCountdown = persistence.showCountdown
+        animateIcon = persistence.animateIcon
+        declareUserActivity = persistence.declareUserActivity
+        autoDisableOnLowBattery = persistence.autoDisableOnLowBattery
+        lowBatteryThreshold = persistence.lowBatteryThreshold
+        autoDisableOnUnpluggedPower = persistence.autoDisableOnUnpluggedPower
+        autoDisableNotificationsEnabled = persistence.autoDisableNotificationsEnabled
+        launchAtLogin = persistence.launchAtLogin
+        mruEntries = persistence.mruEntries
 
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
         userActivityManager.isEnabled = declareUserActivity
-
-        if let data = defaults.data(forKey: "mruEntries"),
-           let decoded = try? JSONDecoder().decode([MRUEntry].self, from: data) {
-            mruEntries = decoded
-        }
 
         batteryMonitor.onLowBattery = { [weak self] in
             guard let self else {
@@ -271,8 +253,6 @@ class SettingsViewModel: ObservableObject {
             mruEntries = Array(mruEntries.prefix(Self.maxMRU))
         }
 
-        if let data = try? JSONEncoder().encode(mruEntries) {
-            UserDefaults.standard.set(data, forKey: "mruEntries")
-        }
+        persistence.mruEntries = mruEntries
     }
 }

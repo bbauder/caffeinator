@@ -22,12 +22,14 @@ struct CaffeinatorApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     let wakeManager = WakeAssertionManager()
+    let persistence = SettingsPersistenceManager()
     let notificationManager = NotificationManager()
     let batteryMonitor = BatteryMonitor()
     let powerSourceMonitor = PowerSourceMonitor()
     let userActivityManager = UserActivityManager()
     private var statusItemController: StatusItemController?
-    lazy var settings = SettingsViewModel(notificationManager: notificationManager,
+    lazy var settings = SettingsViewModel(persistence: persistence,
+                                          notificationManager: notificationManager,
                                           batteryMonitor: batteryMonitor,
                                           powerSourceMonitor: powerSourceMonitor,
                                           userActivityManager: userActivityManager)
