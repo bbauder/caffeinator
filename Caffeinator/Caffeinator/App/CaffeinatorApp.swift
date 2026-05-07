@@ -27,8 +27,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let batteryMonitor = BatteryMonitor()
     let powerSourceMonitor = PowerSourceMonitor()
     let userActivityManager = UserActivityManager()
+    lazy var mruStore = MRUStore(persistence: persistence)
     private var statusItemController: StatusItemController?
     lazy var settings = SettingsViewModel(persistence: persistence,
+                                          mruStore: mruStore,
                                           notificationManager: notificationManager,
                                           batteryMonitor: batteryMonitor,
                                           powerSourceMonitor: powerSourceMonitor,

@@ -134,8 +134,6 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    @Published private(set) var mruEntries: [MRUEntry] = []
-
     var isRunningFromDerivedData: Bool {
         Bundle.main.bundlePath.contains("DerivedData")
     }
@@ -145,11 +143,11 @@ class SettingsViewModel: ObservableObject {
     }
 
     let persistence: SettingsPersistenceManager
+    let mruStore: MRUStore
     let notificationManager: NotificationManager
     let batteryMonitor: BatteryMonitor
     let powerSourceMonitor: PowerSourceMonitor
     let userActivityManager: UserActivityManager
-    private static let maxMRU = 3
     private var wakeManagerCancellable: AnyCancellable?
 
     weak var wakeManager: WakeAssertionManager? {
@@ -159,11 +157,13 @@ class SettingsViewModel: ObservableObject {
     }
 
     init(persistence: SettingsPersistenceManager,
+         mruStore: MRUStore,
          notificationManager: NotificationManager,
          batteryMonitor: BatteryMonitor,
          powerSourceMonitor: PowerSourceMonitor,
          userActivityManager: UserActivityManager) {
         self.persistence = persistence
+        self.mruStore = mruStore
         self.notificationManager = notificationManager
         self.batteryMonitor = batteryMonitor
         self.powerSourceMonitor = powerSourceMonitor
@@ -182,7 +182,6 @@ class SettingsViewModel: ObservableObject {
         autoDisableOnUnpluggedPower = persistence.autoDisableOnUnpluggedPower
         autoDisableNotificationsEnabled = persistence.autoDisableNotificationsEnabled
         launchAtLogin = persistence.launchAtLogin
-        mruEntries = persistence.mruEntries
 
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
         userActivityManager.isEnabled = declareUserActivity
@@ -244,15 +243,6 @@ class SettingsViewModel: ObservableObject {
     }
 
     func recordMRU(_ entry: MRUEntry) {
-        mruEntries.removeAll {
-            $0 == entry
-        }
-        mruEntries.insert(entry, at: 0)
-
-        if mruEntries.count > Self.maxMRU {
-            mruEntries = Array(mruEntries.prefix(Self.maxMRU))
-        }
-
-        persistence.mruEntries = mruEntries
+        mruStore.record(entry)
     }
 }

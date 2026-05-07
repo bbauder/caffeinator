@@ -134,7 +134,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         // MRU section
         if !hideInactive && settings.showRecentDurations {
-            let entries = settings.mruEntries
+            let entries = settings.mruStore.entries
 
             if !entries.isEmpty {
                 let header = NSMenuItem(title: L.recents, action: nil, keyEquivalent: "")
