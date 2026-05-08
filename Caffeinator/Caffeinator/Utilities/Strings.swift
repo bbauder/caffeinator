@@ -160,4 +160,26 @@ enum L {
     static func durationHoursMinutes(_ hourPart: String, _ minPart: String) -> String {
         String(format: NSLocalizedString("durationHoursMinutes", comment: ""), hourPart, minPart)
     }
+
+    static let settingsShowStatusText = NSLocalizedString("settingsShowStatusText", comment: "")
+    static let settingsStatusTextHelp = NSLocalizedString("settingsStatusTextHelp", comment: "")
+    static let untilAppExits = NSLocalizedString("untilAppExits", comment: "")
+    static let watchProcessesTitle = NSLocalizedString("watchProcessesTitle", comment: "")
+    static let watchProcessesEmptyState = NSLocalizedString("watchProcessesEmptyState", comment: "")
+    static let watchProcessesFooterEmpty = NSLocalizedString("watchProcessesFooterEmpty", comment: "")
+    static let watchProcessesFooterWatching = NSLocalizedString("watchProcessesFooterWatching", comment: "")
+    static let tooltipWatching = NSLocalizedString("tooltipWatching", comment: "")
+    static let statusKeepingAwake = NSLocalizedString("statusKeepingAwake", comment: "")
+    static let statusWatchingOneApp = NSLocalizedString("statusWatchingOneApp", comment: "")
+
+    static func tooltipAndMore(_ count: Int) -> String {
+        String(format: NSLocalizedString("tooltipAndMore", comment: ""), count)
+    }
+
+    static func statusWatchingApps(_ count: Int) -> String {
+        if count == 1 {
+            return statusWatchingOneApp
+        }
+        return String(format: NSLocalizedString("statusWatchingApps", comment: ""), count)
+    }
 }

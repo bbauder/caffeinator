@@ -71,6 +71,15 @@ class WakeAssertionManager: ObservableObject {
         settings?.recordMRU(.indefinitely)
     }
 
+    func activateForProcessWatch() {
+        deactivate()
+        createAssertions()
+
+        isActive = true
+        timeRemaining = nil
+        selectedDuration = nil
+    }
+
     func activate(for duration: TimeInterval) {
         deactivate()
         createAssertions()

@@ -27,6 +27,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let batteryMonitor = BatteryMonitor()
     let powerSourceMonitor = PowerSourceMonitor()
     let userActivityManager = UserActivityManager()
+    let processDiscovery = ProcessDiscovery()
+    let processWatcher = ProcessWatcher()
+    let watchedProcessStore = WatchedProcessStore()
     lazy var mruStore = MRUStore(persistence: persistence)
     private var statusItemController: StatusItemController?
     lazy var settings = SettingsViewModel(persistence: persistence,
@@ -35,12 +38,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                           batteryMonitor: batteryMonitor,
                                           powerSourceMonitor: powerSourceMonitor,
                                           userActivityManager: userActivityManager)
+    lazy var watchProcessesViewModel = WatchProcessesViewModel(
+        discovery: processDiscovery,
+        store: watchedProcessStore,
+        processWatcher: processWatcher
+    )
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         wakeManager.settings = settings
         settings.wakeManager = wakeManager
-        statusItemController = StatusItemController(wakeManager: wakeManager,
-                                                    settings: settings
+
+        watchedProcessStore.onFirstProcessAdded = { [weak self] in
+            self?.wakeManager.activateForProcessWatch()
+        }
+        watchedProcessStore.onLastProcessRemoved = { [weak self] in
+            self?.wakeManager.deactivate()
+        }
+        processWatcher.onProcessTerminated = { [weak self] pid in
+            self?.watchProcessesViewModel.handleProcessTerminated(pid: pid)
+        }
+        processWatcher.onAllProcessesTerminated = { [weak self] in
+            self?.watchProcessesViewModel.handleAllProcessesTerminated()
+        }
+
+        statusItemController = StatusItemController(
+            wakeManager: wakeManager,
+            settings: settings,
+            watchedProcessStore: watchedProcessStore,
+            watchProcessesViewModel: watchProcessesViewModel,
+            processWatcher: processWatcher
         )
     }
 }

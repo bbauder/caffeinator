@@ -32,7 +32,7 @@ struct WatchProcessesRow: View {
 
             if isWatched {
                 Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(.accent)
+                    .foregroundStyle(.tint)
                     .font(.system(size: 16))
             }
         }

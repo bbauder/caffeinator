@@ -3,6 +3,7 @@
 //  Caffeinator
 //
 
+import Combine
 import Foundation
 
 @MainActor

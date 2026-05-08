@@ -17,7 +17,7 @@ struct WatchProcessesPopover: View {
             buttonRow
         }
         .padding(16)
-        .frame(width: 320, idealHeight: 420)
+        .frame(width: 320)
         .onAppear {
             viewModel.refreshRunningApps()
         }

@@ -76,3 +76,15 @@
 "settingsRecentDurationsHelp" = "Shows your recently used Keep Awake durations in the menu for quick access.";
 "settingsCountdownHelp" = "Displays the remaining time directly in the menu bar while a timed session is active.";
 "settingsAnimateIconHelp" = "Adds a subtle animation to the menu bar icon while Keep Awake is active.";
+"settingsShowStatusText" = "Show status text next to menu bar icon";
+"settingsStatusTextHelp" = "Displays contextual info in the menu bar: countdown for timed sessions, app count when watching processes.";
+"untilAppExits" = "Until App Exits…";
+"watchProcessesTitle" = "Watch Processes";
+"watchProcessesEmptyState" = "No running apps found.";
+"watchProcessesFooterEmpty" = "Select one or more apps to begin watching.";
+"watchProcessesFooterWatching" = "Caffeinator will stop when all watched apps exit.";
+"tooltipWatching" = "Watching:";
+"tooltipAndMore" = "… and %d more";
+"statusKeepingAwake" = "Awake";
+"statusWatchingOneApp" = "1 App";
+"statusWatchingApps" = "%d Apps";

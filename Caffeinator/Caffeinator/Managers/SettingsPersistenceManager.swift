@@ -31,8 +31,8 @@ class SettingsPersistenceManager {
         didSet { defaults.set(showRecentDurations, forKey: "showRecentDurations") }
     }
 
-    var showCountdown: Bool {
-        didSet { defaults.set(showCountdown, forKey: "showCountdown") }
+    var showStatusText: Bool {
+        didSet { defaults.set(showStatusText, forKey: "showCountdown") }
     }
 
     var animateIcon: Bool {
@@ -92,7 +92,7 @@ class SettingsPersistenceManager {
         preventScreenSaver = defaults.bool(forKey: "preventScreenSaver")
         hideActivationOptionsWhileActive = defaults.bool(forKey: "hideActivationOptionsWhileActive")
         showRecentDurations = defaults.bool(forKey: "showRecentDurations")
-        showCountdown = defaults.bool(forKey: "showCountdown")
+        showStatusText = defaults.bool(forKey: "showCountdown")
         animateIcon = defaults.bool(forKey: "animateIcon")
         declareUserActivity = defaults.bool(forKey: "declareUserActivity")
         autoDisableOnLowBattery = defaults.bool(forKey: "autoDisableOnLowBattery")

@@ -26,8 +26,8 @@ struct SettingsView: View {
                             InfoButton(popoverText: L.settingsRecentDurationsHelp)
                         }
                         HStack {
-                            Toggle(L.settingsShowCountdown, isOn: $settings.showCountdown)
-                            InfoButton(popoverText: L.settingsCountdownHelp)
+                            Toggle(L.settingsShowStatusText, isOn: $settings.showStatusText)
+                            InfoButton(popoverText: L.settingsStatusTextHelp)
                         }
                         HStack {
                             Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)

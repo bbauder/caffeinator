@@ -13,12 +13,22 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     private var statusItem: NSStatusItem!
     private let wakeManager: WakeAssertionManager
     private let settings: SettingsViewModel
+    private let watchedProcessStore: WatchedProcessStore
+    private let watchProcessesViewModel: WatchProcessesViewModel
+    private let processWatcher: ProcessWatcher
     private var cancellables = Set<AnyCancellable>()
     private var settingsWindow: NSWindow?
 
-    init(wakeManager: WakeAssertionManager, settings: SettingsViewModel) {
+    init(wakeManager: WakeAssertionManager,
+         settings: SettingsViewModel,
+         watchedProcessStore: WatchedProcessStore,
+         watchProcessesViewModel: WatchProcessesViewModel,
+         processWatcher: ProcessWatcher) {
         self.wakeManager = wakeManager
         self.settings = settings
+        self.watchedProcessStore = watchedProcessStore
+        self.watchProcessesViewModel = watchProcessesViewModel
+        self.processWatcher = processWatcher
         super.init()
 
         setupStatusItem()
@@ -37,26 +47,25 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         button.title = ""
         button.imagePosition = .imageOnly
 
-        let iconView = StatusBarIconView(wakeManager: wakeManager, settings: settings)
+        let iconView = StatusBarIconView(wakeManager: wakeManager, settings: settings, watchedProcessStore: watchedProcessStore)
         let hostingView = NSHostingView(rootView: iconView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
 
         button.addSubview(hostingView)
 
-        Publishers.CombineLatest(wakeManager.$isActive, settings.$showCountdown)
+        Publishers.CombineLatest4(
+            wakeManager.$isActive,
+            settings.$showStatusText,
+            wakeManager.$timeRemaining.map { _ in () }.prepend(()),
+            watchedProcessStore.$processes.map { _ in () }.prepend(())
+        )
             .receive(on: RunLoop.main)
-            .sink { isActive, showCountdown in
-                // Compute the width of our NSStatusItem button in the menu bar.
-                // Three cases to handle, and we do this dynamically rather than hardcode constant widths.
-                // - Cup only
-                // - Cup with long countdown text (ex: "23:39:05")
-                // - Cup with other/typical countdown text (ex: 1:59:46, 4:15)
-                if isActive && showCountdown, let label = self.wakeManager.menuBarTimeLabel {
+            .sink { isActive, showStatusText, _, _ in
+                if isActive && showStatusText, let label = self.computeStatusText() {
                     let font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
                     let width = (label as NSString).size(withAttributes: [.font: font]).width
                     self.statusItem.length = ceil(width) + 26
                 } else {
-                    // Cup only, it's safe to hardcode the width
                     self.statusItem.length = 20
                 }
             }
@@ -77,6 +86,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             .merge(with: settings.$preventSystemSleep.map { _ in () })
             .merge(with: settings.$preventDisplaySleep.map { _ in () })
             .merge(with: settings.$preventScreenSaver.map { _ in () })
+            .merge(with: watchedProcessStore.$processes.map { _ in () })
             .receive(on: RunLoop.main)
             .sink { [weak self] in
                 self?.updateTooltip()
@@ -104,7 +114,18 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         lines.append(L.tooltipAutoLock(status(settings.preventScreenSaver)))
 
         if wakeManager.isActive {
-            if let stopTime = wakeManager.formattedStopTime {
+            let watchedApps = watchedProcessStore.allProcesses
+            if !watchedApps.isEmpty {
+                lines.append("")
+                lines.append(L.tooltipWatching)
+                let maxShown = 5
+                for app in watchedApps.prefix(maxShown) {
+                    lines.append("  \u{2022} \(app.name)")
+                }
+                if watchedApps.count > maxShown {
+                    lines.append("  \u{2022} \(L.tooltipAndMore(watchedApps.count - maxShown))")
+                }
+            } else if let stopTime = wakeManager.formattedStopTime {
                 lines.append(L.tooltipTimeRemaining(L.tooltipUntil(stopTime)))
             } else if let countdown = wakeManager.formattedTimeRemaining {
                 lines.append(L.tooltipTimeRemaining(countdown))
@@ -114,6 +135,23 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         }
 
         return lines.joined(separator: "\n")
+    }
+
+    private func computeStatusText() -> String? {
+        guard wakeManager.isActive else {
+            return nil
+        }
+
+        let watchCount = watchedProcessStore.processes.count
+        if watchCount > 0 {
+            return L.statusWatchingApps(watchCount)
+        }
+
+        if let timeLabel = wakeManager.menuBarTimeLabel {
+            return timeLabel
+        }
+
+        return L.statusKeepingAwake
     }
 
     // MARK: - NSMenuDelegate
@@ -169,7 +207,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
             let isIndefinite = wakeManager.isActive &&
                                wakeManager.selectedDuration == nil &&
-                               wakeManager.selectedStopTime == nil
+                               wakeManager.selectedStopTime == nil &&
+                               watchedProcessStore.isEmpty
             let indefiniteItem = NSMenuItem(title: L.indefinitely, action: #selector(toggleIndefinite), keyEquivalent: "")
 
             indefiniteItem.target = self
@@ -198,6 +237,13 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 item.target = self
                 keepAwakeSubmenu.addItem(item)
             }
+
+            let untilAppItem = NSMenuItem(title: L.untilAppExits, action: #selector(showWatchProcessesPicker), keyEquivalent: "")
+            untilAppItem.target = self
+            if !watchedProcessStore.isEmpty {
+                untilAppItem.state = .on
+            }
+            keepAwakeSubmenu.addItem(untilAppItem)
 
             keepAwakeItem.submenu = keepAwakeSubmenu
             menu.addItem(keepAwakeItem)
@@ -254,7 +300,9 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         switch entry {
             case .indefinitely:
-                return wakeManager.selectedDuration == nil && wakeManager.selectedStopTime == nil
+                return wakeManager.selectedDuration == nil &&
+                       wakeManager.selectedStopTime == nil &&
+                       watchedProcessStore.isEmpty
             case .duration(let seconds):
                 return wakeManager.selectedDuration == seconds
             case .untilTime(let hour, let minute):
@@ -265,6 +313,13 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 let components = Calendar.current.dateComponents([.hour, .minute], from: stopTime)
                 return components.hour == hour && components.minute == minute
         }
+    }
+
+    // MARK: - Watch State
+
+    private func clearWatchState() {
+        processWatcher.stopAll()
+        watchedProcessStore.removeAll()
     }
 
     // MARK: - Actions
@@ -281,7 +336,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     @objc private func toggleIndefinite() {
         let isIndefinite = wakeManager.isActive &&
                            wakeManager.selectedDuration == nil &&
-                           wakeManager.selectedStopTime == nil
+                           wakeManager.selectedStopTime == nil &&
+                           watchedProcessStore.isEmpty
 
         if isIndefinite {
             wakeManager.deactivate()
@@ -290,11 +346,13 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 return
             }
 
+            clearWatchState()
             wakeManager.activateIndefinitely()
         }
     }
 
     @objc private func deactivateWake() {
+        clearWatchState()
         wakeManager.deactivate()
     }
 
@@ -303,6 +361,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             return
         }
 
+        clearWatchState()
         StopAtPopoverManager.shared.show(wakeManager: wakeManager)
     }
 
@@ -311,6 +370,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             return
         }
 
+        clearWatchState()
         CustomDurationPopoverManager.shared.show(wakeManager: wakeManager)
     }
 
@@ -324,8 +384,17 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 return
             }
 
+            clearWatchState()
             wakeManager.activate(for: duration)
         }
+    }
+
+    @objc private func showWatchProcessesPicker() {
+        guard requireSystemEnabled() else {
+            return
+        }
+
+        WatchProcessesPopoverManager.shared.show(viewModel: watchProcessesViewModel)
     }
 
     @objc private func activateMRU(_ sender: NSMenuItem) {
@@ -337,7 +406,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             case .indefinitely:
                 let isIndefinite = wakeManager.isActive &&
                                    wakeManager.selectedDuration == nil &&
-                                   wakeManager.selectedStopTime == nil
+                                   wakeManager.selectedStopTime == nil &&
+                                   watchedProcessStore.isEmpty
                 if isIndefinite {
                     wakeManager.deactivate()
                 } else {
@@ -345,6 +415,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                         return
                     }
 
+                    clearWatchState()
                     wakeManager.activateIndefinitely()
                 }
             case .duration(let seconds):
@@ -355,6 +426,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                         return
                     }
 
+                    clearWatchState()
                     wakeManager.activate(for: seconds)
                 }
             case .untilTime(let hour, let minute):
@@ -369,6 +441,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 guard requireSystemEnabled() else {
                     return
                 }
+
+                clearWatchState()
 
                 var components = Calendar.current.dateComponents([.year, .month, .day], from: Date.now)
                 components.hour = hour
@@ -413,6 +487,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 private struct StatusBarIconView: View {
     @ObservedObject var wakeManager: WakeAssertionManager
     @ObservedObject var settings: SettingsViewModel
+    @ObservedObject var watchedProcessStore: WatchedProcessStore
 
     var body: some View {
         let isActive = wakeManager.isActive
@@ -423,10 +498,27 @@ private struct StatusBarIconView: View {
                 .frame(width: 18, height: 18)
                 .offset(y: -1)
 
-            if settings.showCountdown, let timeLabel = wakeManager.menuBarTimeLabel {
-                Text(timeLabel)
+            if settings.showStatusText, let statusText = statusText {
+                Text(statusText)
                     .font(FontPalette.monospacedDigit)
             }
         }
+    }
+
+    private var statusText: String? {
+        guard wakeManager.isActive else {
+            return nil
+        }
+
+        let watchCount = watchedProcessStore.processes.count
+        if watchCount > 0 {
+            return L.statusWatchingApps(watchCount)
+        }
+
+        if let timeLabel = wakeManager.menuBarTimeLabel {
+            return timeLabel
+        }
+
+        return L.statusKeepingAwake
     }
 }

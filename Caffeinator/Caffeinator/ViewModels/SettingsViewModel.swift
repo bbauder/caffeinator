@@ -47,9 +47,9 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var showCountdown: Bool {
+    @Published var showStatusText: Bool {
         didSet {
-            updateShowCountdown()
+            updateShowStatusText()
         }
     }
 
@@ -152,7 +152,7 @@ class SettingsViewModel: ObservableObject {
         preventScreenSaver = persistence.preventScreenSaver
         hideActivationOptionsWhileActive = persistence.hideActivationOptionsWhileActive
         showRecentDurations = persistence.showRecentDurations
-        showCountdown = persistence.showCountdown
+        showStatusText = persistence.showStatusText
         animateIcon = persistence.animateIcon
         declareUserActivity = persistence.declareUserActivity
         autoDisableOnLowBattery = persistence.autoDisableOnLowBattery
@@ -248,8 +248,8 @@ class SettingsViewModel: ObservableObject {
         persistence.showRecentDurations = showRecentDurations
     }
 
-    private func updateShowCountdown() {
-        persistence.showCountdown = showCountdown
+    private func updateShowStatusText() {
+        persistence.showStatusText = showStatusText
     }
 
     private func updateAnimateIcon() {
