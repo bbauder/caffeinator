@@ -15,9 +15,11 @@ struct CaffeinatorIconView: View {
     var animateSteam: Bool = true
 
     @State private var steamFrame = 0
+    
+    // Ensure the steam animation frame rate never matches the once-per-second countdown display
     private let timer = Timer.publish(every: 0.66, on: .main, in: .common).autoconnect()
 
-    // Three-line steam pattern, three distinct frames
+    // Three-line steam pattern, three distinct frames, three relative (rising) heights
     private static let steamHeights: [[CGFloat]] = [ [1, 2, 1],
                                                      [3, 2, 3],
                                                      [4, 4, 4] ]
@@ -52,7 +54,8 @@ struct CaffeinatorIconView: View {
                              width: rect.width - topInset * 2,
                              height: rect.height)
 
-        // --- Custom bowl path with asymmetric corner radii ---
+        // Draw the cup's body with asymmetric corner radii. We want the top to appear
+        // wider than the base.
         var cupPath = Path()
 
         let rTop: CGFloat = metrics.cornerRadius * 0.35     // tighter top corners
@@ -99,7 +102,7 @@ struct CaffeinatorIconView: View {
                        with: .foreground,
                        lineWidth: metrics.lineWidth)
 
-        // --- Connected Handle (Apple‑ceramic style) ---
+        // Draw the handle on the right side, connected at the top and bottom to the cup's body
         var handle = Path()
 
         let outerR = metrics.handleOuterRadius
@@ -122,7 +125,7 @@ struct CaffeinatorIconView: View {
             y: cy + outerR * 0.55
         )
 
-        // --- Top connector ---
+        // Top connector
         handle.move(to: topAttach)
 
         // Outer arc
@@ -134,7 +137,7 @@ struct CaffeinatorIconView: View {
             clockwise: false
         )
 
-        // --- Bottom connector ---
+        // Bottom connector
         handle.addLine(to: bottomAttach)
 
         // Inner arc (back toward top)
@@ -146,14 +149,11 @@ struct CaffeinatorIconView: View {
             clockwise: true
         )
 
-        // Stroke only (no fill)
+        // Draw the path of the handle, with no fill so it remains hollow.
         context.stroke(
             handle,
             with: .foreground,
-            style: StrokeStyle(
-                lineWidth: metrics.lineWidth * 1.1,
-                lineCap: .round
-            )
+            style: StrokeStyle(lineWidth: metrics.lineWidth * 1.1, lineCap: .round)
         )
     }
 
@@ -198,6 +198,7 @@ struct CaffeinatorIconView: View {
         let heights = Self.steamHeights[frame]
         let unitHeight = metrics.steamRegionHeight / 4
 
+        // Iterate over all three frames, each with rising height above the cup body
         for i in 0..<3 {
             let x = metrics.steamXPositions[i]
             let lineHeight = unitHeight * heights[i]
@@ -205,7 +206,7 @@ struct CaffeinatorIconView: View {
             let yStart = metrics.steamBaseY
             let yEnd = metrics.steamBaseY - lineHeight
 
-            // --- Gentle S-curve steam ---
+            // Make each steam line rise into an approximated S-curve
             var path = Path()
             path.move(to: CGPoint(x: x, y: yStart))
 
@@ -263,7 +264,7 @@ private struct CupMetrics {
         let w = size.width
         let h = size.height
 
-        // Tuned for menu bar clarity
+        // Tuned for consistency with standard menu bar items
         lineWidth = max(w * 0.07, 1)
         cornerRadius = w * 0.18
 

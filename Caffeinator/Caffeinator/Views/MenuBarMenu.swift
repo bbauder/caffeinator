@@ -88,7 +88,9 @@ struct MenuBarMenu: View {
 
     private var indefiniteBinding: Binding<Bool> {
         Binding(
-            get: { isIndefinite },
+            get: {
+                isIndefinite
+            },
             set: { newValue in
                 if newValue {
                     wakeManager.activateIndefinitely()
@@ -101,7 +103,9 @@ struct MenuBarMenu: View {
 
     private func durationToggle(_ title: String, duration: TimeInterval) -> some View {
         Toggle(title, isOn: Binding(
-            get: { wakeManager.selectedDuration == duration },
+            get: {
+                wakeManager.selectedDuration == duration
+            },
             set: { newValue in
                 if newValue {
                     wakeManager.activate(for: duration)

@@ -23,6 +23,7 @@ struct CustomDurationPickerView: View {
         let formatter = DateFormatter()
 
         formatter.timeStyle = .short
+
         return formatter.string(from: endDate)
     }
 
@@ -38,9 +39,13 @@ struct CustomDurationPickerView: View {
                 .foregroundStyle(.secondary)
 
             HStack {
-                Button(L.cancel) { onDismiss() }
-                    .keyboardShortcut(.cancelAction)
+                Button(L.cancel) {
+                    onDismiss()
+                }
+                .keyboardShortcut(.cancelAction)
+
                 Spacer()
+
                 Button(L.start) {
                     wakeManager.activate(for: duration)
                     onDismiss()
