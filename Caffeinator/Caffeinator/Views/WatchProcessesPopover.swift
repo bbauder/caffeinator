@@ -1,0 +1,84 @@
+//
+//  WatchProcessesPopover.swift
+//  Caffeinator
+//
+
+import SwiftUI
+
+struct WatchProcessesPopover: View {
+    @ObservedObject var viewModel: WatchProcessesViewModel
+    var onDismiss: () -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            header
+            content
+            footer
+            buttonRow
+        }
+        .padding(16)
+        .frame(width: 320, idealHeight: 420)
+        .onAppear {
+            viewModel.refreshRunningApps()
+        }
+    }
+
+    private var header: some View {
+        HStack {
+            Text(L.watchProcessesTitle)
+                .font(.headline)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if viewModel.runningApps.isEmpty {
+            emptyState
+        } else {
+            ScrollView {
+                VStack(spacing: 0) {
+                    ForEach(viewModel.runningApps) { process in
+                        WatchProcessesRow(
+                            process: process,
+                            isWatched: viewModel.isWatched(process),
+                            onAdd: { viewModel.add(process: process) },
+                            onRemove: { viewModel.remove(process: process) }
+                        )
+                    }
+                }
+            }
+            .frame(maxHeight: 300)
+        }
+    }
+
+    private var emptyState: some View {
+        VStack {
+            Text(L.watchProcessesEmptyState)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.top, 40)
+            Spacer()
+        }
+    }
+
+    private var footer: some View {
+        HStack {
+            Text(viewModel.footerText)
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            Spacer()
+        }
+    }
+
+    private var buttonRow: some View {
+        HStack {
+            Spacer()
+            Button(L.done) {
+                onDismiss()
+            }
+            .keyboardShortcut(.defaultAction)
+        }
+    }
+}
