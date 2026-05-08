@@ -37,9 +37,11 @@ struct SettingsView: View {
 
                     Section(L.settingsSleepPrevention) {
                         if !settings.isAnySystemEnabled {
+                            // Display a banner if no sleep systems are enabled
                             HStack(alignment: .top, spacing: 8) {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .foregroundStyle(.yellow)
+
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(L.settingsNoSystemsEnabledTitle)
                                         .fontWeight(.semibold)
@@ -50,10 +52,10 @@ struct SettingsView: View {
                                 }
                             }
                             .font(.callout)
-                            .padding(12)
+                            .padding(8)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(.yellow.opacity(0.10), in: RoundedRectangle(cornerRadius: 8))
-                            .padding(.bottom, 6)
+                            .padding(.bottom, 4)
                         }
 
                         HStack {
@@ -79,6 +81,7 @@ struct SettingsView: View {
                             Toggle(L.settingsDisableOnLowBattery, isOn: $settings.autoDisableOnLowBattery)
                             InfoButton(popoverText: L.settingsLowBatteryHelp)
                         }
+
                         HStack(spacing: 6) {
                             Text(L.settingsThreshold)
                                 .foregroundStyle(.secondary)
@@ -89,9 +92,11 @@ struct SettingsView: View {
                                 ),
                                 in: 5...50
                             )
+
                             Text("\(settings.lowBatteryThreshold)%")
                                 .monospacedDigit()
                                 .frame(width: 36, alignment: .trailing)
+
                             HStack(spacing: 2) {
                                 Button {
                                     if settings.lowBatteryThreshold > 5 {
@@ -117,6 +122,7 @@ struct SettingsView: View {
                         .padding(.leading, 20)
                         .padding(.top, 4)
                         .disabled(!settings.autoDisableOnLowBattery)
+
                         HStack {
                             Toggle(L.settingsDisableOnUnpluggedPower, isOn: $settings.autoDisableOnUnpluggedPower)
                             InfoButton(popoverText: L.settingsUnplugHelp)
@@ -135,17 +141,17 @@ struct SettingsView: View {
                 Spacer()
 
                 Button(L.done) {
-                    // Dismiss when the user hits Return--default button
+                    // Dismiss when the user hits Return--Done gets styled as the default button
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
             }
-            .padding(.horizontal, 14)
+            .padding(.horizontal, 4)
             .padding(.top, 12)
             .padding(.bottom, 12)
         }
-        .frame(width: 480, height: 520)
-        .padding(20)
+        .frame(width: 480, height: 540)
+        .padding(12)
         .onAppear {
             NSApplication.shared.activate()
         }
