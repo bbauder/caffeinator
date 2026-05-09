@@ -43,7 +43,6 @@
 "settingsShowRecents" = "Show recent durations in menu";
 "settingsNoSystemsEnabledTitle" = "No sleep prevention systems are enabled.";
 "settingsNoSystemsEnabledMessage" = "Caffeinator cannot keep your Mac awake until at least one system is turned on.";
-"settingsShowCountdown" = "Show countdown next to menu bar icon";
 "settingsAnimateIconWhileActive" = "Animate menu bar icon while active";
 "settingsLaunchAtLogin" = "Launch at login";
 "tooltipActive" = "Caffeinator: Keeping Awake";
@@ -74,7 +73,6 @@
 "settingsLowBatteryHelp" = "Automatically stops Keep Awake when your battery falls below the selected threshold.";
 "settingsUnplugHelp" = "Automatically stops Keep Awake when your Mac switches to battery power.";
 "settingsRecentDurationsHelp" = "Shows your recently used Keep Awake durations in the menu for quick access.";
-"settingsCountdownHelp" = "Displays the remaining time directly in the menu bar while a timed session is active.";
 "settingsAnimateIconHelp" = "Adds a subtle animation to the menu bar icon while Keep Awake is active.";
 "settingsShowStatusText" = "Show status text next to menu bar icon";
 "settingsStatusTextHelp" = "Displays contextual info in the menu bar: countdown for timed sessions, app count when watching processes.";

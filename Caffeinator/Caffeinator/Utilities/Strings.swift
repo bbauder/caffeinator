@@ -103,7 +103,6 @@ enum L {
     static let settingsShowRecents = NSLocalizedString("settingsShowRecents", comment: "")
     static let settingsNoSystemsEnabledTitle = NSLocalizedString("settingsNoSystemsEnabledTitle", comment: "")
     static let settingsNoSystemsEnabledMessage = NSLocalizedString("settingsNoSystemsEnabledMessage", comment: "")
-    static let settingsShowCountdown = NSLocalizedString("settingsShowCountdown", comment: "")
     static let settingsAnimateIconWhileActive = NSLocalizedString("settingsAnimateIconWhileActive", comment: "")
     static let settingsLaunchAtLogin = NSLocalizedString("settingsLaunchAtLogin", comment: "")
     static let settingsPreventSystemSleepHelp = NSLocalizedString("settingsPreventSystemSleepHelp", comment: "")
@@ -114,7 +113,6 @@ enum L {
     static let settingsLowBatteryHelp = NSLocalizedString("settingsLowBatteryHelp", comment: "")
     static let settingsUnplugHelp = NSLocalizedString("settingsUnplugHelp", comment: "")
     static let settingsRecentDurationsHelp = NSLocalizedString("settingsRecentDurationsHelp", comment: "")
-    static let settingsCountdownHelp = NSLocalizedString("settingsCountdownHelp", comment: "")
     static let settingsAnimateIconHelp = NSLocalizedString("settingsAnimateIconHelp", comment: "")
 
     static let tooltipActive = NSLocalizedString("tooltipActive", comment: "")
