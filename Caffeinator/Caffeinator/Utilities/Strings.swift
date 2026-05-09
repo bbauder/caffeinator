@@ -169,6 +169,7 @@ enum L {
     static let tooltipWatching = NSLocalizedString("tooltipWatching", comment: "")
     static let statusKeepingAwake = NSLocalizedString("statusKeepingAwake", comment: "")
     static let statusWatchingOneApp = NSLocalizedString("statusWatchingOneApp", comment: "")
+    static let startWatching = NSLocalizedString("startWatching", comment: "")
 
     static func tooltipAndMore(_ count: Int) -> String {
         String(format: NSLocalizedString("tooltipAndMore", comment: ""), count)

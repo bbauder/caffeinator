@@ -42,9 +42,9 @@ struct WatchProcessesPopover: View {
                 VStack(spacing: 0) {
                     ForEach(viewModel.runningApps) { process in
                         WatchProcessesRow(process: process,
-                                          isWatched: viewModel.isWatched(process),
-                                          onAdd: { viewModel.add(process: process) },
-                                          onRemove: { viewModel.remove(process: process) }
+                                          isWatched: viewModel.isPending(process),
+                                          onAdd: { viewModel.togglePending(process: process) },
+                                          onRemove: { viewModel.togglePending(process: process) }
                         )
                     }
                 }
@@ -76,10 +76,12 @@ struct WatchProcessesPopover: View {
     private var buttonRow: some View {
         HStack {
             Spacer()
-            Button(L.done) {
+            Button(L.startWatching) {
                 onDismiss()
+                viewModel.commitSelection()
             }
             .keyboardShortcut(.defaultAction)
+            .disabled(!viewModel.canCommit)
         }
     }
 }

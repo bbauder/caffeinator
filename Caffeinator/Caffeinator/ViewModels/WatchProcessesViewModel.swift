@@ -11,22 +11,23 @@ import Foundation
 @MainActor
 class WatchProcessesViewModel: ObservableObject {
     @Published private(set) var runningApps: [WatchedProcess] = []
+    @Published var pendingSelection = Set<pid_t>()
 
     private let discovery: ProcessDiscovery
     private let store: WatchedProcessStore
     private let processWatcher: ProcessWatcher
     private var storeCancellable: AnyCancellable?
 
-    var watchedApps: [WatchedProcess] {
-        store.allProcesses
-    }
-
     var footerText: String {
-        if store.isEmpty {
+        if pendingSelection.isEmpty {
             return L.watchProcessesFooterEmpty
         }
 
         return L.watchProcessesFooterWatching
+    }
+
+    var canCommit: Bool {
+        !pendingSelection.isEmpty
     }
 
     init(discovery: ProcessDiscovery,
@@ -47,22 +48,34 @@ class WatchProcessesViewModel: ObservableObject {
         runningApps = discovery.discoverGUIApplications()
     }
 
-    func add(process: WatchedProcess) {
-        guard !store.contains(pid: process.id) else {
-            return
+    func beginPendingSelection() {
+        pendingSelection = Set(store.processes.keys)
+    }
+
+    func togglePending(process: WatchedProcess) {
+        if pendingSelection.contains(process.id) {
+            pendingSelection.remove(process.id)
+        } else {
+            pendingSelection.insert(process.id)
+        }
+    }
+
+    func isPending(_ process: WatchedProcess) -> Bool {
+        pendingSelection.contains(process.id)
+    }
+
+    func commitSelection() {
+        let currentPIDs = Set(store.processes.keys)
+
+        for pid in currentPIDs where !pendingSelection.contains(pid) {
+            store.remove(pid: pid)
+            processWatcher.stopWatching(pid: pid)
         }
 
-        store.add(process)
-        processWatcher.startWatching(pid: process.id)
-    }
-
-    func remove(process: WatchedProcess) {
-        store.remove(pid: process.id)
-        processWatcher.stopWatching(pid: process.id)
-    }
-
-    func isWatched(_ process: WatchedProcess) -> Bool {
-        store.contains(pid: process.id)
+        for process in runningApps where pendingSelection.contains(process.id) && !currentPIDs.contains(process.id) {
+            store.add(process)
+            processWatcher.startWatching(pid: process.id)
+        }
     }
 
     func handleProcessTerminated(pid: pid_t) {

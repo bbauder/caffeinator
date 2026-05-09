@@ -86,3 +86,4 @@
 "statusKeepingAwake" = "Keeping Awake";
 "statusWatchingOneApp" = "1 App";
 "statusWatchingApps" = "%d Apps";
+"startWatching" = "Start Watching";

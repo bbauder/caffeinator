@@ -9,36 +9,46 @@ import AppKit
 import SwiftUI
 
 @MainActor
-final class WatchProcessesPopoverManager {
+final class WatchProcessesPopoverManager: NSObject, NSPopoverDelegate {
     static let shared = WatchProcessesPopoverManager()
     private var popover: NSPopover?
 
     func show(viewModel: WatchProcessesViewModel) {
-        dismiss()
+        if !NSApp.isActive {
+            NSApp.activate(ignoringOtherApps: true)
+        }
+        guard let button = Self.findStatusItemButton() else {
+            return
+        }
 
-        Task {
-            NSApp.activate()
-            guard let button = Self.findStatusItemButton() else {
-                return
-            }
+        viewModel.beginPendingSelection()
 
-            let popoverView = WatchProcessesPopover(viewModel: viewModel) { [weak self] in
-                self?.dismiss()
-            }
+        let popoverView = WatchProcessesPopover(viewModel: viewModel) { [weak self] in
+            self?.dismiss()
+        }
 
-            let popover = NSPopover()
-            popover.contentSize = NSSize(width: 320, height: 420)
-            popover.behavior = .transient
-            popover.contentViewController = NSHostingController(rootView: popoverView)
+        let popover = NSPopover()
+        popover.delegate = self
+        popover.contentSize = NSSize(width: 320, height: 420)
+        popover.behavior = .transient
+        popover.contentViewController = NSHostingController(rootView: popoverView)
+        self.popover = popover
+
+        DispatchQueue.main.async {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)
-
-            self.popover = popover
+            popover.contentViewController?.view.window?.makeKeyAndOrderFront(nil)
         }
     }
 
     func dismiss() {
         popover?.close()
         popover = nil
+    }
+
+    nonisolated func popoverDidClose(_ notification: Notification) {
+        MainActor.assumeIsolated {
+            popover = nil
+        }
     }
 
     private static func findStatusItemButton() -> NSStatusBarButton? {
