@@ -15,25 +15,27 @@ final class StopAtPopoverManager {
     private var popover: NSPopover?
 
     func show(wakeManager: WakeAssertionManager) {
-        dismiss()
+        if !NSApp.isActive {
+            NSApp.activate(ignoringOtherApps: true)
+        }
 
-        Task {
-            NSApp.activate()
-            guard let button = Self.findStatusItemButton() else {
-                return
-            }
+        guard let button = Self.findStatusItemButton() else {
+            return
+        }
 
-            let pickerView = StopAtPickerView(wakeManager: wakeManager) { [weak self] in
-                self?.dismiss()
-            }
+        let pickerView = StopAtPickerView(wakeManager: wakeManager) { [weak self] in
+            self?.dismiss()
+        }
 
-            let popover = NSPopover()
-            popover.contentSize = NSSize(width: 260, height: 120)
-            popover.behavior = .transient
-            popover.contentViewController = NSHostingController(rootView: pickerView)
+        let popover = NSPopover()
+        popover.contentSize = NSSize(width: 260, height: 120)
+        popover.behavior = .transient
+        popover.contentViewController = NSHostingController(rootView: pickerView)
+        self.popover = popover
+
+        DispatchQueue.main.async {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .maxY)
-
-            self.popover = popover
+            popover.contentViewController?.view.window?.makeKeyAndOrderFront(nil)
         }
     }
 
