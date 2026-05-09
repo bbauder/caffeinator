@@ -33,7 +33,7 @@ struct WatchProcessesRow: View {
             Spacer()
 
             if isWatched {
-                Image(systemName: "checkmark.circle.fill")
+                Image(systemName: "eye.fill")   // "checkmark.circle.fill" is a neutral option
                     .foregroundStyle(.tint)
                     .font(.system(size: 16))
             }
