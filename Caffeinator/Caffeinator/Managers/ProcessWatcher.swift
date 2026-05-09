@@ -53,14 +53,19 @@ final class ProcessWatcher {
         guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else {
             return
         }
+        
+        print(DBG.str("Process with PID \(app.processIdentifier) and name \(app.localizedName ?? "unknown") terminated"))
 
         let pid = app.processIdentifier
         guard watchedPIDs.contains(pid) else {
+            print(DBG.str("Process \(pid) was not being watched"))
             return
         }
 
         watchedPIDs.remove(pid)
         onProcessTerminated?(pid)
+
+        print(DBG.str("Process \(pid) was being watched and has been removed from the list"))
 
         if watchedPIDs.isEmpty {
             onAllProcessesTerminated?()

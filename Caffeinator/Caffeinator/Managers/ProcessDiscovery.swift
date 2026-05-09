@@ -32,13 +32,14 @@ final class ProcessDiscovery {
                 app.executableURL != nil
             }
             .map { app in
-                WatchedProcess(
-                    id: app.processIdentifier,
-                    name: app.localizedName ?? app.executableURL?.lastPathComponent ?? "Unknown",
-                    bundleIdentifier: app.bundleIdentifier,
-                    icon: app.icon
+                WatchedProcess(id: app.processIdentifier,
+                               name: app.localizedName ?? app.executableURL?.lastPathComponent ?? "Unknown",
+                               bundleIdentifier: app.bundleIdentifier,
+                               icon: app.icon
                 )
             }
-            .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+            .sorted {
+                $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+            }
     }
 }

@@ -47,7 +47,9 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         button.title = ""
         button.imagePosition = .imageOnly
 
-        let iconView = StatusBarIconView(wakeManager: wakeManager, settings: settings, watchedProcessStore: watchedProcessStore)
+        let iconView = StatusBarIconView(wakeManager: wakeManager,
+                                         settings: settings,
+                                         watchedProcessStore: watchedProcessStore)
         let hostingView = NSHostingView(rootView: iconView)
         hostingView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -62,7 +64,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             .receive(on: RunLoop.main)
             .sink { isActive, showStatusText, _, _ in
                 if isActive && showStatusText, let label = self.computeStatusText() {
-                    let font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
+                    let font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize,
+                                                                weight: .regular)
                     let width = (label as NSString).size(withAttributes: [.font: font]).width
                     self.statusItem.length = ceil(width) + 26
                 } else {

@@ -11,55 +11,80 @@ import ServiceManagement
 @MainActor
 class SettingsPersistenceManager {
 
+    private(set) var launchAtLogin: Bool
+    private let defaults = UserDefaults.standard
+
     var preventSystemSleep: Bool {
-        didSet { defaults.set(preventSystemSleep, forKey: "preventSystemSleep") }
+        didSet {
+            defaults.set(preventSystemSleep, forKey: "preventSystemSleep")
+        }
     }
 
     var preventDisplaySleep: Bool {
-        didSet { defaults.set(preventDisplaySleep, forKey: "preventDisplaySleep") }
+        didSet {
+            defaults.set(preventDisplaySleep, forKey: "preventDisplaySleep")
+        }
     }
 
     var preventScreenSaver: Bool {
-        didSet { defaults.set(preventScreenSaver, forKey: "preventScreenSaver") }
+        didSet {
+            defaults.set(preventScreenSaver, forKey: "preventScreenSaver")
+        }
     }
 
     var hideActivationOptionsWhileActive: Bool {
-        didSet { defaults.set(hideActivationOptionsWhileActive, forKey: "hideActivationOptionsWhileActive") }
+        didSet {
+            defaults.set(hideActivationOptionsWhileActive, forKey: "hideActivationOptionsWhileActive")
+        }
     }
 
     var showRecentDurations: Bool {
-        didSet { defaults.set(showRecentDurations, forKey: "showRecentDurations") }
+        didSet {
+            defaults.set(showRecentDurations, forKey: "showRecentDurations")
+        }
     }
 
     var showStatusText: Bool {
-        didSet { defaults.set(showStatusText, forKey: "showCountdown") }
+        didSet {
+            defaults.set(showStatusText, forKey: "showCountdown")
+        }
     }
 
     var animateIcon: Bool {
-        didSet { defaults.set(animateIcon, forKey: "animateIcon") }
+        didSet {
+            defaults.set(animateIcon, forKey: "animateIcon")
+        }
     }
 
     var declareUserActivity: Bool {
-        didSet { defaults.set(declareUserActivity, forKey: "declareUserActivity") }
+        didSet {
+            defaults.set(declareUserActivity, forKey: "declareUserActivity")
+        }
     }
 
     var autoDisableOnLowBattery: Bool {
-        didSet { defaults.set(autoDisableOnLowBattery, forKey: "autoDisableOnLowBattery") }
+        didSet {
+            defaults.set(autoDisableOnLowBattery, forKey: "autoDisableOnLowBattery")
+        }
     }
 
     var lowBatteryThreshold: Int {
-        didSet { defaults.set(lowBatteryThreshold, forKey: "lowBatteryThreshold") }
+        didSet {
+            defaults.set(lowBatteryThreshold, forKey: "lowBatteryThreshold")
+        }
     }
 
     var autoDisableOnUnpluggedPower: Bool {
-        didSet { defaults.set(autoDisableOnUnpluggedPower, forKey: "autoDisableOnUnpluggedPower") }
+        didSet {
+            defaults.set(autoDisableOnUnpluggedPower, forKey: "autoDisableOnUnpluggedPower")
+        }
     }
 
     var autoDisableNotificationsEnabled: Bool {
-        didSet { defaults.set(autoDisableNotificationsEnabled, forKey: "autoDisableNotificationsEnabled") }
+        didSet {
+            defaults.set(autoDisableNotificationsEnabled, forKey: "autoDisableNotificationsEnabled")
+        }
     }
-
-    private(set) var launchAtLogin: Bool
 
     var mruEntries: [MRUEntry] {
         didSet {
@@ -68,8 +93,6 @@ class SettingsPersistenceManager {
             }
         }
     }
-
-    private let defaults = UserDefaults.standard
 
     init() {
         defaults.register(defaults: [
