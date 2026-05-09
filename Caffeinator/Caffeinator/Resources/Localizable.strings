@@ -85,6 +85,6 @@
 "watchProcessesFooterWatching" = "Caffeinator will stop Keeping Awake when all watched apps exit.";
 "tooltipWatching" = "Watching:";
 "tooltipAndMore" = "… and %d more";
-"statusKeepingAwake" = "Awake";
+"statusKeepingAwake" = "Keeping Awake";
 "statusWatchingOneApp" = "1 App";
 "statusWatchingApps" = "%d Apps";
