@@ -11,6 +11,7 @@ import IOKit.pwr_mgt
 
 @MainActor
 class WakeAssertionManager: ObservableObject {
+
     @Published private(set) var isActive = false
     @Published private(set) var timeRemaining: TimeInterval?
     @Published private(set) var selectedDuration: TimeInterval?

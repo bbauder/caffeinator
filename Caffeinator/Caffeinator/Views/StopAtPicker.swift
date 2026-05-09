@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StopAtPickerView: View {
+
     @ObservedObject var wakeManager: WakeAssertionManager
     @State private var selectedTime: Date
 

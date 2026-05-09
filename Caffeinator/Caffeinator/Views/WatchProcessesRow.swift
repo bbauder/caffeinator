@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WatchProcessesRow: View {
+
     let process: WatchedProcess
     let isWatched: Bool
     let onAdd: () -> Void

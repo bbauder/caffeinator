@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 struct CaffeinatorIconView: View {
+
     var fillLevel: Double
     var isActive: Bool = false
     var animateSteam: Bool = true

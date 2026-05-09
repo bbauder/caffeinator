@@ -10,6 +10,7 @@ import SwiftUI
 import Combine
 
 final class StatusItemController: NSObject, NSMenuDelegate {
+
     private var statusItem: NSStatusItem!
     private let wakeManager: WakeAssertionManager
     private let settings: SettingsViewModel

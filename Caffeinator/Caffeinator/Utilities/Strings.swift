@@ -8,6 +8,7 @@
 import Foundation
 
 enum L {
+
     static let keepAwakeIndefinitely = NSLocalizedString("keepAwakeIndefinitely", comment: "")
 
     static func keepAwakeFor(minutes: Int) -> String {

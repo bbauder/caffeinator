@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WatchProcessesPopover: View {
+
     @ObservedObject var viewModel: WatchProcessesViewModel
     var onDismiss: () -> Void
 

@@ -10,6 +10,7 @@ import SwiftUI
 
 @MainActor
 final class WatchProcessesPopoverManager: NSObject, NSPopoverDelegate {
+
     static let shared = WatchProcessesPopoverManager()
     private var popover: NSPopover?
 
@@ -17,6 +18,7 @@ final class WatchProcessesPopoverManager: NSObject, NSPopoverDelegate {
         if !NSApp.isActive {
             NSApp.activate(ignoringOtherApps: true)
         }
+
         guard let button = Self.findStatusItemButton() else {
             return
         }
@@ -74,6 +76,7 @@ final class WatchProcessesPopoverManager: NSObject, NSPopoverDelegate {
                 return button
             }
         }
+
         return nil
     }
 }

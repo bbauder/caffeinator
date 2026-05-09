@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+
     @EnvironmentObject private var settings: SettingsViewModel
     @Environment(\.dismiss) private var dismiss
 

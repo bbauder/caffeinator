@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct InfoButton: View {
+
     var popoverText: String?
 
     @State private var showPopover = false

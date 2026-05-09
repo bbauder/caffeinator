@@ -9,6 +9,7 @@ import AppKit
 
 @MainActor
 final class ProcessWatcher {
+
     var onProcessTerminated: ((pid_t) -> Void)?
     var onAllProcessesTerminated: (() -> Void)?
 

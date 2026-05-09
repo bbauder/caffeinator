@@ -10,6 +10,7 @@ import Foundation
 
 @MainActor
 class WatchProcessesViewModel: ObservableObject {
+
     @Published private(set) var runningApps: [WatchedProcess] = []
     @Published var pendingSelection = Set<pid_t>()
 

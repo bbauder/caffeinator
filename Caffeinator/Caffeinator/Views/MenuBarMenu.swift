@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MenuBarMenu: View {
+
     @EnvironmentObject private var wakeManager: WakeAssertionManager
     @EnvironmentObject private var settings: SettingsViewModel
     @Environment(\.openSettings) private var openSettings

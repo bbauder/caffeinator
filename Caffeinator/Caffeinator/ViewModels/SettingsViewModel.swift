@@ -10,6 +10,7 @@ import Foundation
 import ServiceManagement
 
 enum MRUEntry: Codable, Equatable {
+
     case indefinitely
     case duration(TimeInterval)
     case untilTime(hour: Int, minute: Int)
@@ -17,6 +18,7 @@ enum MRUEntry: Codable, Equatable {
 
 @MainActor
 class SettingsViewModel: ObservableObject {
+
     @Published var preventSystemSleep: Bool {
         didSet {
             updateSystemSleepPrevention()

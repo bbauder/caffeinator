@@ -10,6 +10,7 @@ import SwiftUI
 
 @MainActor
 final class CustomDurationPopoverManager {
+
     static let shared = CustomDurationPopoverManager()
     private var popover: NSPopover?
 
@@ -18,6 +19,7 @@ final class CustomDurationPopoverManager {
 
         Task {
             NSApp.activate()
+
             guard let button = Self.findStatusItemButton() else {
                 return
             }

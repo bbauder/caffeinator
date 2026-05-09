@@ -8,6 +8,7 @@
 import AppKit
 
 struct WatchedProcess: Identifiable, Hashable {
+
     let id: pid_t
     let name: String
     let bundleIdentifier: String?
@@ -24,6 +25,7 @@ struct WatchedProcess: Identifiable, Hashable {
 
 @MainActor
 final class ProcessDiscovery {
+
     func discoverGUIApplications() -> [WatchedProcess] {
         NSWorkspace.shared.runningApplications
             .filter { app in

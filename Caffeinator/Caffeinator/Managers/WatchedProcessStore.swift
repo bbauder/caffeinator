@@ -10,6 +10,7 @@ import Foundation
 
 @MainActor
 final class WatchedProcessStore: ObservableObject {
+
     @Published private(set) var processes: [pid_t: WatchedProcess] = [:]
 
     var onFirstProcessAdded: (() -> Void)?

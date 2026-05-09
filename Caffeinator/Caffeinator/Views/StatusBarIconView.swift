@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 
 struct StatusBarIconView: View {
+
     @ObservedObject var wakeManager: WakeAssertionManager
     @ObservedObject var settings: SettingsViewModel
     @ObservedObject var watchedProcessStore: WatchedProcessStore

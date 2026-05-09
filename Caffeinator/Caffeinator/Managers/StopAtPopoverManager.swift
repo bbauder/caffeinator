@@ -10,6 +10,7 @@ import SwiftUI
 
 @MainActor
 final class StopAtPopoverManager {
+
     static let shared = StopAtPopoverManager()
     private var popover: NSPopover?
 
