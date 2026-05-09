@@ -75,7 +75,13 @@ struct WatchProcessesPopover: View {
 
     private var buttonRow: some View {
         HStack {
+            Button(L.cancel) {
+                onDismiss()
+            }
+            .keyboardShortcut(.cancelAction)
+
             Spacer()
+
             Button(L.startWatching) {
                 onDismiss()
                 viewModel.commitSelection()
@@ -83,5 +89,6 @@ struct WatchProcessesPopover: View {
             .keyboardShortcut(.defaultAction)
             .disabled(!viewModel.canCommit)
         }
+        .padding(.top, 4)
     }
 }
