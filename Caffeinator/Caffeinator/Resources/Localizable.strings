@@ -82,7 +82,7 @@
 "watchProcessesTitle" = "Watch Processes";
 "watchProcessesEmptyState" = "No running apps found.";
 "watchProcessesFooterEmpty" = "Select one or more apps to begin watching.";
-"watchProcessesFooterWatching" = "Caffeinator will stop when all watched apps exit.";
+"watchProcessesFooterWatching" = "Caffeinator will stop Keeping Awake when all watched apps exit.";
 "tooltipWatching" = "Watching:";
 "tooltipAndMore" = "… and %d more";
 "statusKeepingAwake" = "Awake";

@@ -2,6 +2,8 @@
 //  ProcessDiscovery.swift
 //  Caffeinator
 //
+//  Created by Bruce Bauder on 5/8/26.
+//
 
 import AppKit
 

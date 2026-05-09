@@ -2,6 +2,8 @@
 //  WatchProcessesViewModel.swift
 //  Caffeinator
 //
+//  Created by Bruce Bauder on 5/8/26.
+//
 
 import Combine
 import Foundation
@@ -23,6 +25,7 @@ class WatchProcessesViewModel: ObservableObject {
         if store.isEmpty {
             return L.watchProcessesFooterEmpty
         }
+
         return L.watchProcessesFooterWatching
     }
 
@@ -48,6 +51,7 @@ class WatchProcessesViewModel: ObservableObject {
         guard !store.contains(pid: process.id) else {
             return
         }
+
         store.add(process)
         processWatcher.startWatching(pid: process.id)
     }

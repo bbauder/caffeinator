@@ -2,6 +2,8 @@
 //  WatchProcessesPopover.swift
 //  Caffeinator
 //
+//  Created by Bruce Bauder on 5/8/26.
+//
 
 import SwiftUI
 
@@ -39,16 +41,15 @@ struct WatchProcessesPopover: View {
             ScrollView {
                 VStack(spacing: 0) {
                     ForEach(viewModel.runningApps) { process in
-                        WatchProcessesRow(
-                            process: process,
-                            isWatched: viewModel.isWatched(process),
-                            onAdd: { viewModel.add(process: process) },
-                            onRemove: { viewModel.remove(process: process) }
+                        WatchProcessesRow(process: process,
+                                          isWatched: viewModel.isWatched(process),
+                                          onAdd: { viewModel.add(process: process) },
+                                          onRemove: { viewModel.remove(process: process) }
                         )
                     }
                 }
             }
-            .frame(maxHeight: 300)
+            .frame(maxHeight: 280)
         }
     }
 
@@ -66,7 +67,7 @@ struct WatchProcessesPopover: View {
     private var footer: some View {
         HStack {
             Text(viewModel.footerText)
-                .font(.footnote)
+                .font(.body)
                 .foregroundStyle(.secondary)
             Spacer()
         }

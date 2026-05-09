@@ -3,7 +3,6 @@
 //  Caffeinator
 //
 //  Created by Bruce Bauder on 4/29/26.
-//  Refined version: menu‑bar‑optimized icon with 3‑line steam
 //
 
 import SwiftUI
