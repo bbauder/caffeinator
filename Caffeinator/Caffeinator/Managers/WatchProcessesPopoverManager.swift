@@ -31,7 +31,7 @@ final class WatchProcessesPopoverManager: NSObject, NSPopoverDelegate {
 
         let popover = NSPopover()
         popover.delegate = self
-        popover.contentSize = NSSize(width: 320, height: 420)
+        popover.contentSize = NSSize(width: 320, height: 410) // Show 8 process rows without clipping
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(rootView: popoverView)
         self.popover = popover

@@ -50,7 +50,7 @@ struct WatchProcessesPopover: View {
                     }
                 }
             }
-            .frame(maxHeight: 280)
+            .frame(maxHeight: .infinity)
         }
     }
 
@@ -72,6 +72,7 @@ struct WatchProcessesPopover: View {
                 .foregroundStyle(.secondary)
             Spacer()
         }
+        .frame(height: 40, alignment: .top)
     }
 
     private var buttonRow: some View {
