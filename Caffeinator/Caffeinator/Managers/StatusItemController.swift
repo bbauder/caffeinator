@@ -459,10 +459,9 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     @objc private func openSettings() {
+        NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
 
-        // Create an NSWindow with NSHosting​Controller wrapping Settings​View,
-        // reusing an existing window if one is already visible.
         if let existing = settingsWindow, existing.isVisible {
             existing.makeKeyAndOrderFront(nil)
             return
@@ -478,7 +477,24 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         window.center()
         window.makeKeyAndOrderFront(nil)
 
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(settingsWindowWillClose),
+            name: NSWindow.willCloseNotification,
+            object: window
+        )
+
         settingsWindow = window
+    }
+
+    @objc private func settingsWindowWillClose(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSWindow.willCloseNotification,
+            object: notification.object
+        )
+        settingsWindow = nil
+        NSApp.setActivationPolicy(.accessory)
     }
 
     @objc private func quitApp() {
