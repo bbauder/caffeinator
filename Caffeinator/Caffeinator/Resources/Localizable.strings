@@ -27,7 +27,6 @@
 "settingsPreventDisplaySleep" = "Prevent display sleep";
 "settingsPreventAutoLock" = "Prevent auto‑lock";
 "settingsDeclareUserActivity" = "Declare user activity (like caffeinate -u)";
-"settingsMenu" = "Menu";
 "settingsHideActivationOptions" = "Hide activation options while active";
 "done" = "Done";
 "settingsWindowTitle" = "Caffeinator Settings";
@@ -68,7 +67,6 @@
 "settingsPreventSystemSleepHelp" = "Keeps macOS from entering full system sleep, allowing long-running tasks to continue uninterrupted.";
 "settingsPreventDisplaySleepHelp" = "Keeps the screen awake. Useful for presentations, monitoring, or when you need the display to stay visible.";
 "settingsPreventScreenSaverHelp" = "Prevents the lock screen from appearing due to inactivity.";
-"settingsDeclareUserActivityHelp" = "Periodically tells macOS you're active, similar to caffeinate -u.";
 "settingsDeclareUserActivityPopover" = "Declares user activity at intervals so macOS treats you as 'active.' This resets the idle timer and helps keep the display awake. Caffeinator only performs this while 'Prevent display sleep' is enabled, ensuring the display isn't awakened unexpectedly.";
 "settingsLowBatteryHelp" = "Automatically stops Keep Awake when your battery falls below the selected threshold.";
 "settingsUnplugHelp" = "Automatically stops Keep Awake when your Mac switches to battery power.";
