@@ -113,6 +113,9 @@ enum L {
     static let settingsUnplugHelp = NSLocalizedString("settingsUnplugHelp", comment: "")
     static let settingsRecentDurationsHelp = NSLocalizedString("settingsRecentDurationsHelp", comment: "")
     static let settingsAnimateIconHelp = NSLocalizedString("settingsAnimateIconHelp", comment: "")
+    static let settingsLaunchAtLoginHelp = NSLocalizedString("settingsLaunchAtLoginHelp", comment: "")
+    static let settingsHideActivationOptionsHelp = NSLocalizedString("settingsHideActivationOptionsHelp", comment: "")
+    static let settingsAutoDisableNotificationsHelp = NSLocalizedString("settingsAutoDisableNotificationsHelp", comment: "")
 
     static let tooltipActive = NSLocalizedString("tooltipActive", comment: "")
     static let tooltipIdle = NSLocalizedString("tooltipIdle", comment: "")

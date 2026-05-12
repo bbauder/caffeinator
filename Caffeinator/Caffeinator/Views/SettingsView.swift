@@ -17,8 +17,14 @@ struct SettingsView: View {
             ScrollView(.vertical) {
                 Form {
                     Section(L.settingsGeneral) {
-                        Toggle(L.settingsLaunchAtLogin, isOn: $settings.launchAtLogin)
-                        Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
+                        HStack {
+                            Toggle(L.settingsLaunchAtLogin, isOn: $settings.launchAtLogin)
+                            InfoButton(popoverText: L.settingsLaunchAtLoginHelp)
+                        }
+                        HStack {
+                            Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
+                            InfoButton(popoverText: L.settingsHideActivationOptionsHelp)
+                        }
                     }
 
                     Section(L.settingsAppearance) {
@@ -131,7 +137,10 @@ struct SettingsView: View {
                     }
 
                     Section(L.settingsNotifications) {
-                        Toggle(L.settingsAutoDisableNotificationsEnabled, isOn: $settings.autoDisableNotificationsEnabled)
+                        HStack {
+                            Toggle(L.settingsAutoDisableNotificationsEnabled, isOn: $settings.autoDisableNotificationsEnabled)
+                            InfoButton(popoverText: L.settingsAutoDisableNotificationsHelp)
+                        }
                         HStack {
                             Toggle(L.settingsNotifyOnTimerExpired, isOn: $settings.notifyOnTimerExpired)
                             InfoButton(popoverText: L.settingsNotifyOnTimerExpiredHelp)

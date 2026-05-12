@@ -87,5 +87,8 @@
 "startWatching" = "Start Watching";
 "settingsNotifyOnTimerExpired" = "Notify when timed duration ends";
 "settingsNotifyOnTimerExpiredHelp" = "If enabled, Caffeinator will send a notification when your countdown finishes and Keep Awake turns off.";
+"settingsLaunchAtLoginHelp" = "If enabled, Caffeinator will automatically start when you log in to your Mac.";
+"settingsHideActivationOptionsHelp" = "When enabled, activation options are hidden while Caffeinator is active to simplify the menu.";
+"settingsAutoDisableNotificationsHelp" = "If enabled, Caffeinator will send a notification when it automatically stops Keeping Awake due to power or battery conditions.";
 "notificationTimerExpiredTitle" = "Timed Keep Awake Ended";
 "notificationTimerExpiredBody" = "Your countdown has finished and Keep Awake is now off.";
