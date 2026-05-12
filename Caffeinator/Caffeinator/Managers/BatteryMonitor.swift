@@ -15,9 +15,11 @@ class BatteryMonitor {
 
     private var batteryTask: Task<Void, Never>?
     private var threshold: Int = 20
+    private var hasFired = false
 
     func startMonitoring(threshold: Int) {
         self.threshold = threshold
+        hasFired = false
         batteryTask?.cancel()
 
         batteryTask = Task {
@@ -31,14 +33,24 @@ class BatteryMonitor {
     func stopMonitoring() {
         batteryTask?.cancel()
         batteryTask = nil
+        hasFired = false
     }
 
     private func checkBattery() {
-        guard let level = currentBatteryLevel(),
-              level < threshold else {
+        guard let level = currentBatteryLevel() else {
             return
         }
 
+        if level >= threshold {
+            hasFired = false
+            return
+        }
+
+        guard !hasFired else {
+            return
+        }
+
+        hasFired = true
         onLowBattery?()
     }
 
@@ -50,6 +62,7 @@ class BatteryMonitor {
               let capacity = description[kIOPSCurrentCapacityKey] as? Int else {
             return nil
         }
+
         return capacity
     }
 }
