@@ -132,6 +132,10 @@ struct SettingsView: View {
 
                     Section(L.settingsNotifications) {
                         Toggle(L.settingsAutoDisableNotificationsEnabled, isOn: $settings.autoDisableNotificationsEnabled)
+                        HStack {
+                            Toggle(L.settingsNotifyOnTimerEnd, isOn: $settings.notifyOnTimerEnd)
+                            InfoButton(popoverText: L.settingsNotifyOnTimerEndHelp)
+                        }
                     }
                 }
                 .formStyle(.grouped)

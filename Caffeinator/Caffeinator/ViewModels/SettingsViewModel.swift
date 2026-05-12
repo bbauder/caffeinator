@@ -85,6 +85,12 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var notifyOnTimerEnd: Bool {
+        didSet {
+            updateNotifyOnTimerEnd()
+        }
+    }
+
     @Published var autoDisableOnUnpluggedPower: Bool {
         didSet {
             updateUnplugMonitoring()
@@ -161,6 +167,7 @@ class SettingsViewModel: ObservableObject {
         lowBatteryThreshold = persistence.lowBatteryThreshold
         autoDisableOnUnpluggedPower = persistence.autoDisableOnUnpluggedPower
         autoDisableNotificationsEnabled = persistence.autoDisableNotificationsEnabled
+        notifyOnTimerEnd = persistence.notifyOnTimerEnd
         launchAtLogin = persistence.launchAtLogin
 
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
@@ -203,6 +210,13 @@ class SettingsViewModel: ObservableObject {
 
         guard let wakeManager else {
             return
+        }
+
+        wakeManager.onTimerEnd = { [weak self] in
+            guard let self, self.notifyOnTimerEnd else {
+                return
+            }
+            self.notificationManager.sendTimerEndNotification()
         }
 
         wakeManagerCancellable = wakeManager.$isActive
@@ -296,6 +310,14 @@ class SettingsViewModel: ObservableObject {
     private func updateNotificationPreferences() {
         persistence.autoDisableNotificationsEnabled = autoDisableNotificationsEnabled
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
+    }
+
+    private func updateNotifyOnTimerEnd() {
+        persistence.notifyOnTimerEnd = notifyOnTimerEnd
+
+        if notifyOnTimerEnd {
+            notificationManager.requestPermission()
+        }
     }
 
     func recordMRU(_ entry: MRUEntry) {

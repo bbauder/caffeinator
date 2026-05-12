@@ -86,6 +86,12 @@ class SettingsPersistenceManager {
         }
     }
 
+    var notifyOnTimerEnd: Bool {
+        didSet {
+            defaults.set(notifyOnTimerEnd, forKey: "notifyOnTimerEnd")
+        }
+    }
+
     var mruEntries: [MRUEntry] {
         didSet {
             if let data = try? JSONEncoder().encode(mruEntries) {
@@ -108,6 +114,7 @@ class SettingsPersistenceManager {
             "autoDisableOnUnpluggedPower": false,
             "autoDisableNotificationsEnabled": true,
             "declareUserActivity": false,
+            "notifyOnTimerEnd": false,
         ])
 
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
@@ -122,6 +129,7 @@ class SettingsPersistenceManager {
         lowBatteryThreshold = defaults.integer(forKey: "lowBatteryThreshold")
         autoDisableOnUnpluggedPower = defaults.bool(forKey: "autoDisableOnUnpluggedPower")
         autoDisableNotificationsEnabled = defaults.bool(forKey: "autoDisableNotificationsEnabled")
+        notifyOnTimerEnd = defaults.bool(forKey: "notifyOnTimerEnd")
 
         let derivedData = Bundle.main.bundlePath.contains("DerivedData")
         launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled

@@ -85,3 +85,7 @@
 "statusWatchingOneApp" = "1 App";
 "statusWatchingApps" = "%d Apps";
 "startWatching" = "Start Watching";
+"settingsNotifyOnTimerEnd" = "Notify when timed duration ends";
+"settingsNotifyOnTimerEndHelp" = "If enabled, Caffeinator will send a notification when your countdown finishes and Keep Awake turns off.";
+"notificationTimerEndTitle" = "Timed Keep Awake Ended";
+"notificationTimerEndBody" = "Your countdown has finished and Keep Awake is now off.";

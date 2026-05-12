@@ -169,6 +169,10 @@ enum L {
     static let statusKeepingAwake = NSLocalizedString("statusKeepingAwake", comment: "")
     static let statusWatchingOneApp = NSLocalizedString("statusWatchingOneApp", comment: "")
     static let startWatching = NSLocalizedString("startWatching", comment: "")
+    static let settingsNotifyOnTimerEnd = NSLocalizedString("settingsNotifyOnTimerEnd", comment: "")
+    static let settingsNotifyOnTimerEndHelp = NSLocalizedString("settingsNotifyOnTimerEndHelp", comment: "")
+    static let notificationTimerEndTitle = NSLocalizedString("notificationTimerEndTitle", comment: "")
+    static let notificationTimerEndBody = NSLocalizedString("notificationTimerEndBody", comment: "")
 
     static func tooltipAndMore(_ count: Int) -> String {
         String(format: NSLocalizedString("tooltipAndMore", comment: ""), count)

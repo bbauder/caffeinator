@@ -17,6 +17,8 @@ class WakeAssertionManager: ObservableObject {
     @Published private(set) var selectedDuration: TimeInterval?
     @Published private(set) var selectedStopTime: Date?
 
+    var onTimerEnd: (() -> Void)?
+
     var settings: SettingsViewModel? {
         didSet {
             observeSettings()
@@ -114,6 +116,7 @@ class WakeAssertionManager: ObservableObject {
         if let hour = components.hour, let minute = components.minute {
             settings?.recordMRU(.untilTime(hour: hour, minute: minute))
         }
+
         startCountdown()
     }
 
@@ -231,11 +234,13 @@ class WakeAssertionManager: ObservableObject {
             systemSleepAssertionID = 0
             hasSystemSleepAssertion = false
         }
+
         if hasDisplaySleepAssertion {
             IOPMAssertionRelease(displaySleepAssertionID)
             displaySleepAssertionID = 0
             hasDisplaySleepAssertion = false
         }
+
         if hasScreensaverAssertion {
             IOPMAssertionRelease(screensaverAssertionID)
             screensaverAssertionID = 0
@@ -252,7 +257,9 @@ class WakeAssertionManager: ObservableObject {
                 }
                 timeRemaining = remaining - 1
             }
+
             deactivate()
+            onTimerEnd?()
         }
     }
 
