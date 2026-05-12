@@ -107,11 +107,12 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     private func buildTooltip() -> String {
-        let status: (Bool) -> String = { $0 ? L.tooltipPrevented : L.tooltipAllowed }
+        let isActive = wakeManager.isActive
+        let status: (Bool) -> String = { isActive && $0 ? L.tooltipPrevented : L.tooltipAllowed }
 
         var lines: [String] = []
 
-        lines.append(wakeManager.isActive ? L.tooltipActive : L.tooltipIdle)
+        lines.append(isActive ? L.tooltipActive : L.tooltipIdle)
         lines.append("")
         lines.append(L.tooltipSystemSleep(status(settings.preventSystemSleep)))
         lines.append(L.tooltipDisplaySleep(status(settings.preventDisplaySleep)))
