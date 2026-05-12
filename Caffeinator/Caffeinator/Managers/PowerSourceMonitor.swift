@@ -14,9 +14,12 @@ class PowerSourceMonitor {
     var onUnplugged: (() -> Void)?
 
     private var runLoopSource: CFRunLoopSource?
+    private var wasOnAC: Bool?
 
     func startMonitoring() {
         stopMonitoring()
+
+        wasOnAC = currentlyOnAC()
 
         let context = Unmanaged.passUnretained(self).toOpaque()
         guard let source = IOPSNotificationCreateRunLoopSource({ context in
@@ -25,6 +28,7 @@ class PowerSourceMonitor {
             }
 
             let monitor = Unmanaged<PowerSourceMonitor>.fromOpaque(context).takeUnretainedValue()
+
             MainActor.assumeIsolated {
                 monitor.handlePowerSourceChange()
             }
@@ -39,14 +43,30 @@ class PowerSourceMonitor {
             CFRunLoopRemoveSource(CFRunLoopGetMain(), source, .defaultMode)
             runLoopSource = nil
         }
+
+        wasOnAC = nil
     }
 
+    // IOPSNotification​Create​Run​Loop​Source fires on every power source
+    // change (battery percentage ticks, charging state updates,
+    // time-remaining recalculations), not just plug/unplug events.
+    // As a result, we have to track the previous power source state and
+    // only fire onUnplugged() for an actual transition from AC to battery.
     private func handlePowerSourceChange() {
+        let onAC = currentlyOnAC()
+        let previouslyOnAC = wasOnAC
+
+        wasOnAC = onAC
+
+        if previouslyOnAC == true && !onAC {
+            onUnplugged?()
+        }
+    }
+
+    private func currentlyOnAC() -> Bool {
         let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue()
         let powerType = IOPSGetProvidingPowerSourceType(snapshot)?.takeUnretainedValue() as String?
 
-        if powerType == kIOPSBatteryPowerValue as String {
-            onUnplugged?()
-        }
+        return powerType != kIOPSBatteryPowerValue as String
     }
 }

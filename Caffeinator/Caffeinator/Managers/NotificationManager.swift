@@ -25,7 +25,8 @@ class NotificationManager {
         content.title = L.autoDisableNotificationTitle
         content.body = L.autoDisableNotificationBody(threshold)
 
-        let request = UNNotificationRequest(identifier: "autoDisableLowBattery", content: content, trigger: nil)
+        let request = UNNotificationRequest(identifier: "autoDisableLowBattery",
+                                            content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request) { _ in }
     }
 
@@ -38,7 +39,8 @@ class NotificationManager {
         content.title = L.notificationStoppedTitle
         content.body = L.notificationUnpluggedBody
 
-        let request = UNNotificationRequest(identifier: "autoDisableUnplugged", content: content, trigger: nil)
+        let request = UNNotificationRequest(identifier: "autoDisableUnplugged",
+                                            content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request) { _ in }
     }
 }
