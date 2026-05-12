@@ -17,7 +17,7 @@ class WakeAssertionManager: ObservableObject {
     @Published private(set) var selectedDuration: TimeInterval?
     @Published private(set) var selectedStopTime: Date?
 
-    var onTimerEnd: (() -> Void)?
+    var onTimerExpired: (() -> Void)?
 
     var settings: SettingsViewModel? {
         didSet {
@@ -259,7 +259,7 @@ class WakeAssertionManager: ObservableObject {
             }
 
             deactivate()
-            onTimerEnd?()
+            onTimerExpired?()
         }
     }
 

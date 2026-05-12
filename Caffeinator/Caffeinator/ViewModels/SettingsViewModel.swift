@@ -85,9 +85,9 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    @Published var notifyOnTimerEnd: Bool {
+    @Published var notifyOnTimerExpired: Bool {
         didSet {
-            updateNotifyOnTimerEnd()
+            updateNotifyOnTimerExpired()
         }
     }
 
@@ -167,7 +167,7 @@ class SettingsViewModel: ObservableObject {
         lowBatteryThreshold = persistence.lowBatteryThreshold
         autoDisableOnUnpluggedPower = persistence.autoDisableOnUnpluggedPower
         autoDisableNotificationsEnabled = persistence.autoDisableNotificationsEnabled
-        notifyOnTimerEnd = persistence.notifyOnTimerEnd
+        notifyOnTimerExpired = persistence.notifyOnTimerExpired
         launchAtLogin = persistence.launchAtLogin
 
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
@@ -212,11 +212,11 @@ class SettingsViewModel: ObservableObject {
             return
         }
 
-        wakeManager.onTimerEnd = { [weak self] in
-            guard let self, self.notifyOnTimerEnd else {
+        wakeManager.onTimerExpired = { [weak self] in
+            guard let self, self.notifyOnTimerExpired else {
                 return
             }
-            self.notificationManager.sendTimerEndNotification()
+            self.notificationManager.sendTimerExpiredNotification()
         }
 
         wakeManagerCancellable = wakeManager.$isActive
@@ -312,10 +312,10 @@ class SettingsViewModel: ObservableObject {
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
     }
 
-    private func updateNotifyOnTimerEnd() {
-        persistence.notifyOnTimerEnd = notifyOnTimerEnd
+    private func updateNotifyOnTimerExpired() {
+        persistence.notifyOnTimerExpired = notifyOnTimerExpired
 
-        if notifyOnTimerEnd {
+        if notifyOnTimerExpired {
             notificationManager.requestPermission()
         }
     }

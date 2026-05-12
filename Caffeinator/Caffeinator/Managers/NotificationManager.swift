@@ -31,12 +31,12 @@ class NotificationManager {
         UNUserNotificationCenter.current().add(request) { _ in }
     }
 
-    func sendTimerEndNotification() {
+    func sendTimerExpiredNotification() {
         let content = UNMutableNotificationContent()
-        content.title = L.notificationTimerEndTitle
-        content.body = L.notificationTimerEndBody
+        content.title = L.notificationTimerExpiredTitle
+        content.body = L.notificationTimerExpiredBody
 
-        let request = UNNotificationRequest(identifier: "timerEnd",
+        let request = UNNotificationRequest(identifier: "timerExpired",
                                             content: content,
                                             trigger: nil)
         UNUserNotificationCenter.current().add(request) { _ in }

@@ -86,9 +86,9 @@ class SettingsPersistenceManager {
         }
     }
 
-    var notifyOnTimerEnd: Bool {
+    var notifyOnTimerExpired: Bool {
         didSet {
-            defaults.set(notifyOnTimerEnd, forKey: "notifyOnTimerEnd")
+            defaults.set(notifyOnTimerExpired, forKey: "notifyOnTimerExpired")
         }
     }
 
@@ -114,7 +114,7 @@ class SettingsPersistenceManager {
             "autoDisableOnUnpluggedPower": false,
             "autoDisableNotificationsEnabled": true,
             "declareUserActivity": false,
-            "notifyOnTimerEnd": false,
+            "notifyOnTimerExpired": false,
         ])
 
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
@@ -129,7 +129,7 @@ class SettingsPersistenceManager {
         lowBatteryThreshold = defaults.integer(forKey: "lowBatteryThreshold")
         autoDisableOnUnpluggedPower = defaults.bool(forKey: "autoDisableOnUnpluggedPower")
         autoDisableNotificationsEnabled = defaults.bool(forKey: "autoDisableNotificationsEnabled")
-        notifyOnTimerEnd = defaults.bool(forKey: "notifyOnTimerEnd")
+        notifyOnTimerExpired = defaults.bool(forKey: "notifyOnTimerExpired")
 
         let derivedData = Bundle.main.bundlePath.contains("DerivedData")
         launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled
