@@ -27,18 +27,27 @@ struct WatchedProcess: Identifiable, Hashable {
 final class ProcessDiscovery {
 
     func discoverGUIApplications() -> [WatchedProcess] {
-        NSWorkspace.shared.runningApplications
+        let current = NSRunningApplication.current
+
+        return NSWorkspace.shared.runningApplications
             .filter { app in
                 app.activationPolicy == .regular &&
                 !app.isTerminated &&
-                app.executableURL != nil
+                app.executableURL != nil &&
+                app != current
             }
-            .map { app in
-                WatchedProcess(id: app.processIdentifier,
-                               name: app.localizedName ?? app.executableURL?.lastPathComponent ?? "Unknown",
-                               bundleIdentifier: app.bundleIdentifier,
-                               icon: app.icon
-                )
+            .compactMap { app -> WatchedProcess? in
+                let name = (app.localizedName ?? app.executableURL?.lastPathComponent ?? "")
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+
+                guard !name.isEmpty else {
+                    return nil
+                }
+
+                return WatchedProcess(id: app.processIdentifier,
+                                      name: name,
+                                      bundleIdentifier: app.bundleIdentifier,
+                                      icon: app.icon)
             }
             .sorted {
                 $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
