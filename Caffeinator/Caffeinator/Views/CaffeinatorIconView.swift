@@ -17,7 +17,10 @@ struct CaffeinatorIconView: View {
     @State private var steamFrame = 0
     
     // Ensure the steam animation frame rate never matches the once-per-second countdown display
-    private let timer = Timer.publish(every: 0.66, on: .main, in: .common).autoconnect()
+    private let timer = Timer.publish(every: 0.66,
+                                      on: .main,
+                                      in: .common)
+                            .autoconnect()
 
     // Three-line steam pattern, three distinct frames, three relative (rising) heights
     private static let steamHeights: [[CGFloat]] = [ [1, 2, 1],
@@ -115,45 +118,40 @@ struct CaffeinatorIconView: View {
         let endDeg: CGFloat = 35
 
         // Compute the two connection points on the bowl
-        let topAttach = CGPoint(
-            x: metrics.cupRect.maxX,
-            y: cy - outerR * 0.55
+        let topAttach = CGPoint(x: metrics.cupRect.maxX,
+                                y: cy - outerR * 0.55
         )
 
-        let bottomAttach = CGPoint(
-            x: metrics.cupRect.maxX,
-            y: cy + outerR * 0.55
+        let bottomAttach = CGPoint(x: metrics.cupRect.maxX,
+                                   y: cy + outerR * 0.55
         )
 
         // Top connector
         handle.move(to: topAttach)
 
         // Outer arc
-        handle.addArc(
-            center: CGPoint(x: cx, y: cy),
-            radius: outerR,
-            startAngle: .degrees(startDeg),
-            endAngle: .degrees(endDeg),
-            clockwise: false
+        handle.addArc(center: CGPoint(x: cx, y: cy),
+                      radius: outerR,
+                      startAngle: .degrees(startDeg),
+                      endAngle: .degrees(endDeg),
+                      clockwise: false
         )
 
         // Bottom connector
         handle.addLine(to: bottomAttach)
 
         // Inner arc (back toward top)
-        handle.addArc(
-            center: CGPoint(x: cx, y: cy),
-            radius: innerR,
-            startAngle: .degrees(endDeg),
-            endAngle: .degrees(startDeg),
-            clockwise: true
+        handle.addArc(center: CGPoint(x: cx, y: cy),
+                      radius: innerR,
+                      startAngle: .degrees(endDeg),
+                      endAngle: .degrees(startDeg),
+                      clockwise: true
         )
 
         // Draw the path of the handle, with no fill so it remains hollow.
-        context.stroke(
-            handle,
-            with: .foreground,
-            style: StrokeStyle(lineWidth: metrics.lineWidth * 1.1, lineCap: .round)
+        context.stroke(handle,
+                       with: .foreground,
+                       style: StrokeStyle(lineWidth: metrics.lineWidth * 1.1, lineCap: .round)
         )
     }
 
@@ -172,11 +170,11 @@ struct CaffeinatorIconView: View {
         let clamped = min(max(fillLevel, 0), 1)
         let fillHeight = interior.height * CGFloat(clamped)
 
-        // Slight horizontal expansion to eliminate the visible gap
-        let fillRect = CGRect(x: interior.minX - metrics.lineWidth * 0.2,
-                              y: interior.maxY - fillHeight,
-                              width: interior.width + metrics.lineWidth * 0.4,
-                              height: fillHeight)
+        let fillRect = CGRect(x: interior.minX - metrics.lineWidth * 0.35,
+                              y: interior.maxY - fillHeight - metrics.lineWidth * 0.35,
+                              width: interior.width + metrics.lineWidth * 0.70,
+                              height: fillHeight + metrics.lineWidth * 0.50
+        )
 
         context.drawLayer { layer in
             layer.clip(to: interiorPath)
@@ -280,12 +278,11 @@ private struct CupMetrics {
         handleRadius = w * 0.11
 
         // Refined B1 geometry
-        handleOuterRadius = handleRadius * 1.10     // slightly taller
-        handleInnerRadius = handleRadius * 0.90     // slightly narrower
+        handleOuterRadius = handleRadius * 1.10
+        handleInnerRadius = handleRadius * 0.90
 
-        handleCenter = CGPoint(
-            x: cupRect.maxX + handleRadius * 0.12,  // closer to bowl
-            y: cupRect.minY + cupH * 0.42           // same vertical alignment
+        handleCenter = CGPoint(x: cupRect.maxX + handleRadius * 0.12,
+                               y: cupRect.minY + cupH * 0.42
         )
 
         // Steam geometry
