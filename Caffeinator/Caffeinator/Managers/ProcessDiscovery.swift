@@ -23,23 +23,42 @@ struct WatchedProcess: Identifiable, Hashable {
     }
 }
 
+protocol AppEnumerable {
+
+    var processIdentifier: pid_t { get }
+    var activationPolicy: NSApplication.ActivationPolicy { get }
+    var isTerminated: Bool { get }
+    var executableURL: URL? { get }
+    var localizedName: String? { get }
+    var bundleIdentifier: String? { get }
+    var icon: NSImage? { get }
+}
+
+extension NSRunningApplication: AppEnumerable {}
+
 @MainActor
 final class ProcessDiscovery {
 
-    func discoverGUIApplications() -> [WatchedProcess] {
-        let current = NSRunningApplication.current
+    private let provider: () -> [any AppEnumerable]
+    private let currentPID: pid_t
 
-        return NSWorkspace.shared.runningApplications
+    init(provider: @escaping () -> [any AppEnumerable] = { NSWorkspace.shared.runningApplications },
+         currentPID: pid_t = NSRunningApplication.current.processIdentifier) {
+        self.provider = provider
+        self.currentPID = currentPID
+    }
+
+    func discoverGUIApplications() -> [WatchedProcess] {
+        provider()
             .filter { app in
                 app.activationPolicy == .regular &&
                 !app.isTerminated &&
                 app.executableURL != nil &&
-                app != current
+                app.processIdentifier != currentPID
             }
             .compactMap { app -> WatchedProcess? in
                 let name = (app.localizedName ?? app.executableURL?.lastPathComponent ?? "")
                     .trimmingCharacters(in: .whitespacesAndNewlines)
-
                 guard !name.isEmpty else {
                     return nil
                 }

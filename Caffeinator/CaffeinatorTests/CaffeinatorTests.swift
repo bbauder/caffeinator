@@ -2,17 +2,24 @@
 //  CaffeinatorTests.swift
 //  CaffeinatorTests
 //
-//  Created by Bruce Bauder on 5/14/26.
-//
 
-import Testing
+import XCTest
+@testable import Caffeinator
 
-struct CaffeinatorTests {
+// This file intentionally left mostly empty.
+// Per-component tests live in their own files in this target.
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-        // Swift Testing Documentation
-        // https://developer.apple.com/documentation/testing
+final class CaffeinatorSmokeTests: XCTestCase {
+
+    @MainActor
+    func test_appDelegateTypesInstantiate() {
+        XCTAssertNotNil(SettingsPersistenceManager(defaults: TestUserDefaults.make()))
+        XCTAssertNotNil(WakeAssertionManager())
+        XCTAssertNotNil(BatteryMonitor())
+        XCTAssertNotNil(PowerSourceMonitor())
+        XCTAssertNotNil(NotificationManager())
+        XCTAssertNotNil(UserActivityManager())
+        XCTAssertNotNil(ProcessDiscovery())
+        XCTAssertNotNil(WatchedProcessStore())
     }
-
 }

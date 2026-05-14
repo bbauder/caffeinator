@@ -7,13 +7,36 @@
 
 import UserNotifications
 
+protocol NotificationDelivering {
+
+    func requestAuthorization()
+    func deliver(_ request: UNNotificationRequest)
+}
+
+struct UNCenterNotificationDelivery: NotificationDelivering {
+
+    func requestAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
+    }
+
+    func deliver(_ request: UNNotificationRequest) {
+        UNUserNotificationCenter.current().add(request) { _ in }
+    }
+}
+
 @MainActor
 class NotificationManager {
 
     var notificationsEnabled: Bool = true
 
+    private let delivery: NotificationDelivering
+
+    init(delivery: NotificationDelivering = UNCenterNotificationDelivery()) {
+        self.delivery = delivery
+    }
+
     func requestPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
+        delivery.requestAuthorization()
     }
 
     func sendLowBatteryNotification(threshold: Int) {
@@ -28,7 +51,7 @@ class NotificationManager {
         let request = UNNotificationRequest(identifier: "autoDisableLowBattery",
                                             content: content,
                                             trigger: nil)
-        UNUserNotificationCenter.current().add(request) { _ in }
+        delivery.deliver(request)
     }
 
     func sendTimerExpiredNotification() {
@@ -43,7 +66,7 @@ class NotificationManager {
         let request = UNNotificationRequest(identifier: "timerExpired",
                                             content: content,
                                             trigger: nil)
-        UNUserNotificationCenter.current().add(request) { _ in }
+        delivery.deliver(request)
     }
 
     func sendUnpluggedNotification() {
@@ -58,6 +81,6 @@ class NotificationManager {
         let request = UNNotificationRequest(identifier: "autoDisableUnplugged",
                                             content: content,
                                             trigger: nil)
-        UNUserNotificationCenter.current().add(request) { _ in }
+        delivery.deliver(request)
     }
 }

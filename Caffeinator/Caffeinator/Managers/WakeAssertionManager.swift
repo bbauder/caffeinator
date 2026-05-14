@@ -9,6 +9,28 @@ import Combine
 import Foundation
 import IOKit.pwr_mgt
 
+protocol PowerAssertionProvider {
+
+    func create(type: CFString, reason: CFString) -> IOPMAssertionID?
+    func release(_ id: IOPMAssertionID)
+}
+
+struct IOKitPowerAssertionProvider: PowerAssertionProvider {
+
+    func create(type: CFString, reason: CFString) -> IOPMAssertionID? {
+        var id: IOPMAssertionID = 0
+        let result = IOPMAssertionCreateWithName(type,
+                                                 UInt32(kIOPMAssertionLevelOn),
+                                                 reason,
+                                                 &id)
+        return result == kIOReturnSuccess ? id : nil
+    }
+
+    func release(_ id: IOPMAssertionID) {
+        IOPMAssertionRelease(id)
+    }
+}
+
 @MainActor
 class WakeAssertionManager: ObservableObject {
 
@@ -24,6 +46,9 @@ class WakeAssertionManager: ObservableObject {
             observeSettings()
         }
     }
+
+    private let assertions: PowerAssertionProvider
+    private let tickInterval: Duration
 
     private var systemSleepAssertionID: IOPMAssertionID = 0
     private var displaySleepAssertionID: IOPMAssertionID = 0
@@ -61,6 +86,12 @@ class WakeAssertionManager: ObservableObject {
         }
 
         return max(remaining / total, 0)
+    }
+
+    init(assertions: PowerAssertionProvider = IOKitPowerAssertionProvider(),
+         tickInterval: Duration = .seconds(1)) {
+        self.assertions = assertions
+        self.tickInterval = tickInterval
     }
 
     func activateIndefinitely() {
@@ -138,7 +169,7 @@ class WakeAssertionManager: ObservableObject {
 
     private func observeSettings() {
         cancellables.removeAll()
-        
+
         guard let settings else {
             return
         }
@@ -166,37 +197,40 @@ class WakeAssertionManager: ObservableObject {
         guard isActive else {
             return
         }
-        
+
         guard let s = settings else {
             return
         }
 
         if s.preventSystemSleep && !hasSystemSleepAssertion {
-            hasSystemSleepAssertion = createAssertion(type: kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
-                                                      id: &systemSleepAssertionID
-            )
+            if let id = createAssertion(type: kIOPMAssertionTypePreventUserIdleSystemSleep as CFString) {
+                systemSleepAssertionID = id
+                hasSystemSleepAssertion = true
+            }
         } else if !s.preventSystemSleep && hasSystemSleepAssertion {
-            IOPMAssertionRelease(systemSleepAssertionID)
+            assertions.release(systemSleepAssertionID)
             systemSleepAssertionID = 0
             hasSystemSleepAssertion = false
         }
 
         if s.preventDisplaySleep && !hasDisplaySleepAssertion {
-            hasDisplaySleepAssertion = createAssertion(type: kIOPMAssertionTypeNoDisplaySleep as CFString,
-                                                       id: &displaySleepAssertionID
-            )
+            if let id = createAssertion(type: kIOPMAssertionTypeNoDisplaySleep as CFString) {
+                displaySleepAssertionID = id
+                hasDisplaySleepAssertion = true
+            }
         } else if !s.preventDisplaySleep && hasDisplaySleepAssertion {
-            IOPMAssertionRelease(displaySleepAssertionID)
+            assertions.release(displaySleepAssertionID)
             displaySleepAssertionID = 0
             hasDisplaySleepAssertion = false
         }
 
         if s.preventScreenSaver && !hasScreensaverAssertion {
-            hasScreensaverAssertion = createAssertion(type: kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
-                                                      id: &screensaverAssertionID
-            )
+            if let id = createAssertion(type: kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString) {
+                screensaverAssertionID = id
+                hasScreensaverAssertion = true
+            }
         } else if !s.preventScreenSaver && hasScreensaverAssertion {
-            IOPMAssertionRelease(screensaverAssertionID)
+            assertions.release(screensaverAssertionID)
             screensaverAssertionID = 0
             hasScreensaverAssertion = false
         }
@@ -210,52 +244,62 @@ class WakeAssertionManager: ObservableObject {
         }
 
         if s.preventSystemSleep {
-            hasSystemSleepAssertion = createAssertion(type: kIOPMAssertionTypePreventUserIdleSystemSleep as CFString,
-                                                      id: &systemSleepAssertionID
-            )
+            if let id = createAssertion(type: kIOPMAssertionTypePreventUserIdleSystemSleep as CFString) {
+                systemSleepAssertionID = id
+                hasSystemSleepAssertion = true
+            }
         }
 
         if s.preventDisplaySleep {
-            hasDisplaySleepAssertion = createAssertion(type: kIOPMAssertionTypeNoDisplaySleep as CFString,
-                                                       id: &displaySleepAssertionID
-            )
+            if let id = createAssertion(type: kIOPMAssertionTypeNoDisplaySleep as CFString) {
+                displaySleepAssertionID = id
+                hasDisplaySleepAssertion = true
+            }
         }
 
         if s.preventScreenSaver {
-            hasScreensaverAssertion = createAssertion(type: kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString,
-                                                      id: &screensaverAssertionID
-            )
+            if let id = createAssertion(type: kIOPMAssertionTypePreventUserIdleDisplaySleep as CFString) {
+                screensaverAssertionID = id
+                hasScreensaverAssertion = true
+            }
         }
     }
 
     private func releaseAllAssertions() {
         if hasSystemSleepAssertion {
-            IOPMAssertionRelease(systemSleepAssertionID)
+            assertions.release(systemSleepAssertionID)
             systemSleepAssertionID = 0
             hasSystemSleepAssertion = false
         }
 
         if hasDisplaySleepAssertion {
-            IOPMAssertionRelease(displaySleepAssertionID)
+            assertions.release(displaySleepAssertionID)
             displaySleepAssertionID = 0
             hasDisplaySleepAssertion = false
         }
 
         if hasScreensaverAssertion {
-            IOPMAssertionRelease(screensaverAssertionID)
+            assertions.release(screensaverAssertionID)
             screensaverAssertionID = 0
             hasScreensaverAssertion = false
         }
     }
 
     private func startCountdown() {
+        let interval = tickInterval
+
         timerTask = Task {
             while let remaining = timeRemaining, remaining > 0 {
-                try? await Task.sleep(for: .seconds(1))
+                try? await Task.sleep(for: interval)
+
                 if Task.isCancelled {
                     return
                 }
                 timeRemaining = remaining - 1
+            }
+
+            if Task.isCancelled {
+                return
             }
 
             deactivate()
@@ -263,14 +307,8 @@ class WakeAssertionManager: ObservableObject {
         }
     }
 
-    private func createAssertion(type: CFString, id: inout IOPMAssertionID) -> Bool {
+    private func createAssertion(type: CFString) -> IOPMAssertionID? {
         let reason = "Caffeinator is keeping this Mac awake" as CFString
-        let result = IOPMAssertionCreateWithName(type,
-                                                 UInt32(kIOPMAssertionLevelOn),
-                                                 reason,
-                                                 &id
-        )
-
-        return result == kIOReturnSuccess
+        return assertions.create(type: type, reason: reason)
     }
 }

@@ -97,31 +97,19 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    typealias LaunchAtLoginUpdater = (Bool) -> Bool
+
     @Published var launchAtLogin: Bool {
         didSet {
             guard launchAtLogin != oldValue else {
                 return
             }
-            
-            if isRunningFromDerivedData {
-                launchAtLogin = false
-                return
-            }
 
-            do {
-                if launchAtLogin {
-                    try SMAppService.mainApp.register()
-                } else {
-                    try SMAppService.mainApp.unregister()
-                }
-            } catch {
-                launchAtLogin = SMAppService.mainApp.status == .enabled
+            let resolved = launchAtLoginUpdater(launchAtLogin)
+            if resolved != launchAtLogin {
+                launchAtLogin = resolved
             }
         }
-    }
-
-    var isRunningFromDerivedData: Bool {
-        Bundle.main.bundlePath.contains("DerivedData")
     }
 
     var isAnySystemEnabled: Bool {
@@ -134,6 +122,7 @@ class SettingsViewModel: ObservableObject {
     let batteryMonitor: BatteryMonitor
     let powerSourceMonitor: PowerSourceMonitor
     let userActivityManager: UserActivityManager
+    private let launchAtLoginUpdater: LaunchAtLoginUpdater
     private var wakeManagerCancellable: AnyCancellable?
 
     weak var wakeManager: WakeAssertionManager? {
@@ -147,13 +136,15 @@ class SettingsViewModel: ObservableObject {
          notificationManager: NotificationManager,
          batteryMonitor: BatteryMonitor,
          powerSourceMonitor: PowerSourceMonitor,
-         userActivityManager: UserActivityManager) {
+         userActivityManager: UserActivityManager,
+         launchAtLoginUpdater: @escaping LaunchAtLoginUpdater = SettingsViewModel.defaultLaunchAtLoginUpdater) {
         self.persistence = persistence
         self.mruStore = mruStore
         self.notificationManager = notificationManager
         self.batteryMonitor = batteryMonitor
         self.powerSourceMonitor = powerSourceMonitor
         self.userActivityManager = userActivityManager
+        self.launchAtLoginUpdater = launchAtLoginUpdater
 
         preventSystemSleep = persistence.preventSystemSleep
         preventDisplaySleep = persistence.preventDisplaySleep
@@ -322,5 +313,22 @@ class SettingsViewModel: ObservableObject {
 
     func recordMRU(_ entry: MRUEntry) {
         mruStore.record(entry)
+    }
+
+    static let defaultLaunchAtLoginUpdater: LaunchAtLoginUpdater = { desired in
+        if Bundle.main.bundlePath.contains("DerivedData") {
+            return false
+        }
+
+        do {
+            if desired {
+                try SMAppService.mainApp.register()
+            } else {
+                try SMAppService.mainApp.unregister()
+            }
+            return desired
+        } catch {
+            return SMAppService.mainApp.status == .enabled
+        }
     }
 }

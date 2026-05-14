@@ -12,7 +12,7 @@ import ServiceManagement
 class SettingsPersistenceManager {
 
     private(set) var launchAtLogin: Bool
-    private let defaults = UserDefaults.standard
+    private let defaults: UserDefaults
 
     var preventSystemSleep: Bool {
         didSet {
@@ -100,7 +100,10 @@ class SettingsPersistenceManager {
         }
     }
 
-    init() {
+    init(defaults: UserDefaults = .standard,
+         launchAtLoginResolver: () -> Bool = SettingsPersistenceManager.defaultLaunchAtLoginResolver) {
+        self.defaults = defaults
+
         defaults.register(defaults: [
             "preventSystemSleep": true,
             "preventDisplaySleep": false,
@@ -131,8 +134,7 @@ class SettingsPersistenceManager {
         autoDisableNotificationsEnabled = defaults.bool(forKey: "autoDisableNotificationsEnabled")
         notifyOnTimerExpired = defaults.bool(forKey: "notifyOnTimerExpired")
 
-        let derivedData = Bundle.main.bundlePath.contains("DerivedData")
-        launchAtLogin = !derivedData && SMAppService.mainApp.status == .enabled
+        launchAtLogin = launchAtLoginResolver()
 
         if let data = defaults.data(forKey: "mruEntries"),
            let decoded = try? JSONDecoder().decode([MRUEntry].self, from: data) {
@@ -140,5 +142,10 @@ class SettingsPersistenceManager {
         } else {
             mruEntries = []
         }
+    }
+
+    static let defaultLaunchAtLoginResolver: () -> Bool = {
+        let derivedData = Bundle.main.bundlePath.contains("DerivedData")
+        return !derivedData && SMAppService.mainApp.status == .enabled
     }
 }

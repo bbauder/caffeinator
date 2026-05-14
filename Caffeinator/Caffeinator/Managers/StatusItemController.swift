@@ -107,56 +107,19 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     private func buildTooltip() -> String {
-        let isActive = wakeManager.isActive
-        let status: (Bool) -> String = { isActive && $0 ? L.tooltipPrevented : L.tooltipAllowed }
-
-        var lines: [String] = []
-
-        lines.append(isActive ? L.tooltipActive : L.tooltipIdle)
-        lines.append("")
-        lines.append(L.tooltipSystemSleep(status(settings.preventSystemSleep)))
-        lines.append(L.tooltipDisplaySleep(status(settings.preventDisplaySleep)))
-        lines.append(L.tooltipAutoLock(status(settings.preventScreenSaver)))
-
-        if wakeManager.isActive {
-            let watchedApps = watchedProcessStore.allProcesses
-            if !watchedApps.isEmpty {
-                lines.append("")
-                lines.append(L.tooltipWatching)
-                let maxShown = 5
-                for app in watchedApps.prefix(maxShown) {
-                    lines.append("  \u{2022} \(app.name)")
-                }
-                if watchedApps.count > maxShown {
-                    lines.append("  \u{2022} \(L.tooltipAndMore(watchedApps.count - maxShown))")
-                }
-            } else if let stopTime = wakeManager.formattedStopTime {
-                lines.append(L.tooltipTimeRemaining(L.tooltipUntil(stopTime)))
-            } else if let countdown = wakeManager.formattedTimeRemaining {
-                lines.append(L.tooltipTimeRemaining(countdown))
-            } else {
-                lines.append(L.tooltipTimeRemaining(L.tooltipIndefinite))
-            }
-        }
-
-        return lines.joined(separator: "\n")
+        TooltipBuilder.build(isActive: wakeManager.isActive,
+                             preventSystemSleep: settings.preventSystemSleep,
+                             preventDisplaySleep: settings.preventDisplaySleep,
+                             preventScreenSaver: settings.preventScreenSaver,
+                             watchedApps: watchedProcessStore.allProcesses,
+                             formattedStopTime: wakeManager.formattedStopTime,
+                             formattedTimeRemaining: wakeManager.formattedTimeRemaining)
     }
 
     private func computeStatusText() -> String? {
-        guard wakeManager.isActive else {
-            return nil
-        }
-
-        let watchCount = watchedProcessStore.processes.count
-        if watchCount > 0 {
-            return L.statusWatchingApps(watchCount)
-        }
-
-        if let timeLabel = wakeManager.menuBarTimeLabel {
-            return timeLabel
-        }
-
-        return L.statusKeepingAwake
+        StatusTextBuilder.compute(isActive: wakeManager.isActive,
+                                  watchCount: watchedProcessStore.processes.count,
+                                  menuBarTimeLabel: wakeManager.menuBarTimeLabel)
     }
 
     // MARK: - NSMenuDelegate

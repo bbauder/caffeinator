@@ -13,9 +13,14 @@ class BatteryMonitor {
 
     var onLowBattery: (() -> Void)?
 
+    private let batteryLevelProvider: () -> Int?
     private var batteryTask: Task<Void, Never>?
-    private var threshold: Int = 20
-    private var hasFired = false
+    var threshold: Int = 20
+    private(set) var hasFired = false
+
+    init(batteryLevelProvider: @escaping () -> Int? = BatteryMonitor.iokitBatteryLevel) {
+        self.batteryLevelProvider = batteryLevelProvider
+    }
 
     func startMonitoring(threshold: Int) {
         self.threshold = threshold
@@ -36,8 +41,8 @@ class BatteryMonitor {
         hasFired = false
     }
 
-    private func checkBattery() {
-        guard let level = currentBatteryLevel() else {
+    func checkBattery() {
+        guard let level = batteryLevelProvider() else {
             return
         }
 
@@ -54,7 +59,7 @@ class BatteryMonitor {
         onLowBattery?()
     }
 
-    private func currentBatteryLevel() -> Int? {
+    static let iokitBatteryLevel: () -> Int? = {
         guard let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue(),
               let sources = IOPSCopyPowerSourcesList(snapshot)?.takeRetainedValue() as? [CFTypeRef],
               let source = sources.first,

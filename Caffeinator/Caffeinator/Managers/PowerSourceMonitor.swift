@@ -13,13 +13,18 @@ class PowerSourceMonitor {
 
     var onUnplugged: (() -> Void)?
 
+    private let powerStateProvider: () -> Bool
     private var runLoopSource: CFRunLoopSource?
-    private var wasOnAC: Bool?
+    private(set) var wasOnAC: Bool?
+
+    init(powerStateProvider: @escaping () -> Bool = PowerSourceMonitor.iokitOnAC) {
+        self.powerStateProvider = powerStateProvider
+    }
 
     func startMonitoring() {
         stopMonitoring()
 
-        wasOnAC = currentlyOnAC()
+        wasOnAC = powerStateProvider()
 
         let context = Unmanaged.passUnretained(self).toOpaque()
         guard let source = IOPSNotificationCreateRunLoopSource({ context in
@@ -52,8 +57,8 @@ class PowerSourceMonitor {
     // time-remaining recalculations), not just plug/unplug events.
     // As a result, we have to track the previous power source state and
     // only fire onUnplugged() for an actual transition from AC to battery.
-    private func handlePowerSourceChange() {
-        let onAC = currentlyOnAC()
+    func handlePowerSourceChange() {
+        let onAC = powerStateProvider()
         let previouslyOnAC = wasOnAC
 
         wasOnAC = onAC
@@ -63,7 +68,7 @@ class PowerSourceMonitor {
         }
     }
 
-    private func currentlyOnAC() -> Bool {
+    static let iokitOnAC: () -> Bool = {
         let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue()
         let powerType = IOPSGetProvidingPowerSourceType(snapshot)?.takeUnretainedValue() as String?
 
