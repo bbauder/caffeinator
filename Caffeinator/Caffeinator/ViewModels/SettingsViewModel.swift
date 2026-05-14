@@ -9,13 +9,6 @@ import Combine
 import Foundation
 import ServiceManagement
 
-enum MRUEntry: Codable, Equatable {
-
-    case indefinitely
-    case duration(TimeInterval)
-    case untilTime(hour: Int, minute: Int)
-}
-
 @MainActor
 class SettingsViewModel: ObservableObject {
 
@@ -315,7 +308,7 @@ class SettingsViewModel: ObservableObject {
         mruStore.record(entry)
     }
 
-    static let defaultLaunchAtLoginUpdater: LaunchAtLoginUpdater = { desired in
+    nonisolated static let defaultLaunchAtLoginUpdater: LaunchAtLoginUpdater = { desired in
         if Bundle.main.bundlePath.contains("DerivedData") {
             return false
         }

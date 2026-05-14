@@ -51,7 +51,7 @@ class UserActivityManager {
         task = nil
     }
 
-    static let iokitDeclare: DeclareActivity = { assertionID in
+    nonisolated static let iokitDeclare: DeclareActivity = { assertionID in
         IOPMAssertionDeclareUserActivity("Caffeinator user activity" as CFString,
                                          kIOPMUserActiveLocal,
                                          &assertionID)

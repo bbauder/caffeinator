@@ -15,6 +15,8 @@ protocol NotificationDelivering {
 
 struct UNCenterNotificationDelivery: NotificationDelivering {
 
+    nonisolated init() {}
+
     func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
     }

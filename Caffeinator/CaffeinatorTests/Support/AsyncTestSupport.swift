@@ -6,13 +6,13 @@
 import Foundation
 import XCTest
 
-/// Pumps the main run loop briefly so Combine `receive(on: RunLoop.main)`
-/// subscriptions and other scheduled work get a chance to run.
+/// Lets Combine `receive(on: RunLoop.main)` subscriptions and other scheduled
+/// main-actor work get a chance to run.
 @MainActor
 func pumpMainRunLoop(times: Int = 3) async {
     for _ in 0..<times {
         await Task.yield()
-        RunLoop.main.run(until: Date().addingTimeInterval(0.005))
+        try? await Task.sleep(for: .milliseconds(5))
     }
 }
 

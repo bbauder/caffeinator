@@ -17,6 +17,8 @@ protocol PowerAssertionProvider {
 
 struct IOKitPowerAssertionProvider: PowerAssertionProvider {
 
+    nonisolated init() {}
+
     func create(type: CFString, reason: CFString) -> IOPMAssertionID? {
         var id: IOPMAssertionID = 0
         let result = IOPMAssertionCreateWithName(type,

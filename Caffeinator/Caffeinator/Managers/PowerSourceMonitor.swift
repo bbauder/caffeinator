@@ -68,7 +68,7 @@ class PowerSourceMonitor {
         }
     }
 
-    static let iokitOnAC: () -> Bool = {
+    nonisolated static let iokitOnAC: () -> Bool = {
         let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue()
         let powerType = IOPSGetProvidingPowerSourceType(snapshot)?.takeUnretainedValue() as String?
 

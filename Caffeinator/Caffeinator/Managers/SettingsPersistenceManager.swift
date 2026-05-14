@@ -144,7 +144,7 @@ class SettingsPersistenceManager {
         }
     }
 
-    static let defaultLaunchAtLoginResolver: () -> Bool = {
+    nonisolated static let defaultLaunchAtLoginResolver: () -> Bool = {
         let derivedData = Bundle.main.bundlePath.contains("DerivedData")
         return !derivedData && SMAppService.mainApp.status == .enabled
     }

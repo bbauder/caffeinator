@@ -59,7 +59,7 @@ class BatteryMonitor {
         onLowBattery?()
     }
 
-    static let iokitBatteryLevel: () -> Int? = {
+    nonisolated static let iokitBatteryLevel: () -> Int? = {
         guard let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue(),
               let sources = IOPSCopyPowerSourcesList(snapshot)?.takeRetainedValue() as? [CFTypeRef],
               let source = sources.first,
