@@ -32,6 +32,10 @@ class NotificationManager {
     }
 
     func sendTimerExpiredNotification() {
+        guard notificationsEnabled else {
+            return
+        }
+
         let content = UNMutableNotificationContent()
         content.title = L.notificationTimerExpiredTitle
         content.body = L.notificationTimerExpiredBody
