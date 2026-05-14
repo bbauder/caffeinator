@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		32A29D122FB60AA00010A805 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3240BC492F9ACEBA007E3890 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3240BC502F9ACEBA007E3890;
+			remoteInfo = Caffeinator;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		3240BC512F9ACEBA007E3890 /* Caffeinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caffeinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32A29D0E2FB60AA00010A805 /* CaffeinatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaffeinatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,10 +40,22 @@
 			path = Caffeinator;
 			sourceTree = "<group>";
 		};
+		32A29D0F2FB60AA00010A805 /* CaffeinatorTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CaffeinatorTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3240BC4E2F9ACEBA007E3890 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32A29D0B2FB60AA00010A805 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				3240BC532F9ACEBA007E3890 /* Caffeinator */,
+				32A29D0F2FB60AA00010A805 /* CaffeinatorTests */,
 				3240BC522F9ACEBA007E3890 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				3240BC512F9ACEBA007E3890 /* Caffeinator.app */,
+				32A29D0E2FB60AA00010A805 /* CaffeinatorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +108,29 @@
 			productReference = 3240BC512F9ACEBA007E3890 /* Caffeinator.app */;
 			productType = "com.apple.product-type.application";
 		};
+		32A29D0D2FB60AA00010A805 /* CaffeinatorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32A29D162FB60AA00010A805 /* Build configuration list for PBXNativeTarget "CaffeinatorTests" */;
+			buildPhases = (
+				32A29D0A2FB60AA00010A805 /* Sources */,
+				32A29D0B2FB60AA00010A805 /* Frameworks */,
+				32A29D0C2FB60AA00010A805 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				32A29D132FB60AA00010A805 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				32A29D0F2FB60AA00010A805 /* CaffeinatorTests */,
+			);
+			name = CaffeinatorTests;
+			packageProductDependencies = (
+			);
+			productName = CaffeinatorTests;
+			productReference = 32A29D0E2FB60AA00010A805 /* CaffeinatorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -90,11 +138,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2640;
+				LastSwiftUpdateCheck = 2650;
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					3240BC502F9ACEBA007E3890 = {
 						CreatedOnToolsVersion = 26.4.1;
+					};
+					32A29D0D2FB60AA00010A805 = {
+						CreatedOnToolsVersion = 26.5;
+						TestTargetID = 3240BC502F9ACEBA007E3890;
 					};
 				};
 			};
@@ -136,12 +188,20 @@
 			projectRoot = "";
 			targets = (
 				3240BC502F9ACEBA007E3890 /* Caffeinator */,
+				32A29D0D2FB60AA00010A805 /* CaffeinatorTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3240BC4F2F9ACEBA007E3890 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32A29D0C2FB60AA00010A805 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -158,7 +218,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		32A29D0A2FB60AA00010A805 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		32A29D132FB60AA00010A805 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3240BC502F9ACEBA007E3890 /* Caffeinator */;
+			targetProxy = 32A29D122FB60AA00010A805 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3240BC5A2F9ACEBB007E3890 /* Debug */ = {
@@ -355,6 +430,46 @@
 			};
 			name = Release;
 		};
+		32A29D142FB60AA00010A805 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brucebauder.CaffeinatorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Caffeinator.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Caffeinator";
+			};
+			name = Debug;
+		};
+		32A29D152FB60AA00010A805 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brucebauder.CaffeinatorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Caffeinator.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Caffeinator";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -372,6 +487,15 @@
 			buildConfigurations = (
 				3240BC5D2F9ACEBB007E3890 /* Debug */,
 				3240BC5E2F9ACEBB007E3890 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32A29D162FB60AA00010A805 /* Build configuration list for PBXNativeTarget "CaffeinatorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32A29D142FB60AA00010A805 /* Debug */,
+				32A29D152FB60AA00010A805 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
