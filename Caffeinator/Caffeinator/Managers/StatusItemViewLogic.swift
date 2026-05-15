@@ -30,9 +30,11 @@ enum TooltipBuilder {
             if !watchedApps.isEmpty {
                 lines.append("")
                 lines.append(L.tooltipWatching)
+
                 for app in watchedApps.prefix(maxWatchedAppsShown) {
                     lines.append("  \u{2022} \(app.name)")
                 }
+
                 if watchedApps.count > maxWatchedAppsShown {
                     lines.append("  \u{2022} \(L.tooltipAndMore(watchedApps.count - maxWatchedAppsShown))")
                 }

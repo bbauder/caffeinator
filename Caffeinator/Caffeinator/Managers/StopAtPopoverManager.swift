@@ -67,6 +67,7 @@ final class StopAtPopoverManager {
                 return button
             }
         }
+
         return nil
     }
 }

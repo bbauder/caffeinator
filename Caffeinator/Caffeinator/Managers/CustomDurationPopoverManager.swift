@@ -67,6 +67,7 @@ final class CustomDurationPopoverManager {
                 return button
             }
         }
+
         return nil
     }
 }
