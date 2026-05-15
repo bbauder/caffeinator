@@ -10,11 +10,10 @@ import XCTest
 final class LocalizationIntegrityTests: XCTestCase {
 
     /// All locales we expect the app to ship with.
-    let expectedLocales = [
-        "en", "fr", "de", "it", "es", "es-419",
-        "pt-BR", "pt-PT", "ja", "ko", "zh-Hans", "zh-Hant",
-        "nl", "sv", "da", "nb", "fi", "pl", "tr",
-        "ar", "he", "hi", "th", "pseudo",
+    let expectedLocales = ["en", "fr", "de", "it", "es", "es-419",
+                           "pt-BR", "pt-PT", "ja", "ko", "zh-Hans", "zh-Hant",
+                           "nl", "sv", "da", "nb", "fi", "pl", "tr",
+                           "ar", "he", "hi", "th", "pseudo",
     ]
 
     /// Locale used as the source of truth for keys and placeholders.
@@ -93,9 +92,15 @@ final class LocalizationIntegrityTests: XCTestCase {
 
     func test_noBOMMarkers() throws {
         for locale in expectedLocales {
-            guard let url = stringsURL(for: locale) else { continue }
+            guard let url = stringsURL(for: locale) else {
+                continue
+            }
+
             let data = try Data(contentsOf: url)
-            guard data.count >= 3 else { continue }
+            guard data.count >= 3 else {
+                continue
+            }
+
             let prefix = data.prefix(3)
             let bom: [UInt8] = [0xEF, 0xBB, 0xBF]
             XCTAssertNotEqual([UInt8](prefix), bom, "[\(locale)] file contains UTF-8 BOM")

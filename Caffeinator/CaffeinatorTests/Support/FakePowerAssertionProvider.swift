@@ -23,9 +23,11 @@ final class FakePowerAssertionProvider: PowerAssertionProvider, @unchecked Senda
 
     func create(type: CFString, reason: CFString) -> IOPMAssertionID? {
         createCalls.append(CreateCall(type: type as String, reason: reason as String))
+
         guard createSucceeds else {
             return nil
         }
+
         let id = nextID
         nextID += 1
         liveIDs.insert(id)

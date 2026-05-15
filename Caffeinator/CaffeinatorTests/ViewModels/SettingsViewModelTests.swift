@@ -85,6 +85,7 @@ final class SettingsViewModelTests: XCTestCase {
             sut.preventSystemSleep = (combo & 0b001) != 0
             sut.preventDisplaySleep = (combo & 0b010) != 0
             sut.preventScreenSaver = (combo & 0b100) != 0
+
             let expected = sut.preventSystemSleep || sut.preventDisplaySleep || sut.preventScreenSaver
             XCTAssertEqual(sut.isAnySystemEnabled, expected, "combo=\(combo)")
         }

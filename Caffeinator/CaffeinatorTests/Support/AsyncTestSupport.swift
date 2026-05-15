@@ -26,9 +26,11 @@ extension XCTestCase {
                  file: StaticString = #file,
                  line: UInt = #line) async {
         let deadline = Date().addingTimeInterval(timeout)
+
         while !condition() && Date() < deadline {
             await pumpMainRunLoop(times: 1)
         }
+
         if !condition() {
             XCTFail("Condition not met within \(timeout)s", file: file, line: line)
         }

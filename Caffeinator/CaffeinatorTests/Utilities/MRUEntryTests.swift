@@ -42,9 +42,12 @@ final class MRUEntryTests: XCTestCase {
         try assertRoundTrip(.untilTime(hour: 23, minute: 59))
     }
 
-    private func assertRoundTrip(_ entry: MRUEntry, file: StaticString = #file, line: UInt = #line) throws {
+    private func assertRoundTrip(_ entry: MRUEntry,
+                                 file: StaticString = #file,
+                                 line: UInt = #line) throws {
         let data = try JSONEncoder().encode(entry)
         let decoded = try JSONDecoder().decode(MRUEntry.self, from: data)
+
         XCTAssertEqual(decoded, entry, file: file, line: line)
     }
 }

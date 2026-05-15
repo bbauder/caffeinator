@@ -13,7 +13,9 @@ enum TestUserDefaults {
     static func make(file: StaticString = #file, line: UInt = #line) -> UserDefaults {
         let suite = "test-\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
+
         defaults.removePersistentDomain(forName: suite)
+
         return defaults
     }
 }

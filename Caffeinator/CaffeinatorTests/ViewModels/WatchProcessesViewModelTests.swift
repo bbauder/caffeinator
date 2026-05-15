@@ -20,11 +20,11 @@ final class WatchProcessesViewModelTests: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
-        let apps = [
-            FakeApp.make(pid: 1, name: "Alpha"),
-            FakeApp.make(pid: 2, name: "Bravo"),
-            FakeApp.make(pid: 3, name: "Charlie"),
+        let apps = [FakeApp.make(pid: 1, name: "Alpha"),
+                    FakeApp.make(pid: 2, name: "Bravo"),
+                    FakeApp.make(pid: 3, name: "Charlie"),
         ]
+
         discovery = makeDiscovery(apps)
         store = WatchedProcessStore()
         watcher = ProcessWatcher()
