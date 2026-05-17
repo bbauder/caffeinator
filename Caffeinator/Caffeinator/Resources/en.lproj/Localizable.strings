@@ -68,8 +68,8 @@
 "settingsPreventDisplaySleepHelp" = "Keeps the screen awake. Useful for presentations, monitoring, or when you need the display to stay visible.";
 "settingsPreventScreenSaverHelp" = "Prevents the lock screen from appearing due to inactivity.";
 "settingsDeclareUserActivityPopover" = "Declares user activity at intervals so macOS treats you as 'active.' This resets the idle timer and helps keep the display awake. Caffeinator only performs this while 'Prevent display sleep' is enabled, ensuring the display isn't awakened unexpectedly.";
-"settingsLowBatteryHelp" = "Automatically stops Keep Awake when your battery falls below the selected threshold.";
-"settingsUnplugHelp" = "Automatically stops Keep Awake when your Mac switches to battery power.";
+"settingsLowBatteryHelp" = "Automatically stops Keeping Awake when your battery falls below the selected threshold.";
+"settingsUnplugHelp" = "Automatically stops Keeping Awake when your Mac switches to battery power.";
 "settingsRecentDurationsHelp" = "Shows your recently used Keep Awake durations in the menu for quick access.";
 "settingsAnimateIconHelp" = "Adds a subtle animation to the menu bar icon while Keep Awake is active.";
 "settingsShowStatusText" = "Show status text next to menu bar icon";
