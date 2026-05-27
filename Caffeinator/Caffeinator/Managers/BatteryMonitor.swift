@@ -14,12 +14,15 @@ class BatteryMonitor {
     var onLowBattery: (() -> Void)?
 
     private let batteryLevelProvider: () -> Int?
+    private let isOnACProvider: () -> Bool
     private var batteryTask: Task<Void, Never>?
     var threshold: Int = 20
     private(set) var hasFired = false
 
-    init(batteryLevelProvider: @escaping () -> Int? = BatteryMonitor.iokitBatteryLevel) {
+    init(batteryLevelProvider: @escaping () -> Int? = BatteryMonitor.iokitBatteryLevel,
+         isOnACProvider: @escaping () -> Bool = PowerSourceMonitor.iokitOnAC) {
         self.batteryLevelProvider = batteryLevelProvider
+        self.isOnACProvider = isOnACProvider
     }
 
     func startMonitoring(threshold: Int) {
@@ -42,6 +45,14 @@ class BatteryMonitor {
     }
 
     func checkBattery() {
+        // "Low battery" only applies when running on battery power.
+        // If plugged in, charge is rising — not a low-battery situation.
+        // hasFired is intentionally preserved so we don't re-fire on a
+        // brief AC excursion below the threshold.
+        if isOnACProvider() {
+            return
+        }
+
         guard let level = batteryLevelProvider() else {
             return
         }
