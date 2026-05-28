@@ -66,6 +66,7 @@ enum L {
     static func autoDisableNotificationBody(_ threshold: Int) -> String {
         String(format: NSLocalizedString("autoDisableNotificationBody", comment: ""), threshold)
     }
+
     static let settingsPreventSystemSleep = NSLocalizedString("settingsPreventSystemSleep", comment: "")
     static let settingsPreventDisplaySleep = NSLocalizedString("settingsPreventDisplaySleep", comment: "")
     static let settingsPreventAutoLock = NSLocalizedString("settingsPreventAutoLock", comment: "")

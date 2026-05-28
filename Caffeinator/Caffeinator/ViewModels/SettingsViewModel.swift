@@ -91,7 +91,6 @@ class SettingsViewModel: ObservableObject {
     }
 
     typealias LaunchAtLoginUpdater = (Bool) -> Bool
-
     @Published var launchAtLogin: Bool {
         didSet {
             guard launchAtLogin != oldValue else {
@@ -115,6 +114,7 @@ class SettingsViewModel: ObservableObject {
     let batteryMonitor: BatteryMonitor
     let powerSourceMonitor: PowerSourceMonitor
     let userActivityManager: UserActivityManager
+
     private let launchAtLoginUpdater: LaunchAtLoginUpdater
     private var wakeManagerCancellable: AnyCancellable?
 
@@ -182,6 +182,7 @@ class SettingsViewModel: ObservableObject {
         if autoDisableOnLowBattery {
             batteryMonitor.startMonitoring(threshold: lowBatteryThreshold)
         }
+
         if autoDisableOnUnpluggedPower {
             powerSourceMonitor.startMonitoring()
         }
@@ -200,6 +201,7 @@ class SettingsViewModel: ObservableObject {
             guard let self, self.notifyOnTimerExpired else {
                 return
             }
+
             self.notificationManager.sendTimerExpiredNotification()
         }
 
