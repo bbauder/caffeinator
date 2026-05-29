@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct CaffeinatorApp: App {
+
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     var body: some Scene {
@@ -21,6 +22,7 @@ struct CaffeinatorApp: App {
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+
     let wakeManager = WakeAssertionManager()
     let persistence = SettingsPersistenceManager()
     let notificationManager = NotificationManager()
