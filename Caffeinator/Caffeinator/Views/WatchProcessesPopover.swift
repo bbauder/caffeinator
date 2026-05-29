@@ -14,10 +14,10 @@ struct WatchProcessesPopover: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            header
-            content
-            footer
-            buttonRow
+            HeaderView
+            ContentView
+            FooterView
+            ButtonRowView
         }
         .padding(16)
         .frame(width: 320)
@@ -26,7 +26,7 @@ struct WatchProcessesPopover: View {
         }
     }
 
-    private var header: some View {
+    private var HeaderView: some View {
         HStack {
             Text(viewModel.popoverTitle)
                 .font(.headline)
@@ -35,7 +35,7 @@ struct WatchProcessesPopover: View {
     }
 
     @ViewBuilder
-    private var content: some View {
+    private var ContentView: some View {
         if viewModel.runningApps.isEmpty {
             emptyState
         } else {
@@ -70,7 +70,7 @@ struct WatchProcessesPopover: View {
         }
     }
 
-    private var footer: some View {
+    private var FooterView: some View {
         HStack {
             Text(viewModel.footerText)
                 .font(.body)
@@ -80,7 +80,7 @@ struct WatchProcessesPopover: View {
         .frame(height: 40, alignment: .top)
     }
 
-    private var buttonRow: some View {
+    private var ButtonRowView: some View {
         HStack {
             Button(L.cancel) {
                 onDismiss()
