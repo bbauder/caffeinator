@@ -127,9 +127,7 @@ struct SettingsView: View {
                 }
                 .keyboardShortcut(.defaultAction)
             }
-            .padding(.horizontal, 4)
-            .padding(.top, 12)
-            .padding(.bottom, 12)
+            .padding(EdgeInsets(top: 12, leading: 4, bottom: 12, trailing: 4))
         }
         .frame(width: 480, height: 540)
         .padding(12)
