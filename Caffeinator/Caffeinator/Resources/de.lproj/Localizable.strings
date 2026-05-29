@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Wachhalten wurde beendet, weil die Stromversorgung getrennt wurde.";
 "settingsNotifications" = "Mitteilungen";
 "settingsAutoDisableNotificationsEnabled" = "Mitteilungen bei automatischer Deaktivierung senden";
-"settingsDeclareUserActivityPopover" = "Meldet in regelmäßigen Abständen Benutzeraktivität, sodass macOS dich als „aktiv“ behandelt. Dies setzt den Inaktivitäts-Timer zurück und hilft, den Bildschirm wach zu halten. Caffeinator tut dies nur, wenn „Bildschirmruhezustand verhindern“ aktiviert ist, um ein unerwartetes Aufwecken des Bildschirms zu vermeiden.";
+"settingsDeclareUserActivityPopover" = "Meldet in regelmäßigen Abständen Benutzeraktivität, sodass macOS dich als „aktiv“ behandelt. Dies setzt den Inaktivitäts-Timer zurück und hilft, den Bildschirm wach zu halten.";
 "settingsLowBatteryHelp" = "Beendet das Wachhalten automatisch, wenn der Akku unter den ausgewählten Schwellenwert fällt.";
 "settingsUnplugHelp" = "Beendet das Wachhalten automatisch, wenn dein Mac auf Akkubetrieb wechselt.";
 "settingsRecentDurationsHelp" = "Zeigt die zuletzt verwendeten Wachhalte-Dauern im Menü für schnellen Zugriff an.";

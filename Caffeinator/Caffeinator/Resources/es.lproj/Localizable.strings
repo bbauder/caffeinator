@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Se dejó de mantener despierto porque se desconectó la alimentación.";
 "settingsNotifications" = "Notificaciones";
 "settingsAutoDisableNotificationsEnabled" = "Enviar notificaciones para eventos de desactivación automática";
-"settingsDeclareUserActivityPopover" = "Declara actividad del usuario a intervalos para que macOS te considere «activo». Esto restablece el temporizador de inactividad y ayuda a mantener la pantalla encendida. Caffeinator solo lo hace cuando «Impedir el reposo de la pantalla» está activado, para evitar que la pantalla se encienda inesperadamente.";
+"settingsDeclareUserActivityPopover" = "Declara actividad del usuario a intervalos para que macOS te considere «activo». Esto restablece el temporizador de inactividad y ayuda a mantener la pantalla encendida.";
 "settingsLowBatteryHelp" = "Deja de mantener despierto automáticamente cuando la batería cae por debajo del umbral seleccionado.";
 "settingsUnplugHelp" = "Deja de mantener despierto automáticamente cuando tu Mac pasa a funcionar con batería.";
 "settingsRecentDurationsHelp" = "Muestra las duraciones de mantenimiento despierto utilizadas recientemente en el menú para un acceso rápido.";

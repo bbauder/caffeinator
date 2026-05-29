@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Il mantenimento sveglio è stato interrotto perché l'alimentazione è stata scollegata.";
 "settingsNotifications" = "Notifiche";
 "settingsAutoDisableNotificationsEnabled" = "Invia notifiche per gli eventi di disattivazione automatica";
-"settingsDeclareUserActivityPopover" = "Dichiara attività utente a intervalli regolari, così macOS ti considera 'attivo'. Questo resetta il timer di inattività e aiuta a mantenere il display acceso. Caffeinator lo fa solo quando 'Impedisci lo stop del display' è attivato, per evitare risvegli inattesi del display.";
+"settingsDeclareUserActivityPopover" = "Dichiara attività utente a intervalli regolari, così macOS ti considera 'attivo'. Questo resetta il timer di inattività e aiuta a mantenere il display acceso.";
 "settingsLowBatteryHelp" = "Interrompe automaticamente il mantenimento sveglio quando la batteria scende sotto la soglia selezionata.";
 "settingsUnplugHelp" = "Interrompe automaticamente il mantenimento sveglio quando il Mac passa all'alimentazione a batteria.";
 "settingsRecentDurationsHelp" = "Mostra le durate di mantenimento sveglio usate di recente nel menu per un accesso rapido.";

@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Le maintien éveillé a été arrêté car l'alimentation a été débranchée.";
 "settingsNotifications" = "Notifications";
 "settingsAutoDisableNotificationsEnabled" = "Envoyer des notifications pour les événements de désactivation automatique";
-"settingsDeclareUserActivityPopover" = "Déclare une activité utilisateur à intervalles réguliers pour que macOS vous considère comme « actif ». Cela réinitialise le minuteur d'inactivité et aide à maintenir l'écran allumé. Caffeinator ne le fait que lorsque « Empêcher la mise en veille de l'écran » est activé, afin d'éviter tout réveil inattendu de l'écran.";
+"settingsDeclareUserActivityPopover" = "Déclare une activité utilisateur à intervalles réguliers pour que macOS vous considère comme « actif ». Cela réinitialise le minuteur d'inactivité et aide à maintenir l'écran allumé.";
 "settingsLowBatteryHelp" = "Arrête automatiquement le maintien éveillé lorsque la batterie descend en dessous du seuil sélectionné.";
 "settingsUnplugHelp" = "Arrête automatiquement le maintien éveillé lorsque votre Mac passe sur batterie.";
 "settingsRecentDurationsHelp" = "Affiche les durées de maintien éveillé récemment utilisées dans le menu pour un accès rapide.";

@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "電源が切断されたため、スリープ防止を停止しました。";
 "settingsNotifications" = "通知";
 "settingsAutoDisableNotificationsEnabled" = "自動無効化イベントの通知を送信";
-"settingsDeclareUserActivityPopover" = "一定間隔でユーザーアクティビティを宣言し、macOSに「アクティブ」として認識させます。これによりアイドルタイマーがリセットされ、ディスプレイの維持に役立ちます。Caffeinatorは「ディスプレイスリープを防止」が有効な場合のみこれを実行し、予期しない画面の点灯を防ぎます。";
+"settingsDeclareUserActivityPopover" = "一定間隔でユーザーアクティビティを宣言し、macOSに「アクティブ」として認識させます。これによりアイドルタイマーがリセットされ、ディスプレイの維持に役立ちます。";
 "settingsLowBatteryHelp" = "バッテリー残量が選択したしきい値を下回ると、自動的にスリープ防止を停止します。";
 "settingsUnplugHelp" = "Macがバッテリー駆動に切り替わると、自動的にスリープ防止を停止します。";
 "settingsRecentDurationsHelp" = "最近使用したスリープ防止の期間をメニューに表示し、すばやくアクセスできるようにします。";

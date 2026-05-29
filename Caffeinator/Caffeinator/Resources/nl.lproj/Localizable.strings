@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Wakker houden is gestopt omdat de stroom werd losgekoppeld.";
 "settingsNotifications" = "Meldingen";
 "settingsAutoDisableNotificationsEnabled" = "Meldingen sturen bij automatische uitschakeling";
-"settingsDeclareUserActivityPopover" = "Meldt op regelmatige intervallen gebruikersactiviteit zodat macOS je als 'actief' beschouwt. Dit reset de inactiviteitstimer en helpt het beeldscherm wakker te houden. Caffeinator doet dit alleen wanneer 'Beeldschermslaap voorkomen' is ingeschakeld, om te voorkomen dat het scherm onverwacht wordt gewekt.";
+"settingsDeclareUserActivityPopover" = "Meldt op regelmatige intervallen gebruikersactiviteit zodat macOS je als 'actief' beschouwt. Dit reset de inactiviteitstimer en helpt het beeldscherm wakker te houden.";
 "settingsLowBatteryHelp" = "Stopt automatisch met wakker houden wanneer de batterij onder de geselecteerde drempelwaarde daalt.";
 "settingsUnplugHelp" = "Stopt automatisch met wakker houden wanneer je Mac overschakelt op batterijstroom.";
 "settingsRecentDurationsHelp" = "Toont recent gebruikte duren in het menu voor snelle toegang.";

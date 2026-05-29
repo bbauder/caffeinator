@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Czuwanie zostało zatrzymane z powodu odłączenia zasilania.";
 "settingsNotifications" = "Powiadomienia";
 "settingsAutoDisableNotificationsEnabled" = "Wysyłaj powiadomienia o automatycznym wyłączeniu";
-"settingsDeclareUserActivityPopover" = "Zgłasza aktywność użytkownika w regularnych odstępach, aby macOS traktował Cię jako „aktywnego”. Resetuje to licznik bezczynności i pomaga utrzymać ekran włączony. Caffeinator robi to tylko, gdy „Zapobiegaj uśpieniu ekranu” jest włączone, aby uniknąć nieoczekiwanego wybudzenia ekranu.";
+"settingsDeclareUserActivityPopover" = "Zgłasza aktywność użytkownika w regularnych odstępach, aby macOS traktował Cię jako „aktywnego”. Resetuje to licznik bezczynności i pomaga utrzymać ekran włączony.";
 "settingsLowBatteryHelp" = "Automatycznie zatrzymuje czuwanie, gdy bateria spadnie poniżej wybranego progu.";
 "settingsUnplugHelp" = "Automatycznie zatrzymuje czuwanie, gdy Mac przełączy się na zasilanie bateryjne.";
 "settingsRecentDurationsHelp" = "Pokazuje ostatnio używane czasy trwania czuwania w menu dla szybkiego dostępu.";

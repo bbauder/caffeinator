@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Hereillä pitäminen lopetettiin, koska virta irrotettiin.";
 "settingsNotifications" = "Ilmoitukset";
 "settingsAutoDisableNotificationsEnabled" = "Lähetä ilmoitukset automaattisesta käytöstäpoistosta";
-"settingsDeclareUserActivityPopover" = "Ilmoittaa käyttäjäaktiivisuudesta säännöllisin väliajoin, jotta macOS käsittelee sinua \"aktiivisena\". Tämä nollaa käyttämättömyysajastimen ja auttaa pitämään näytön päällä. Caffeinator tekee tämän vain kun \"Estä näytön lepotila\" on käytössä, jotta näyttö ei herää odottamatta.";
+"settingsDeclareUserActivityPopover" = "Ilmoittaa käyttäjäaktiivisuudesta säännöllisin väliajoin, jotta macOS käsittelee sinua \"aktiivisena\". Tämä nollaa käyttämättömyysajastimen ja auttaa pitämään näytön päällä.";
 "settingsLowBatteryHelp" = "Lopettaa automaattisesti hereillä pitämisen kun akku laskee valitun kynnyksen alle.";
 "settingsUnplugHelp" = "Lopettaa automaattisesti hereillä pitämisen kun Mac siirtyy akkuvirtaan.";
 "settingsRecentDurationsHelp" = "Näyttää viimeksi käytetyt hereillä pitämisen kestot valikossa nopeaa käyttöä varten.";

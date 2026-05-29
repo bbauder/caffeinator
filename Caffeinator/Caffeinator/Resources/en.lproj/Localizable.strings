@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Stopped Keeping Awake because power was unplugged.";
 "settingsNotifications" = "Notifications";
 "settingsAutoDisableNotificationsEnabled" = "Send notifications for Auto-Disable events";
-"settingsDeclareUserActivityPopover" = "Declares user activity at intervals so macOS treats you as 'active.' This resets the idle timer and helps keep the display awake. Caffeinator only performs this while 'Prevent display sleep' is enabled, ensuring the display isn't awakened unexpectedly.";
+"settingsDeclareUserActivityPopover" = "Declares user activity at intervals so macOS treats you as 'active.' This resets the idle timer and helps keep the display awake.";
 "settingsLowBatteryHelp" = "Automatically stops Keeping Awake when your battery falls below the selected threshold.";
 "settingsUnplugHelp" = "Automatically stops Keeping Awake when your Mac switches to battery power.";
 "settingsRecentDurationsHelp" = "Shows your recently used Keep Awake durations in the menu for quick access.";

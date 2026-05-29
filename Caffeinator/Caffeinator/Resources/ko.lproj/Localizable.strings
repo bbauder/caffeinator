@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "전원이 분리되어 깨어 있기가 중단되었습니다.";
 "settingsNotifications" = "알림";
 "settingsAutoDisableNotificationsEnabled" = "자동 비활성화 이벤트에 대한 알림 전송";
-"settingsDeclareUserActivityPopover" = "일정 간격으로 사용자 활동을 선언하여 macOS가 사용자를 '활성' 상태로 인식하게 합니다. 이렇게 하면 유휴 타이머가 재설정되고 디스플레이가 켜진 상태로 유지됩니다. Caffeinator는 '디스플레이 잠자기 방지'가 활성화된 경우에만 이 기능을 수행하여 디스플레이가 예기치 않게 켜지는 것을 방지합니다.";
+"settingsDeclareUserActivityPopover" = "일정 간격으로 사용자 활동을 선언하여 macOS가 사용자를 '활성' 상태로 인식하게 합니다. 이렇게 하면 유휴 타이머가 재설정되고 디스플레이가 켜진 상태로 유지됩니다.";
 "settingsLowBatteryHelp" = "배터리가 선택한 임계값 아래로 떨어지면 자동으로 깨어 있기를 중단합니다.";
 "settingsUnplugHelp" = "Mac이 배터리 전원으로 전환되면 자동으로 깨어 있기를 중단합니다.";
 "settingsRecentDurationsHelp" = "최근 사용한 깨어 있기 기간을 메뉴에 표시하여 빠르게 접근할 수 있게 합니다.";

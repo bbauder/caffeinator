@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "O modo ativo foi interrompido porque a alimentação foi desligada.";
 "settingsNotifications" = "Notificações";
 "settingsAutoDisableNotificationsEnabled" = "Enviar notificações para eventos de desativação automática";
-"settingsDeclareUserActivityPopover" = "Declara atividade do utilizador a intervalos para que o macOS o considere como «ativo». Isto repõe o temporizador de inatividade e ajuda a manter o ecrã ligado. O Caffeinator só o faz quando «Impedir repouso do ecrã» está ativado, evitando que o ecrã seja ligado inesperadamente.";
+"settingsDeclareUserActivityPopover" = "Declara atividade do utilizador a intervalos para que o macOS o considere como «ativo». Isto repõe o temporizador de inatividade e ajuda a manter o ecrã ligado.";
 "settingsLowBatteryHelp" = "Para automaticamente de manter ativo quando a bateria desce abaixo do limiar selecionado.";
 "settingsUnplugHelp" = "Para automaticamente de manter ativo quando o Mac muda para energia da bateria.";
 "settingsRecentDurationsHelp" = "Mostra as durações utilizadas recentemente no menu para acesso rápido.";

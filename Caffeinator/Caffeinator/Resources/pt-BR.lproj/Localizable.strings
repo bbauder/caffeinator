@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "O modo ativo foi interrompido porque a energia foi desconectada.";
 "settingsNotifications" = "Notificações";
 "settingsAutoDisableNotificationsEnabled" = "Enviar notificações para eventos de desativação automática";
-"settingsDeclareUserActivityPopover" = "Declara atividade do usuário em intervalos para que o macOS considere você como 'ativo'. Isso reinicia o temporizador de inatividade e ajuda a manter a tela ligada. O Caffeinator só faz isso quando 'Impedir repouso da tela' está ativado, evitando que a tela seja ligada inesperadamente.";
+"settingsDeclareUserActivityPopover" = "Declara atividade do usuário em intervalos para que o macOS considere você como 'ativo'. Isso reinicia o temporizador de inatividade e ajuda a manter a tela ligada.";
 "settingsLowBatteryHelp" = "Para automaticamente de manter ativo quando a bateria cai abaixo do limite selecionado.";
 "settingsUnplugHelp" = "Para automaticamente de manter ativo quando o Mac muda para energia da bateria.";
 "settingsRecentDurationsHelp" = "Mostra as durações usadas recentemente no menu para acesso rápido.";

@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Güç bağlantısı kesildiği için uyanık tutma durduruldu.";
 "settingsNotifications" = "Bildirimler";
 "settingsAutoDisableNotificationsEnabled" = "Otomatik devre dışı bırakma olaylarında bildirim gönder";
-"settingsDeclareUserActivityPopover" = "Düzenli aralıklarla kullanıcı etkinliği bildirir, böylece macOS sizi «etkin» olarak değerlendirir. Bu, boşta kalma zamanlayıcısını sıfırlar ve ekranı açık tutmaya yardımcı olur. Caffeinator bunu yalnızca «Ekran uykusunu engelle» etkinken yapar, böylece ekranın beklenmedik şekilde uyanması önlenir.";
+"settingsDeclareUserActivityPopover" = "Düzenli aralıklarla kullanıcı etkinliği bildirir, böylece macOS sizi «etkin» olarak değerlendirir. Bu, boşta kalma zamanlayıcısını sıfırlar ve ekranı açık tutmaya yardımcı olur.";
 "settingsLowBatteryHelp" = "Pil seçilen eşiğin altına düştüğünde uyanık tutmayı otomatik olarak durdurur.";
 "settingsUnplugHelp" = "Mac'iniz pil gücüne geçtiğinde uyanık tutmayı otomatik olarak durdurur.";
 "settingsRecentDurationsHelp" = "Son kullanılan uyanık tutma sürelerini hızlı erişim için menüde gösterir.";

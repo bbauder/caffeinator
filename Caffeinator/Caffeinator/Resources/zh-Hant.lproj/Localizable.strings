@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "由於電源已中斷，保持喚醒已停止。";
 "settingsNotifications" = "通知";
 "settingsAutoDisableNotificationsEnabled" = "自動停用事件時傳送通知";
-"settingsDeclareUserActivityPopover" = "定期宣告使用者活動，使 macOS 將你視為「活躍」狀態。這會重設閒置計時器並協助保持顯示器常亮。Caffeinator 僅在「防止顯示器睡眠」啟用時才執行此操作，以避免顯示器被意外喚醒。";
+"settingsDeclareUserActivityPopover" = "定期宣告使用者活動，使 macOS 將你視為「活躍」狀態。這會重設閒置計時器並協助保持顯示器常亮。";
 "settingsLowBatteryHelp" = "當電池電量低於所選閾值時，自動停止保持喚醒。";
 "settingsUnplugHelp" = "當 Mac 切換到電池供電時，自動停止保持喚醒。";
 "settingsRecentDurationsHelp" = "在選單中顯示最近使用的保持喚醒時長，以便快速選取。";

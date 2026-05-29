@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "Stoppede med at holde vågen, fordi strømmen blev frakoblet.";
 "settingsNotifications" = "Notifikationer";
 "settingsAutoDisableNotificationsEnabled" = "Send notifikationer ved automatisk deaktivering";
-"settingsDeclareUserActivityPopover" = "Rapporterer brugeraktivitet med jævne mellemrum, så macOS behandler dig som \"aktiv\". Dette nulstiller inaktivitetstimeren og hjælper med at holde skærmen vågen. Caffeinator gør kun dette, når \"Forhindre skærmdvale\" er aktiveret, for at undgå at skærmen vækkes uventet.";
+"settingsDeclareUserActivityPopover" = "Rapporterer brugeraktivitet med jævne mellemrum, så macOS behandler dig som \"aktiv\". Dette nulstiller inaktivitetstimeren og hjælper med at holde skærmen vågen.";
 "settingsLowBatteryHelp" = "Stopper automatisk med at holde vågen, når batteriet falder under den valgte tærskel.";
 "settingsUnplugHelp" = "Stopper automatisk med at holde vågen, når din Mac skifter til batteridrift.";
 "settingsRecentDurationsHelp" = "Viser seneste brugte varigheder i menuen for hurtig adgang.";

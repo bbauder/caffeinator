@@ -53,7 +53,7 @@
 "notificationUnpluggedBody" = "הפסיק לשמור ער כי החשמל נותק.";
 "settingsNotifications" = "התראות";
 "settingsAutoDisableNotificationsEnabled" = "שלח התראות על אירועי השבתה אוטומטית";
-"settingsDeclareUserActivityPopover" = "מצהיר על פעילות משתמש במרווחי זמן כדי ש-macOS יתייחס אליך כ׳פעיל׳. פעולה זו מאפסת את טיימר חוסר הפעילות ועוזרת לשמור על המסך דלוק. Caffeinator עושה זאת רק כש׳מנע שינת מסך׳ מופעל, כדי למנוע הדלקת מסך בלתי צפויה.";
+"settingsDeclareUserActivityPopover" = "מצהיר על פעילות משתמש במרווחי זמן כדי ש-macOS יתייחס אליך כ׳פעיל׳. פעולה זו מאפסת את טיימר חוסר הפעילות ועוזרת לשמור על המסך דלוק.";
 "settingsLowBatteryHelp" = "מפסיק אוטומטית לשמור ער כשהסוללה יורדת מתחת לסף שנבחר.";
 "settingsUnplugHelp" = "מפסיק אוטומטית לשמור ער כש-Mac עובר לכוח סוללה.";
 "settingsRecentDurationsHelp" = "מציג משכי זמן שנעשה בהם שימוש לאחרונה בתפריט לגישה מהירה.";
