@@ -7,18 +7,6 @@
 
 import Foundation
 
-// Use these extensions and helpers freely to help when debugging or instrumenting your code by sprinkling
-// in print() statements. Getting the current thread and object instance IDs comes up often, so rather than
-// looking up how to get them each time, you can use the static functions declared here.
-//
-// Usage: Add print() statements in your functions and properties as usual. It is helpful to prepend them all with
-// "[DBG]". At runtime, you can type "[DBG]" in the debug console window's filter, and it will only display your
-// debug output. The functions declared here all contain this same prefix by default, but you can pass in whatever
-// you like or an empty string to suppress it entirely.
-//
-// IMPORTANT: Debugging helpers can potentially leak implementation details if they get included in
-// production/release builds.
-
 public class DBG {
 
     /// This is the primary helper function to call. The others can be called if you need specific elements for display or logging.

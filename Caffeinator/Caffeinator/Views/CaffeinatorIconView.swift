@@ -16,7 +16,7 @@ struct CaffeinatorIconView: View {
 
     @State private var steamFrame = 0
     
-    // Ensure the steam animation frame rate never matches the once-per-second countdown display
+    // Ensure the steam animation frame rate is out of phase with the once-per-second countdown display
     private let timer = Timer.publish(every: 0.66,
                                       on: .main,
                                       in: .common)
@@ -49,7 +49,7 @@ struct CaffeinatorIconView: View {
     private func drawCupOutline(in context: inout GraphicsContext, metrics: CupMetrics) {
         let rect = metrics.cupRect
 
-        // Subtle inward taper at the top (3–4% is enough)
+        // Subtle inward taper at the top (3–4% felt good)
         let topInset = rect.width * 0.035
 
         let tapered = CGRect(x: rect.minX + topInset,
