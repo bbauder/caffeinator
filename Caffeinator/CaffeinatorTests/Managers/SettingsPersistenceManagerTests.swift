@@ -33,9 +33,16 @@ final class SettingsPersistenceManagerTests: XCTestCase {
         XCTAssertFalse(sut.autoDisableOnLowBattery)
         XCTAssertEqual(sut.lowBatteryThreshold, 20)
         XCTAssertFalse(sut.autoDisableOnUnpluggedPower)
-        XCTAssertTrue(sut.autoDisableNotificationsEnabled)
+        XCTAssertFalse(sut.autoDisableNotificationsEnabled)
         XCTAssertFalse(sut.notifyOnTimerExpired)
+        XCTAssertFalse(sut.notifyOnWatchedAppsFinished)
         XCTAssertEqual(sut.mruEntries, [])
+    }
+
+    func test_allNotificationSettingsDefaultToOff() {
+        XCTAssertFalse(sut.autoDisableNotificationsEnabled)
+        XCTAssertFalse(sut.notifyOnTimerExpired)
+        XCTAssertFalse(sut.notifyOnWatchedAppsFinished)
     }
 
     func test_launchAtLoginUsesResolver() {
@@ -64,6 +71,11 @@ final class SettingsPersistenceManagerTests: XCTestCase {
     func test_setNotifyOnTimerExpired_persists() {
         sut.notifyOnTimerExpired = true
         XCTAssertTrue(defaults.bool(forKey: "notifyOnTimerExpired"))
+    }
+
+    func test_setNotifyOnWatchedAppsFinished_persists() {
+        sut.notifyOnWatchedAppsFinished = true
+        XCTAssertTrue(defaults.bool(forKey: "notifyOnWatchedAppsFinished"))
     }
 
     // MARK: - MRU JSON round-trip

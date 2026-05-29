@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Jos käytössä, Caffeinator lähettää ilmoituksen kun se lopettaa automaattisesti hereillä pitämisen virta- tai akkuolosuhteiden vuoksi.";
 "notificationTimerExpiredTitle" = "Ajastettu hereillä pitäminen päättyi";
 "notificationTimerExpiredBody" = "Lähtölaskenta on päättynyt ja hereillä pitäminen on nyt pois käytöstä.";
+"settingsNotifyOnWatchedAppsFinished" = "Ilmoita kun seuratut sovellukset päättyvät";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Jos käytössä, Caffeinator lähettää ilmoituksen kun viimeinen seurattu sovellus sulkeutuu ja hereillä pitäminen poistuu käytöstä.";
+"notificationWatchedAppsFinishedTitle" = "Seuratut sovellukset päättyivät";
+"notificationWatchedAppsFinishedBody" = "Kaikki seuratut sovellukset ovat sulkeutuneet ja hereillä pitäminen on nyt pois käytöstä.";
+"watchProcessesTitleWithCount" = "Seuraa prosesseja: %d";

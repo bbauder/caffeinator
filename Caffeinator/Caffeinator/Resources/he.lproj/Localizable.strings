@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "אם מופעל, Caffeinator ישלח התראה כשמפסיק אוטומטית לשמור ער עקב תנאי חשמל או סוללה.";
 "notificationTimerExpiredTitle" = "שמירה ער מתוזמנת הסתיימה";
 "notificationTimerExpiredBody" = "הספירה לאחור הסתיימה ושמירה ער כבויה כעת.";
+"settingsNotifyOnWatchedAppsFinished" = "הודע כשהאפליקציות במעקב מסתיימות";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "אם מופעל, Caffeinator ישלח התראה כשהאפליקציה האחרונה במעקב תיסגר ושמירה ער תיכבה.";
+"notificationWatchedAppsFinishedTitle" = "האפליקציות במעקב הסתיימו";
+"notificationWatchedAppsFinishedBody" = "כל האפליקציות במעקב נסגרו ושמירה ער כבויה כעת.";
+"watchProcessesTitleWithCount" = "עקוב אחר תהליכים: %d";

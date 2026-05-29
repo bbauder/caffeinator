@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "If enabled, Caffeinator will send a notification when it automatically stops Keeping Awake due to power or battery conditions.";
 "notificationTimerExpiredTitle" = "Timed Keep Awake Ended";
 "notificationTimerExpiredBody" = "Your countdown has finished and Keep Awake is now off.";
+"settingsNotifyOnWatchedAppsFinished" = "Notify when watched apps finish";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "If enabled, Caffeinator will send a notification when the last watched app exits and Keep Awake turns off.";
+"notificationWatchedAppsFinishedTitle" = "Watched Apps Finished";
+"notificationWatchedAppsFinishedBody" = "All watched apps have exited and Keep Awake is now off.";
+"watchProcessesTitleWithCount" = "Watch Processes: %d";

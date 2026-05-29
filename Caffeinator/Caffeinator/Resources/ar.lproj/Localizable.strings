@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "في حال التفعيل، سيرسل Caffeinator إشعارًا عندما يتوقف تلقائيًا عن الإبقاء مستيقظًا بسبب ظروف الطاقة أو البطارية.";
 "notificationTimerExpiredTitle" = "انتهى الإبقاء مستيقظًا المحدد بوقت";
 "notificationTimerExpiredBody" = "انتهى العد التنازلي والإبقاء مستيقظًا متوقف الآن.";
+"settingsNotifyOnWatchedAppsFinished" = "إشعار عند انتهاء التطبيقات المراقبة";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "في حال التفعيل، سيرسل Caffeinator إشعارًا عند إغلاق آخر تطبيق مراقب وإيقاف الإبقاء مستيقظًا.";
+"notificationWatchedAppsFinishedTitle" = "انتهت التطبيقات المراقبة";
+"notificationWatchedAppsFinishedBody" = "أُغلقت جميع التطبيقات المراقبة والإبقاء مستيقظًا متوقف الآن.";
+"watchProcessesTitleWithCount" = "مراقبة العمليات: %d";

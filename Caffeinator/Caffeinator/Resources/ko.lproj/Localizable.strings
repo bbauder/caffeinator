@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "활성화하면 전원 또는 배터리 상태로 인해 깨어 있기를 자동으로 중단할 때 Caffeinator가 알림을 보냅니다.";
 "notificationTimerExpiredTitle" = "타이머 깨어 있기가 종료되었습니다";
 "notificationTimerExpiredBody" = "카운트다운이 끝나고 깨어 있기가 꺼졌습니다.";
+"settingsNotifyOnWatchedAppsFinished" = "감시 중인 앱이 종료되면 알림";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "활성화하면 마지막으로 감시 중이던 앱이 종료되고 깨어 있기가 꺼질 때 Caffeinator가 알림을 보냅니다.";
+"notificationWatchedAppsFinishedTitle" = "감시 중인 앱이 종료되었습니다";
+"notificationWatchedAppsFinishedBody" = "감시 중이던 모든 앱이 종료되었고 깨어 있기가 꺼졌습니다.";
+"watchProcessesTitleWithCount" = "프로세스 감시: %d";

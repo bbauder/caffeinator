@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Wenn aktiviert, sendet Caffeinator eine Mitteilung, wenn es das Wachhalten aufgrund von Strom- oder Akkubedingungen automatisch beendet.";
 "notificationTimerExpiredTitle" = "Zeitgesteuertes Wachhalten beendet";
 "notificationTimerExpiredBody" = "Dein Countdown ist abgelaufen und das Wachhalten ist jetzt deaktiviert.";
+"settingsNotifyOnWatchedAppsFinished" = "Bei Beenden überwachter Apps benachrichtigen";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Wenn aktiviert, sendet Caffeinator eine Mitteilung, wenn die letzte überwachte App beendet wird und das Wachhalten deaktiviert wird.";
+"notificationWatchedAppsFinishedTitle" = "Überwachte Apps beendet";
+"notificationWatchedAppsFinishedBody" = "Alle überwachten Apps wurden beendet und das Wachhalten ist jetzt deaktiviert.";
+"watchProcessesTitleWithCount" = "Prozesse überwachen: %d";

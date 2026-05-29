@@ -59,6 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         processWatcher.onAllProcessesTerminated = { [weak self] in
             self?.watchProcessesViewModel.handleAllProcessesTerminated()
+            self?.settings.handleAllWatchedProcessesExited()
         }
 
         statusItemController = StatusItemController(

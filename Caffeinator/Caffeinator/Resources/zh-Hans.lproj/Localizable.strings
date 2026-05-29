@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "启用后，因电源或电池条件自动停止保持唤醒时，Caffeinator 会发送通知。";
 "notificationTimerExpiredTitle" = "定时保持唤醒已结束";
 "notificationTimerExpiredBody" = "倒计时已结束，保持唤醒已关闭。";
+"settingsNotifyOnWatchedAppsFinished" = "监视的应用结束时通知";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "启用后，当最后一个监视的应用退出且保持唤醒关闭时，Caffeinator 会发送通知。";
+"notificationWatchedAppsFinishedTitle" = "监视的应用已结束";
+"notificationWatchedAppsFinishedBody" = "所有监视的应用均已退出，保持唤醒已关闭。";
+"watchProcessesTitleWithCount" = "监视进程：%d";

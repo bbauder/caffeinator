@@ -178,6 +178,15 @@ enum L {
     static let notificationTimerExpiredTitle = NSLocalizedString("notificationTimerExpiredTitle", comment: "")
     static let notificationTimerExpiredBody = NSLocalizedString("notificationTimerExpiredBody", comment: "")
 
+    static let settingsNotifyOnWatchedAppsFinished = NSLocalizedString("settingsNotifyOnWatchedAppsFinished", comment: "")
+    static let settingsNotifyOnWatchedAppsFinishedHelp = NSLocalizedString("settingsNotifyOnWatchedAppsFinishedHelp", comment: "")
+    static let notificationWatchedAppsFinishedTitle = NSLocalizedString("notificationWatchedAppsFinishedTitle", comment: "")
+    static let notificationWatchedAppsFinishedBody = NSLocalizedString("notificationWatchedAppsFinishedBody", comment: "")
+
+    static func watchProcessesTitleWithCount(_ count: Int) -> String {
+        String(format: NSLocalizedString("watchProcessesTitleWithCount", comment: ""), count)
+    }
+
     static func tooltipAndMore(_ count: Int) -> String {
         String(format: NSLocalizedString("tooltipAndMore", comment: ""), count)
     }

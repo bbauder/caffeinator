@@ -145,6 +145,10 @@ struct SettingsView: View {
                             Toggle(L.settingsNotifyOnTimerExpired, isOn: $settings.notifyOnTimerExpired)
                             InfoButton(popoverText: L.settingsNotifyOnTimerExpiredHelp)
                         }
+                        HStack {
+                            Toggle(L.settingsNotifyOnWatchedAppsFinished, isOn: $settings.notifyOnWatchedAppsFinished)
+                            InfoButton(popoverText: L.settingsNotifyOnWatchedAppsFinishedHelp)
+                        }
                     }
                 }
                 .formStyle(.grouped)

@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Jeśli włączone, Caffeinator wyśle powiadomienie, gdy automatycznie zatrzyma czuwanie z powodu warunków zasilania lub baterii.";
 "notificationTimerExpiredTitle" = "Czasowe czuwanie zakończone";
 "notificationTimerExpiredBody" = "Odliczanie się zakończyło i czuwanie jest teraz wyłączone.";
+"settingsNotifyOnWatchedAppsFinished" = "Powiadamiaj o zakończeniu monitorowanych aplikacji";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Jeśli włączone, Caffeinator wyśle powiadomienie, gdy ostatnia monitorowana aplikacja zostanie zamknięta i czuwanie zostanie wyłączone.";
+"notificationWatchedAppsFinishedTitle" = "Monitorowane aplikacje zakończone";
+"notificationWatchedAppsFinishedBody" = "Wszystkie monitorowane aplikacje zostały zamknięte i czuwanie jest teraz wyłączone.";
+"watchProcessesTitleWithCount" = "Monitoruj procesy: %d";

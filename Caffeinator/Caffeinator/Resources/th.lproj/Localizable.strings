@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "หากเปิดใช้งาน Caffeinator จะส่งการแจ้งเตือนเมื่อหยุดป้องกันพักเครื่องโดยอัตโนมัติเนื่องจากสภาพแบตเตอรี่หรือไฟฟ้า";
 "notificationTimerExpiredTitle" = "การป้องกันพักเครื่องตามเวลาสิ้นสุดแล้ว";
 "notificationTimerExpiredBody" = "การนับถอยหลังสิ้นสุดแล้วและการป้องกันพักเครื่องถูกปิดแล้ว";
+"settingsNotifyOnWatchedAppsFinished" = "แจ้งเตือนเมื่อแอปที่เฝ้าดูสิ้นสุด";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "หากเปิดใช้งาน Caffeinator จะส่งการแจ้งเตือนเมื่อแอปที่เฝ้าดูตัวสุดท้ายปิดและการป้องกันพักเครื่องถูกปิด";
+"notificationWatchedAppsFinishedTitle" = "แอปที่เฝ้าดูสิ้นสุดแล้ว";
+"notificationWatchedAppsFinishedBody" = "แอปที่เฝ้าดูทั้งหมดถูกปิดแล้วและการป้องกันพักเครื่องถูกปิดแล้ว";
+"watchProcessesTitleWithCount" = "เฝ้าดูกระบวนการ: %d";

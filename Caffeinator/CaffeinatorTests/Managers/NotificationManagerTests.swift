@@ -38,6 +38,12 @@ final class NotificationManagerTests: XCTestCase {
         XCTAssertTrue(delivery.delivered.isEmpty)
     }
 
+    func test_watchedAppsFinished_suppressedWhenDisabled() {
+        sut.notificationsEnabled = false
+        sut.sendWatchedAppsFinishedNotification()
+        XCTAssertTrue(delivery.delivered.isEmpty)
+    }
+
     // MARK: - Delivery
 
     func test_lowBattery_delivers() {
@@ -59,6 +65,13 @@ final class NotificationManagerTests: XCTestCase {
         XCTAssertEqual(delivery.identifiers, ["autoDisableUnplugged"])
         XCTAssertEqual(delivery.titles, [L.notificationStoppedTitle])
         XCTAssertEqual(delivery.bodies, [L.notificationUnpluggedBody])
+    }
+
+    func test_watchedAppsFinished_delivers() {
+        sut.sendWatchedAppsFinishedNotification()
+        XCTAssertEqual(delivery.identifiers, ["watchedAppsFinished"])
+        XCTAssertEqual(delivery.titles, [L.notificationWatchedAppsFinishedTitle])
+        XCTAssertEqual(delivery.bodies, [L.notificationWatchedAppsFinishedBody])
     }
 
     // MARK: - Auth

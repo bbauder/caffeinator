@@ -27,6 +27,14 @@ class WatchProcessesViewModel: ObservableObject {
         return L.watchProcessesFooterWatching
     }
 
+    var popoverTitle: String {
+        if pendingSelection.isEmpty {
+            return L.watchProcessesTitle
+        }
+
+        return L.watchProcessesTitleWithCount(pendingSelection.count)
+    }
+
     var canCommit: Bool {
         !pendingSelection.isEmpty
     }

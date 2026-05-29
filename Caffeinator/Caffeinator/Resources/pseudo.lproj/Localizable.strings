@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "[Ìƒ éñàƀļéð, Çàƒƒéìñàţöŕ ŵìļļ šéñð à ñöţìƒìçàţìöñ ŵĥéñ ìţ àûţöṁàţìçàļļý šţöṕš Ķééṕìñĝ Àŵàķé ðûé ţö ṕöŵéŕ öŕ ƀàţţéŕý çöñðìţìöñš. one two three four five six seven]";
 "notificationTimerExpiredTitle" = "[Ţìṁéð Ķééṕ Àŵàķé Éñðéð one two]";
 "notificationTimerExpiredBody" = "[Ýöûŕ çöûñţðöŵñ ĥàš ƒìñìšĥéð àñð Ķééṕ Àŵàķé ìš ñöŵ öƒƒ. one two three four]";
+"settingsNotifyOnWatchedAppsFinished" = "[Ñöţìƒý ŵĥéñ ŵàţçĥéð àṕṕš ƒìñìšĥ one two three]";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "[Ìƒ éñàƀļéð, Çàƒƒéìñàţöŕ ŵìļļ šéñð à ñöţìƒìçàţìöñ ŵĥéñ ţĥé ļàšţ ŵàţçĥéð àṕṕ éxìţš àñð Ķééṕ Àŵàķé ţûŕñš öƒƒ. one two three four five six]";
+"notificationWatchedAppsFinishedTitle" = "[Ŵàţçĥéð Àṕṕš Ƒìñìšĥéð one two]";
+"notificationWatchedAppsFinishedBody" = "[Àļļ ŵàţçĥéð àṕṕš ĥàṽé éxìţéð àñð Ķééṕ Àŵàķé ìš ñöŵ öƒƒ. one two three four five]";
+"watchProcessesTitleWithCount" = "[Ŵàţçĥ Ṕŕöçéššéš: %d one two]";

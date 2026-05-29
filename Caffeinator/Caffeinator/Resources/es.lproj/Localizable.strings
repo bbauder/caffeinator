@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Si está activado, Caffeinator enviará una notificación cuando deje de mantener despierto automáticamente debido a las condiciones de alimentación o batería.";
 "notificationTimerExpiredTitle" = "Mantenimiento despierto programado finalizado";
 "notificationTimerExpiredBody" = "La cuenta atrás ha terminado y el mantenimiento despierto está ahora desactivado.";
+"settingsNotifyOnWatchedAppsFinished" = "Notificar cuando finalicen las apps supervisadas";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Si está activado, Caffeinator enviará una notificación cuando la última app supervisada se cierre y se desactive el mantenimiento despierto.";
+"notificationWatchedAppsFinishedTitle" = "Apps supervisadas finalizadas";
+"notificationWatchedAppsFinishedBody" = "Todas las apps supervisadas se han cerrado y el mantenimiento despierto está ahora desactivado.";
+"watchProcessesTitleWithCount" = "Supervisar procesos: %d";

@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Hvis aktiveret sender Caffeinator en notifikation, når det automatisk stopper med at holde vågen på grund af strøm- eller batteriforhold.";
 "notificationTimerExpiredTitle" = "Tidsindstillet vågenhed afsluttet";
 "notificationTimerExpiredBody" = "Nedtællingen er færdig, og hold vågen er nu deaktiveret.";
+"settingsNotifyOnWatchedAppsFinished" = "Giv besked når overvågede apps afsluttes";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Hvis aktiveret sender Caffeinator en notifikation, når den sidste overvågede app afsluttes, og hold vågen deaktiveres.";
+"notificationWatchedAppsFinishedTitle" = "Overvågede apps afsluttet";
+"notificationWatchedAppsFinishedBody" = "Alle overvågede apps er afsluttet, og hold vågen er nu deaktiveret.";
+"watchProcessesTitleWithCount" = "Overvåg processer: %d";

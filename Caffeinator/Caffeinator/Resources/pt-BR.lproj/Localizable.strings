@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Se ativado, o Caffeinator enviará uma notificação quando parar automaticamente de manter ativo por condições de energia ou bateria.";
 "notificationTimerExpiredTitle" = "Temporizador finalizado";
 "notificationTimerExpiredBody" = "Sua contagem regressiva terminou e o modo ativo está desligado.";
+"settingsNotifyOnWatchedAppsFinished" = "Notificar quando os apps monitorados terminarem";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Se ativado, o Caffeinator enviará uma notificação quando o último app monitorado for encerrado e o modo ativo for desligado.";
+"notificationWatchedAppsFinishedTitle" = "Apps monitorados finalizados";
+"notificationWatchedAppsFinishedBody" = "Todos os apps monitorados foram encerrados e o modo ativo está desligado.";
+"watchProcessesTitleWithCount" = "Monitorar processos: %d";

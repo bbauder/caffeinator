@@ -28,7 +28,7 @@ struct WatchProcessesPopover: View {
 
     private var header: some View {
         HStack {
-            Text(L.watchProcessesTitle)
+            Text(viewModel.popoverTitle)
                 .font(.headline)
             Spacer()
         }

@@ -84,6 +84,12 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var notifyOnWatchedAppsFinished: Bool {
+        didSet {
+            updateNotifyOnWatchedAppsFinished()
+        }
+    }
+
     @Published var autoDisableOnUnpluggedPower: Bool {
         didSet {
             updateUnplugMonitoring()
@@ -152,6 +158,7 @@ class SettingsViewModel: ObservableObject {
         autoDisableOnUnpluggedPower = persistence.autoDisableOnUnpluggedPower
         autoDisableNotificationsEnabled = persistence.autoDisableNotificationsEnabled
         notifyOnTimerExpired = persistence.notifyOnTimerExpired
+        notifyOnWatchedAppsFinished = persistence.notifyOnWatchedAppsFinished
         launchAtLogin = persistence.launchAtLogin
 
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
@@ -304,6 +311,27 @@ class SettingsViewModel: ObservableObject {
         if notifyOnTimerExpired {
             notificationManager.requestPermission()
         }
+    }
+
+    private func updateNotifyOnWatchedAppsFinished() {
+        persistence.notifyOnWatchedAppsFinished = notifyOnWatchedAppsFinished
+
+        if notifyOnWatchedAppsFinished {
+            notificationManager.requestPermission()
+        }
+    }
+
+    // MARK: - External event handlers
+
+    /// Called when the OS reports that all watched processes have terminated
+    /// naturally (not via user-initiated stop). Fires a notification gated
+    /// by `notifyOnWatchedAppsFinished`.
+    func handleAllWatchedProcessesExited() {
+        guard notifyOnWatchedAppsFinished else {
+            return
+        }
+
+        notificationManager.sendWatchedAppsFinishedNotification()
     }
 
     func recordMRU(_ entry: MRUEntry) {

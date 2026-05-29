@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Se attivato, Caffeinator invierà una notifica quando interrompe automaticamente il mantenimento sveglio a causa di condizioni di alimentazione o batteria.";
 "notificationTimerExpiredTitle" = "Mantenimento sveglio programmato terminato";
 "notificationTimerExpiredBody" = "Il conto alla rovescia è terminato e il mantenimento sveglio è ora disattivato.";
+"settingsNotifyOnWatchedAppsFinished" = "Notifica al termine delle app monitorate";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Se attivato, Caffeinator invierà una notifica quando l'ultima app monitorata si chiude e il mantenimento sveglio viene disattivato.";
+"notificationWatchedAppsFinishedTitle" = "App monitorate terminate";
+"notificationWatchedAppsFinishedBody" = "Tutte le app monitorate sono state chiuse e il mantenimento sveglio è ora disattivato.";
+"watchProcessesTitleWithCount" = "Monitora processi: %d";

@@ -92,6 +92,12 @@ class SettingsPersistenceManager {
         }
     }
 
+    var notifyOnWatchedAppsFinished: Bool {
+        didSet {
+            defaults.set(notifyOnWatchedAppsFinished, forKey: "notifyOnWatchedAppsFinished")
+        }
+    }
+
     var mruEntries: [MRUEntry] {
         didSet {
             if let data = try? JSONEncoder().encode(mruEntries) {
@@ -115,9 +121,10 @@ class SettingsPersistenceManager {
             "autoDisableOnLowBattery": false,
             "lowBatteryThreshold": 20,
             "autoDisableOnUnpluggedPower": false,
-            "autoDisableNotificationsEnabled": true,
+            "autoDisableNotificationsEnabled": false,
             "declareUserActivity": false,
             "notifyOnTimerExpired": false,
+            "notifyOnWatchedAppsFinished": false,
         ])
 
         preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
@@ -133,6 +140,7 @@ class SettingsPersistenceManager {
         autoDisableOnUnpluggedPower = defaults.bool(forKey: "autoDisableOnUnpluggedPower")
         autoDisableNotificationsEnabled = defaults.bool(forKey: "autoDisableNotificationsEnabled")
         notifyOnTimerExpired = defaults.bool(forKey: "notifyOnTimerExpired")
+        notifyOnWatchedAppsFinished = defaults.bool(forKey: "notifyOnWatchedAppsFinished")
 
         launchAtLogin = launchAtLoginResolver()
 

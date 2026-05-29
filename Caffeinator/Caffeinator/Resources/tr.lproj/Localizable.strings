@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Etkinleştirilirse, güç veya pil koşulları nedeniyle uyanık tutma otomatik olarak durdurulduğunda Caffeinator bir bildirim gönderir.";
 "notificationTimerExpiredTitle" = "Zamanlı uyanık tutma sona erdi";
 "notificationTimerExpiredBody" = "Geri sayım bitti ve uyanık tutma artık kapalı.";
+"settingsNotifyOnWatchedAppsFinished" = "İzlenen uygulamalar sona erdiğinde bildir";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Etkinleştirilirse, son izlenen uygulama kapandığında ve uyanık tutma kapatıldığında Caffeinator bir bildirim gönderir.";
+"notificationWatchedAppsFinishedTitle" = "İzlenen uygulamalar sona erdi";
+"notificationWatchedAppsFinishedBody" = "İzlenen tüm uygulamalar kapandı ve uyanık tutma artık kapalı.";
+"watchProcessesTitleWithCount" = "İşlemleri İzle: %d";

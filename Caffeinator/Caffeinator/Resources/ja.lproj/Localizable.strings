@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "有効にすると、電源やバッテリーの状態によりスリープ防止を自動停止した際にCaffeinatorが通知を送信します。";
 "notificationTimerExpiredTitle" = "タイマーによるスリープ防止が終了しました";
 "notificationTimerExpiredBody" = "カウントダウンが終了し、スリープ防止はオフになりました。";
+"settingsNotifyOnWatchedAppsFinished" = "監視中のアプリが終了したら通知";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "有効にすると、最後の監視中アプリが終了しスリープ防止がオフになったときにCaffeinatorが通知を送信します。";
+"notificationWatchedAppsFinishedTitle" = "監視中のアプリが終了しました";
+"notificationWatchedAppsFinishedBody" = "監視中のすべてのアプリが終了し、スリープ防止はオフになりました。";
+"watchProcessesTitleWithCount" = "プロセスを監視：%d";

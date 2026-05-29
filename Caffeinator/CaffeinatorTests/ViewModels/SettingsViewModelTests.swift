@@ -127,6 +127,7 @@ final class SettingsViewModelTests: XCTestCase {
     // MARK: - Timer-expired notification gating
 
     func test_timerExpired_deliversWhenEnabled() {
+        sut.autoDisableNotificationsEnabled = true
         sut.notifyOnTimerExpired = true
         let wake = WakeAssertionManager(assertions: FakePowerAssertionProvider(),
                                         tickInterval: .milliseconds(5))
@@ -142,6 +143,33 @@ final class SettingsViewModelTests: XCTestCase {
         sut.wakeManager = wake
         wake.onTimerExpired?()
         XCTAssertTrue(notificationDelivery.delivered.isEmpty)
+    }
+
+    // MARK: - Watched-apps-finished notification gating
+
+    func test_watchedAppsFinished_deliversWhenEnabled() {
+        sut.autoDisableNotificationsEnabled = true
+        sut.notifyOnWatchedAppsFinished = true
+        sut.handleAllWatchedProcessesExited()
+        XCTAssertEqual(notificationDelivery.identifiers, ["watchedAppsFinished"])
+    }
+
+    func test_watchedAppsFinished_suppressedWhenDisabled() {
+        sut.autoDisableNotificationsEnabled = true
+        sut.notifyOnWatchedAppsFinished = false
+        sut.handleAllWatchedProcessesExited()
+        XCTAssertTrue(notificationDelivery.delivered.isEmpty)
+    }
+
+    func test_setNotifyOnWatchedAppsFinished_persists() {
+        sut.notifyOnWatchedAppsFinished = true
+        XCTAssertTrue(persistence.notifyOnWatchedAppsFinished)
+    }
+
+    func test_allNotificationSettingsDefaultToOff() {
+        XCTAssertFalse(sut.autoDisableNotificationsEnabled)
+        XCTAssertFalse(sut.notifyOnTimerExpired)
+        XCTAssertFalse(sut.notifyOnWatchedAppsFinished)
     }
 
     // MARK: - Auto-disable monitoring wiring

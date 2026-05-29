@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "啟用後，因電源或電池條件自動停止保持喚醒時，Caffeinator 會傳送通知。";
 "notificationTimerExpiredTitle" = "定時保持喚醒已結束";
 "notificationTimerExpiredBody" = "倒數計時已結束，保持喚醒已關閉。";
+"settingsNotifyOnWatchedAppsFinished" = "監視的 App 結束時通知";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "啟用後，當最後一個監視的 App 結束且保持喚醒關閉時，Caffeinator 會傳送通知。";
+"notificationWatchedAppsFinishedTitle" = "監視的 App 已結束";
+"notificationWatchedAppsFinishedBody" = "所有監視的 App 均已結束，保持喚醒已關閉。";
+"watchProcessesTitleWithCount" = "監視處理程序：%d";

@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "Indien ingeschakeld stuurt Caffeinator een melding wanneer het automatisch stopt met wakker houden door stroom- of batterijomstandigheden.";
 "notificationTimerExpiredTitle" = "Getimed wakker houden beëindigd";
 "notificationTimerExpiredBody" = "De aftelling is voltooid en wakker houden is nu uitgeschakeld.";
+"settingsNotifyOnWatchedAppsFinished" = "Melden wanneer bewaakte apps stoppen";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "Indien ingeschakeld stuurt Caffeinator een melding wanneer de laatste bewaakte app stopt en wakker houden wordt uitgeschakeld.";
+"notificationWatchedAppsFinishedTitle" = "Bewaakte apps gestopt";
+"notificationWatchedAppsFinishedBody" = "Alle bewaakte apps zijn gestopt en wakker houden is nu uitgeschakeld.";
+"watchProcessesTitleWithCount" = "Processen bewaken: %d";

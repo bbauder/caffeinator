@@ -85,4 +85,19 @@ class NotificationManager {
                                             trigger: nil)
         delivery.deliver(request)
     }
+
+    func sendWatchedAppsFinishedNotification() {
+        guard notificationsEnabled else {
+            return
+        }
+
+        let content = UNMutableNotificationContent()
+        content.title = L.notificationWatchedAppsFinishedTitle
+        content.body = L.notificationWatchedAppsFinishedBody
+
+        let request = UNNotificationRequest(identifier: "watchedAppsFinished",
+                                            content: content,
+                                            trigger: nil)
+        delivery.deliver(request)
+    }
 }

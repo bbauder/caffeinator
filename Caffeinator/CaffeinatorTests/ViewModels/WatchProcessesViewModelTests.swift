@@ -114,4 +114,77 @@ final class WatchProcessesViewModelTests: XCTestCase {
         XCTAssertTrue(store.isEmpty)
         XCTAssertFalse(watcher.isWatching)
     }
+
+    // MARK: - popoverTitle
+
+    func test_popoverTitle_emptyWhenNoSelection() {
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitle)
+    }
+
+    func test_popoverTitle_showsCountForOneApp() {
+        sut.refreshRunningApps()
+        sut.togglePending(process: sut.runningApps[0])
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitleWithCount(1))
+    }
+
+    func test_popoverTitle_showsCountForMultipleApps() {
+        sut.refreshRunningApps()
+        sut.togglePending(process: sut.runningApps[0])
+        sut.togglePending(process: sut.runningApps[1])
+        sut.togglePending(process: sut.runningApps[2])
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitleWithCount(3))
+    }
+
+    func test_popoverTitle_resetsAfterDeselectingAll() {
+        sut.refreshRunningApps()
+        sut.togglePending(process: sut.runningApps[0])
+        sut.togglePending(process: sut.runningApps[1])
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitleWithCount(2))
+
+        sut.togglePending(process: sut.runningApps[0])
+        sut.togglePending(process: sut.runningApps[1])
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitle)
+    }
+
+    func test_popoverTitle_resetsAfterCancel() {
+        // Cancel = user dismisses without committing. Next presentation
+        // calls beginPendingSelection() which mirrors the store. If store
+        // is empty, pendingSelection is empty and title resets.
+        sut.refreshRunningApps()
+        sut.togglePending(process: sut.runningApps[0])
+        sut.togglePending(process: sut.runningApps[1])
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitleWithCount(2))
+
+        // Simulate user tapping Cancel: popover dismisses, store untouched.
+        // Next opening calls beginPendingSelection() which rebuilds from store.
+        sut.beginPendingSelection()
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitle)
+    }
+
+    func test_popoverTitle_resetsAfterStartWatchingWhenStoreThenCleared() {
+        // Start Watching commits; if user later opens picker again with
+        // an empty store (e.g. all watched apps exited), title is back to
+        // the base form.
+        sut.refreshRunningApps()
+        sut.togglePending(process: sut.runningApps[0])
+        sut.commitSelection()
+        XCTAssertEqual(store.processes.count, 1)
+
+        // Simulate watched app exiting / cleared
+        store.removeAll()
+        sut.beginPendingSelection()
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitle)
+    }
+
+    func test_popoverTitle_reflectsCommittedSelectionOnReopen() {
+        // After Start Watching, reopening the picker should show the count
+        // because beginPendingSelection() mirrors the current store.
+        sut.refreshRunningApps()
+        sut.togglePending(process: sut.runningApps[0])
+        sut.togglePending(process: sut.runningApps[2])
+        sut.commitSelection()
+
+        sut.beginPendingSelection()
+        XCTAssertEqual(sut.popoverTitle, L.watchProcessesTitleWithCount(2))
+    }
 }

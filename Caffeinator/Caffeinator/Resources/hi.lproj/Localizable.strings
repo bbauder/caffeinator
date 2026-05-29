@@ -92,3 +92,8 @@
 "settingsAutoDisableNotificationsHelp" = "यदि सक्षम हो, तो बिजली या बैटरी की स्थिति के कारण स्वतः जगाए रखना बंद होने पर Caffeinator एक सूचना भेजेगा।";
 "notificationTimerExpiredTitle" = "समयबद्ध जगाए रखना समाप्त";
 "notificationTimerExpiredBody" = "उलटी गिनती समाप्त हो गई है और जगाए रखना अब बंद है।";
+"settingsNotifyOnWatchedAppsFinished" = "निगरानी किए गए ऐप समाप्त होने पर सूचित करें";
+"settingsNotifyOnWatchedAppsFinishedHelp" = "यदि सक्षम हो, तो अंतिम निगरानी किया गया ऐप बंद होने और जगाए रखना बंद होने पर Caffeinator एक सूचना भेजेगा।";
+"notificationWatchedAppsFinishedTitle" = "निगरानी किए गए ऐप समाप्त";
+"notificationWatchedAppsFinishedBody" = "सभी निगरानी किए गए ऐप बंद हो गए हैं और जगाए रखना अब बंद है।";
+"watchProcessesTitleWithCount" = "प्रक्रियाएँ देखें: %d";
