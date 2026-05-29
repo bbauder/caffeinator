@@ -25,6 +25,10 @@ struct SettingsView: View {
                             Toggle(L.settingsHideActivationOptions, isOn: $settings.hideActivationOptionsWhileActive)
                             InfoButton(popoverText: L.settingsHideActivationOptionsHelp)
                         }
+                        HStack {
+                            Toggle(L.settingsDeclareUserActivity, isOn: $settings.declareUserActivity)
+                            InfoButton(popoverText: L.settingsDeclareUserActivityPopover)
+                        }
                     }
 
                     Section(L.settingsAppearance) {
@@ -39,47 +43,6 @@ struct SettingsView: View {
                         HStack {
                             Toggle(L.settingsAnimateIconWhileActive, isOn: $settings.animateIcon)
                             InfoButton(popoverText: L.settingsAnimateIconHelp)
-                        }
-                    }
-
-                    Section(L.settingsSleepPrevention) {
-                        if !settings.isAnySystemEnabled {
-                            // Display a banner if no sleep systems are enabled
-                            HStack(alignment: .top, spacing: 8) {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundStyle(.yellow)
-
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(L.settingsNoSystemsEnabledTitle)
-                                        .fontWeight(.semibold)
-                                        .multilineTextAlignment(.leading)
-                                    Text(L.settingsNoSystemsEnabledMessage)
-                                        .foregroundStyle(.secondary)
-                                        .multilineTextAlignment(.leading)
-                                }
-                            }
-                            .font(.callout)
-                            .padding(8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(.yellow.opacity(0.10), in: RoundedRectangle(cornerRadius: 8))
-                            .padding(.bottom, 4)
-                        }
-
-                        HStack {
-                            Toggle(L.settingsPreventSystemSleep, isOn: $settings.preventSystemSleep)
-                            InfoButton(popoverText: L.settingsPreventSystemSleepHelp)
-                        }
-                        HStack {
-                            Toggle(L.settingsPreventDisplaySleep, isOn: $settings.preventDisplaySleep)
-                            InfoButton(popoverText: L.settingsPreventDisplaySleepHelp)
-                        }
-                        HStack {
-                            Toggle(L.settingsPreventAutoLock, isOn: $settings.preventScreenSaver)
-                            InfoButton(popoverText: L.settingsPreventScreenSaverHelp)
-                        }
-                        HStack {
-                            Toggle(L.settingsDeclareUserActivity, isOn: $settings.declareUserActivity)
-                            InfoButton(popoverText: L.settingsDeclareUserActivityPopover)
                         }
                     }
 

@@ -87,9 +87,6 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         wakeManager.$isActive.map { _ in () }
             .merge(with: wakeManager.$timeRemaining.map { _ in () })
             .merge(with: wakeManager.$selectedStopTime.map { _ in () })
-            .merge(with: settings.$preventSystemSleep.map { _ in () })
-            .merge(with: settings.$preventDisplaySleep.map { _ in () })
-            .merge(with: settings.$preventScreenSaver.map { _ in () })
             .merge(with: watchedProcessStore.$processes.map { _ in () })
             .receive(on: RunLoop.main)
             .sink { [weak self] in
@@ -108,9 +105,6 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     private func buildTooltip() -> String {
         TooltipBuilder.build(isActive: wakeManager.isActive,
-                             preventSystemSleep: settings.preventSystemSleep,
-                             preventDisplaySleep: settings.preventDisplaySleep,
-                             preventScreenSaver: settings.preventScreenSaver,
                              watchedApps: watchedProcessStore.allProcesses,
                              formattedStopTime: wakeManager.formattedStopTime,
                              formattedTimeRemaining: wakeManager.formattedTimeRemaining)
@@ -292,15 +286,6 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
     // MARK: - Actions
 
-    private func requireSystemEnabled() -> Bool {
-        if settings.isAnySystemEnabled {
-            return true
-        }
-
-        openSettings()
-        return false
-    }
-
     @objc private func toggleIndefinite() {
         let isIndefinite = wakeManager.isActive &&
                            wakeManager.selectedDuration == nil &&
@@ -310,10 +295,6 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         if isIndefinite {
             wakeManager.deactivate()
         } else {
-            guard requireSystemEnabled() else {
-                return
-            }
-
             clearWatchState()
             wakeManager.activateIndefinitely()
         }
@@ -325,19 +306,11 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     @objc private func showStopAtPicker() {
-        guard requireSystemEnabled() else {
-            return
-        }
-
         clearWatchState()
         StopAtPopoverManager.shared.show(wakeManager: wakeManager)
     }
 
     @objc private func showCustomDurationPicker() {
-        guard requireSystemEnabled() else {
-            return
-        }
-
         clearWatchState()
         CustomDurationPopoverManager.shared.show(wakeManager: wakeManager)
     }
@@ -348,20 +321,12 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         if wakeManager.selectedDuration == duration {
             wakeManager.deactivate()
         } else {
-            guard requireSystemEnabled() else {
-                return
-            }
-
             clearWatchState()
             wakeManager.activate(for: duration)
         }
     }
 
     @objc private func showWatchProcessesPicker() {
-        guard requireSystemEnabled() else {
-            return
-        }
-
         WatchProcessesPopoverManager.shared.show(viewModel: watchProcessesViewModel)
     }
 
@@ -379,10 +344,6 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 if isIndefinite {
                     wakeManager.deactivate()
                 } else {
-                    guard requireSystemEnabled() else {
-                        return
-                    }
-
                     clearWatchState()
                     wakeManager.activateIndefinitely()
                 }
@@ -390,10 +351,6 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                 if wakeManager.selectedDuration == seconds {
                     wakeManager.deactivate()
                 } else {
-                    guard requireSystemEnabled() else {
-                        return
-                    }
-
                     clearWatchState()
                     wakeManager.activate(for: seconds)
                 }
@@ -404,10 +361,6 @@ final class StatusItemController: NSObject, NSMenuDelegate {
                         wakeManager.deactivate()
                         return
                     }
-                }
-
-                guard requireSystemEnabled() else {
-                    return
                 }
 
                 clearWatchState()

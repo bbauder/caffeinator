@@ -22,9 +22,6 @@ final class SettingsPersistenceManagerTests: XCTestCase {
     // MARK: - Defaults
 
     func test_registeredDefaultsApply() {
-        XCTAssertTrue(sut.preventSystemSleep)
-        XCTAssertFalse(sut.preventDisplaySleep)
-        XCTAssertFalse(sut.preventScreenSaver)
         XCTAssertTrue(sut.hideActivationOptionsWhileActive)
         XCTAssertTrue(sut.showRecentDurations)
         XCTAssertTrue(sut.showStatusText)
@@ -52,11 +49,6 @@ final class SettingsPersistenceManagerTests: XCTestCase {
     }
 
     // MARK: - Setter persistence
-
-    func test_setPreventSystemSleep_persists() {
-        sut.preventSystemSleep = false
-        XCTAssertFalse(defaults.bool(forKey: "preventSystemSleep"))
-    }
 
     func test_setLowBatteryThreshold_persists() {
         sut.lowBatteryThreshold = 42

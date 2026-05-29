@@ -25,11 +25,10 @@ class UserActivityManager {
         self.interval = interval
     }
 
-    func start(preventDisplaySleep: Bool) {
+    func start() {
         stop()
 
-        guard isEnabled,
-              preventDisplaySleep else {
+        guard isEnabled else {
             return
         }
 

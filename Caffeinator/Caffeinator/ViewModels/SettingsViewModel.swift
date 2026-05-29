@@ -12,24 +12,6 @@ import ServiceManagement
 @MainActor
 class SettingsViewModel: ObservableObject {
 
-    @Published var preventSystemSleep: Bool {
-        didSet {
-            updateSystemSleepPrevention()
-        }
-    }
-
-    @Published var preventDisplaySleep: Bool {
-        didSet {
-            updateDisplaySleepPrevention()
-        }
-    }
-
-    @Published var preventScreenSaver: Bool {
-        didSet {
-            updateScreenSaverPrevention()
-        }
-    }
-
     @Published var hideActivationOptionsWhileActive: Bool {
         didSet {
             updateHideActivationOptions()
@@ -110,10 +92,6 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
-    var isAnySystemEnabled: Bool {
-        preventSystemSleep || preventDisplaySleep || preventScreenSaver
-    }
-
     let persistence: SettingsPersistenceManager
     let mruStore: MRUStore
     let notificationManager: NotificationManager
@@ -145,9 +123,6 @@ class SettingsViewModel: ObservableObject {
         self.userActivityManager = userActivityManager
         self.launchAtLoginUpdater = launchAtLoginUpdater
 
-        preventSystemSleep = persistence.preventSystemSleep
-        preventDisplaySleep = persistence.preventDisplaySleep
-        preventScreenSaver = persistence.preventScreenSaver
         hideActivationOptionsWhileActive = persistence.hideActivationOptionsWhileActive
         showRecentDurations = persistence.showRecentDurations
         showStatusText = persistence.showStatusText
@@ -221,7 +196,7 @@ class SettingsViewModel: ObservableObject {
 
                 if isActive {
                     if self.declareUserActivity {
-                        self.userActivityManager.start(preventDisplaySleep: self.preventDisplaySleep)
+                        self.userActivityManager.start()
                     }
                 } else {
                     self.userActivityManager.stop()
@@ -230,24 +205,6 @@ class SettingsViewModel: ObservableObject {
     }
 
     // MARK: - Setting Updates
-
-    private func updateSystemSleepPrevention() {
-        persistence.preventSystemSleep = preventSystemSleep
-    }
-
-    private func updateDisplaySleepPrevention() {
-        persistence.preventDisplaySleep = preventDisplaySleep
-
-        if declareUserActivity,
-           let wakeManager,
-           wakeManager.isActive {
-            userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
-        }
-    }
-
-    private func updateScreenSaverPrevention() {
-        persistence.preventScreenSaver = preventScreenSaver
-    }
 
     private func updateHideActivationOptions() {
         persistence.hideActivationOptionsWhileActive = hideActivationOptionsWhileActive
@@ -272,7 +229,7 @@ class SettingsViewModel: ObservableObject {
         if declareUserActivity,
            let wakeManager,
            wakeManager.isActive {
-            userActivityManager.start(preventDisplaySleep: preventDisplaySleep)
+            userActivityManager.start()
         } else {
             userActivityManager.stop()
         }

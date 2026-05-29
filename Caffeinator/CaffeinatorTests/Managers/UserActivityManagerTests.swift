@@ -33,21 +33,14 @@ final class UserActivityManagerTests: XCTestCase {
 
     func test_notEnabled_doesNotStart() async {
         sut.isEnabled = false
-        sut.start(preventDisplaySleep: true)
+        sut.start()
         XCTAssertNil(sut.task)
         XCTAssertEqual(counter.count, 0)
     }
 
-    func test_preventDisplaySleepFalse_doesNotStart() async {
+    func test_enabled_starts() async {
         sut.isEnabled = true
-        sut.start(preventDisplaySleep: false)
-        XCTAssertNil(sut.task)
-        XCTAssertEqual(counter.count, 0)
-    }
-
-    func test_bothConditionsTrue_starts() async {
-        sut.isEnabled = true
-        sut.start(preventDisplaySleep: true)
+        sut.start()
         XCTAssertNotNil(sut.task)
 
         await waitFor(self.counter.count >= 1, timeout: 1.0)
@@ -56,7 +49,7 @@ final class UserActivityManagerTests: XCTestCase {
 
     func test_stop_cancelsTask() async {
         sut.isEnabled = true
-        sut.start(preventDisplaySleep: true)
+        sut.start()
         XCTAssertNotNil(sut.task)
 
         sut.stop()
@@ -65,11 +58,11 @@ final class UserActivityManagerTests: XCTestCase {
 
     func test_restart_resetsTask() async {
         sut.isEnabled = true
-        sut.start(preventDisplaySleep: true)
+        sut.start()
         let first = sut.task
         XCTAssertNotNil(first)
 
-        sut.start(preventDisplaySleep: true)
+        sut.start()
         XCTAssertNotNil(sut.task)
     }
 }

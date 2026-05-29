@@ -14,24 +14,6 @@ class SettingsPersistenceManager {
     private(set) var launchAtLogin: Bool
     private let defaults: UserDefaults
 
-    var preventSystemSleep: Bool {
-        didSet {
-            defaults.set(preventSystemSleep, forKey: "preventSystemSleep")
-        }
-    }
-
-    var preventDisplaySleep: Bool {
-        didSet {
-            defaults.set(preventDisplaySleep, forKey: "preventDisplaySleep")
-        }
-    }
-
-    var preventScreenSaver: Bool {
-        didSet {
-            defaults.set(preventScreenSaver, forKey: "preventScreenSaver")
-        }
-    }
-
     var hideActivationOptionsWhileActive: Bool {
         didSet {
             defaults.set(hideActivationOptionsWhileActive, forKey: "hideActivationOptionsWhileActive")
@@ -111,9 +93,6 @@ class SettingsPersistenceManager {
         self.defaults = defaults
 
         defaults.register(defaults: [
-            "preventSystemSleep": true,
-            "preventDisplaySleep": false,
-            "preventScreenSaver": false,
             "hideActivationOptionsWhileActive": true,
             "showRecentDurations": true,
             "showStatusText": true,
@@ -127,9 +106,6 @@ class SettingsPersistenceManager {
             "notifyOnWatchedAppsFinished": false,
         ])
 
-        preventSystemSleep = defaults.bool(forKey: "preventSystemSleep")
-        preventDisplaySleep = defaults.bool(forKey: "preventDisplaySleep")
-        preventScreenSaver = defaults.bool(forKey: "preventScreenSaver")
         hideActivationOptionsWhileActive = defaults.bool(forKey: "hideActivationOptionsWhileActive")
         showRecentDurations = defaults.bool(forKey: "showRecentDurations")
         showStatusText = defaults.bool(forKey: "showStatusText")

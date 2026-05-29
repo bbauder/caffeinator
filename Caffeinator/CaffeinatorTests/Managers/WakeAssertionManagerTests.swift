@@ -93,11 +93,7 @@ final class WakeAssertionManagerTests: XCTestCase {
 
     // MARK: - Assertion creation
 
-    func test_activate_createsAssertionsBasedOnSettings() {
-        settings.preventSystemSleep = true
-        settings.preventDisplaySleep = false
-        settings.preventScreenSaver = true
-
+    func test_activate_alwaysCreatesBothAssertions() {
         sut.activateIndefinitely()
 
         XCTAssertEqual(assertions.createCount, 2)
@@ -107,46 +103,19 @@ final class WakeAssertionManagerTests: XCTestCase {
     }
 
     func test_deactivate_releasesAllAssertions() {
-        settings.preventSystemSleep = true
-        settings.preventDisplaySleep = true
-        settings.preventScreenSaver = true
-
         sut.activateIndefinitely()
-        XCTAssertEqual(assertions.liveCount, 3)
+        XCTAssertEqual(assertions.liveCount, 2)
 
         sut.deactivate()
         XCTAssertEqual(assertions.liveCount, 0)
         XCTAssertFalse(sut.isActive)
     }
 
-    func test_settingsObservation_addsAssertionWhenToggledOn() async {
-        settings.preventSystemSleep = true
-        settings.preventDisplaySleep = false
-        settings.preventScreenSaver = false
+    func test_reactivate_replacesAssertionsCleanly() {
         sut.activateIndefinitely()
-        XCTAssertEqual(assertions.liveCount, 1)
+        sut.activate(for: 60)
 
-        settings.preventDisplaySleep = true
-        await pumpMainRunLoop()
         XCTAssertEqual(assertions.liveCount, 2)
-    }
-
-    func test_settingsObservation_releasesAssertionWhenToggledOff() async {
-        settings.preventSystemSleep = true
-        settings.preventDisplaySleep = true
-        sut.activateIndefinitely()
-        XCTAssertEqual(assertions.liveCount, 2)
-
-        settings.preventSystemSleep = false
-        await pumpMainRunLoop()
-        XCTAssertEqual(assertions.liveCount, 1)
-    }
-
-    func test_settingsObservation_inactiveStateIgnoresChanges() async {
-        // Not active — settings changes should not create assertions.
-        settings.preventSystemSleep = true
-        await pumpMainRunLoop()
-        XCTAssertEqual(assertions.liveCount, 0)
     }
 
     // MARK: - fillLevel

@@ -41,10 +41,9 @@ final class SettingsViewModelTests: XCTestCase {
     // MARK: - Init reads persistence
 
     func test_init_reflectsPersistence() {
-        XCTAssertEqual(sut.preventSystemSleep, persistence.preventSystemSleep)
-        XCTAssertEqual(sut.preventDisplaySleep, persistence.preventDisplaySleep)
-        XCTAssertEqual(sut.preventScreenSaver, persistence.preventScreenSaver)
         XCTAssertEqual(sut.lowBatteryThreshold, persistence.lowBatteryThreshold)
+        XCTAssertEqual(sut.hideActivationOptionsWhileActive, persistence.hideActivationOptionsWhileActive)
+        XCTAssertEqual(sut.declareUserActivity, persistence.declareUserActivity)
     }
 
     func test_init_wiresNotificationsEnabledToPersistedValue() {
@@ -56,11 +55,6 @@ final class SettingsViewModelTests: XCTestCase {
     }
 
     // MARK: - Setters persist
-
-    func test_setPreventSystemSleep_persists() {
-        sut.preventSystemSleep = false
-        XCTAssertFalse(persistence.preventSystemSleep)
-    }
 
     func test_setLowBatteryThreshold_persists() {
         sut.lowBatteryThreshold = 35
@@ -76,19 +70,6 @@ final class SettingsViewModelTests: XCTestCase {
         sut.autoDisableNotificationsEnabled = false
         XCTAssertFalse(notifications.notificationsEnabled)
         XCTAssertFalse(persistence.autoDisableNotificationsEnabled)
-    }
-
-    // MARK: - isAnySystemEnabled truth table
-
-    func test_isAnySystemEnabled_truthTable() {
-        for combo in 0..<8 {
-            sut.preventSystemSleep = (combo & 0b001) != 0
-            sut.preventDisplaySleep = (combo & 0b010) != 0
-            sut.preventScreenSaver = (combo & 0b100) != 0
-
-            let expected = sut.preventSystemSleep || sut.preventDisplaySleep || sut.preventScreenSaver
-            XCTAssertEqual(sut.isAnySystemEnabled, expected, "combo=\(combo)")
-        }
     }
 
     // MARK: - launchAtLogin bool flip

@@ -54,7 +54,6 @@ enum L {
 
     static let settingsGeneral = NSLocalizedString("settingsGeneral", comment: "")
     static let settingsAppearance = NSLocalizedString("settingsAppearance", comment: "")
-    static let settingsSleepPrevention = NSLocalizedString("settingsSleepPrevention", comment: "")
     static let settingsAutoDisable = NSLocalizedString("settingsAutoDisable", comment: "")
     static let settingsDisableOnLowBattery = NSLocalizedString("settingsDisableOnLowBattery", comment: "")
     static let settingsDisableOnUnpluggedPower = NSLocalizedString("settingsDisableOnUnpluggedPower", comment: "")
@@ -67,9 +66,6 @@ enum L {
         String(format: NSLocalizedString("autoDisableNotificationBody", comment: ""), threshold)
     }
 
-    static let settingsPreventSystemSleep = NSLocalizedString("settingsPreventSystemSleep", comment: "")
-    static let settingsPreventDisplaySleep = NSLocalizedString("settingsPreventDisplaySleep", comment: "")
-    static let settingsPreventAutoLock = NSLocalizedString("settingsPreventAutoLock", comment: "")
     static let settingsDeclareUserActivity = NSLocalizedString("settingsDeclareUserActivity", comment: "")
     static let settingsHideActivationOptions = NSLocalizedString("settingsHideActivationOptions", comment: "")
     static let done = NSLocalizedString("done", comment: "")
@@ -102,13 +98,8 @@ enum L {
     static let settingsNotifications = NSLocalizedString("settingsNotifications", comment: "")
     static let settingsAutoDisableNotificationsEnabled = NSLocalizedString("settingsAutoDisableNotificationsEnabled", comment: "")
     static let settingsShowRecents = NSLocalizedString("settingsShowRecents", comment: "")
-    static let settingsNoSystemsEnabledTitle = NSLocalizedString("settingsNoSystemsEnabledTitle", comment: "")
-    static let settingsNoSystemsEnabledMessage = NSLocalizedString("settingsNoSystemsEnabledMessage", comment: "")
     static let settingsAnimateIconWhileActive = NSLocalizedString("settingsAnimateIconWhileActive", comment: "")
     static let settingsLaunchAtLogin = NSLocalizedString("settingsLaunchAtLogin", comment: "")
-    static let settingsPreventSystemSleepHelp = NSLocalizedString("settingsPreventSystemSleepHelp", comment: "")
-    static let settingsPreventDisplaySleepHelp = NSLocalizedString("settingsPreventDisplaySleepHelp", comment: "")
-    static let settingsPreventScreenSaverHelp = NSLocalizedString("settingsPreventScreenSaverHelp", comment: "")
     static let settingsDeclareUserActivityPopover = NSLocalizedString("settingsDeclareUserActivityPopover", comment: "")
     static let settingsLowBatteryHelp = NSLocalizedString("settingsLowBatteryHelp", comment: "")
     static let settingsUnplugHelp = NSLocalizedString("settingsUnplugHelp", comment: "")
@@ -120,21 +111,7 @@ enum L {
 
     static let tooltipActive = NSLocalizedString("tooltipActive", comment: "")
     static let tooltipIdle = NSLocalizedString("tooltipIdle", comment: "")
-    static let tooltipPrevented = NSLocalizedString("tooltipPrevented", comment: "")
-    static let tooltipAllowed = NSLocalizedString("tooltipAllowed", comment: "")
     static let tooltipIndefinite = NSLocalizedString("tooltipIndefinite", comment: "")
-
-    static func tooltipSystemSleep(_ status: String) -> String {
-        String(format: NSLocalizedString("tooltipSystemSleep", comment: ""), status)
-    }
-
-    static func tooltipDisplaySleep(_ status: String) -> String {
-        String(format: NSLocalizedString("tooltipDisplaySleep", comment: ""), status)
-    }
-
-    static func tooltipAutoLock(_ status: String) -> String {
-        String(format: NSLocalizedString("tooltipAutoLock", comment: ""), status)
-    }
 
     static func tooltipTimeRemaining(_ value: String) -> String {
         String(format: NSLocalizedString("tooltipTimeRemaining", comment: ""), value)
