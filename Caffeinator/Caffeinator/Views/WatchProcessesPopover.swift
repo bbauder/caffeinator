@@ -51,6 +51,11 @@ struct WatchProcessesPopover: View {
                 }
             }
             .frame(maxHeight: .infinity)
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .overlay {
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color(nsColor: .separatorColor))
+            }
         }
     }
 
