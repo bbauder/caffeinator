@@ -45,7 +45,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     )
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        wakeManager.settings = settings
+        wakeManager.onRecordMRU = { [weak self] entry in
+            self?.settings.recordMRU(entry)
+        }
         settings.wakeManager = wakeManager
 
         watchedProcessStore.onFirstProcessAdded = { [weak self] in

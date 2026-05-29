@@ -11,29 +11,19 @@ import IOKit.pwr_mgt
 final class WakeAssertionManagerTests: XCTestCase {
 
     var assertions: FakePowerAssertionProvider!
-    var persistence: SettingsPersistenceManager!
-    var mruStore: MRUStore!
-    var settings: SettingsViewModel!
+    var recordedMRU: [MRUEntry]!
     var sut: WakeAssertionManager!
 
     override func setUp() async throws {
         try await super.setUp()
         assertions = FakePowerAssertionProvider()
-        persistence = SettingsPersistenceManager(defaults: TestUserDefaults.make(),
-                                                 launchAtLoginResolver: { false })
-        mruStore = MRUStore(persistence: persistence)
-        settings = SettingsViewModel(persistence: persistence,
-                                     mruStore: mruStore,
-                                     notificationManager: NotificationManager(delivery: FakeNotificationDelivery()),
-                                     batteryMonitor: BatteryMonitor(batteryLevelProvider: { nil }),
-                                     powerSourceMonitor: PowerSourceMonitor(powerStateProvider: { true }),
-                                     userActivityManager: UserActivityManager(declareActivity: { _ in }),
-                                     launchAtLoginUpdater: { $0 })
+        recordedMRU = []
 
         sut = WakeAssertionManager(assertions: assertions,
                                    tickInterval: .milliseconds(5))
-        sut.settings = settings
-        settings.wakeManager = sut
+        sut.onRecordMRU = { [weak self] entry in
+            self?.recordedMRU.append(entry)
+        }
     }
 
     override func tearDown() async throws {
@@ -53,13 +43,13 @@ final class WakeAssertionManagerTests: XCTestCase {
 
     func test_activateIndefinitely_recordsMRU() {
         sut.activateIndefinitely()
-        XCTAssertEqual(mruStore.entries.first, .indefinitely)
+        XCTAssertEqual(recordedMRU, [.indefinitely])
     }
 
     func test_activateForProcessWatch_setsActiveWithoutMRU() {
         sut.activateForProcessWatch()
         XCTAssertTrue(sut.isActive)
-        XCTAssertTrue(mruStore.entries.isEmpty)
+        XCTAssertTrue(recordedMRU.isEmpty)
     }
 
     func test_activateForDuration_setsTimeAndMRU() {
@@ -67,7 +57,7 @@ final class WakeAssertionManagerTests: XCTestCase {
         XCTAssertTrue(sut.isActive)
         XCTAssertEqual(sut.timeRemaining, 60)
         XCTAssertEqual(sut.selectedDuration, 60)
-        XCTAssertEqual(mruStore.entries.first, .duration(60))
+        XCTAssertEqual(recordedMRU, [.duration(60)])
     }
 
     func test_activateUntilFuture_setsStopTimeAndMRU() {
@@ -77,7 +67,7 @@ final class WakeAssertionManagerTests: XCTestCase {
         XCTAssertTrue(sut.isActive)
         XCTAssertNotNil(sut.selectedStopTime)
         let components = Calendar.current.dateComponents([.hour, .minute], from: future)
-        XCTAssertEqual(mruStore.entries.first, .untilTime(hour: components.hour!, minute: components.minute!))
+        XCTAssertEqual(recordedMRU, [.untilTime(hour: components.hour!, minute: components.minute!)])
     }
 
     func test_activateUntilPast_wrapsToNextDay() {

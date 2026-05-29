@@ -42,8 +42,7 @@ class WakeAssertionManager: ObservableObject {
     @Published private(set) var selectedStopTime: Date?
 
     var onTimerExpired: (() -> Void)?
-
-    weak var settings: SettingsViewModel?
+    var onRecordMRU: ((MRUEntry) -> Void)?
 
     private let assertions: PowerAssertionProvider
     private let tickInterval: Duration
@@ -97,7 +96,7 @@ class WakeAssertionManager: ObservableObject {
         timeRemaining = nil
         selectedDuration = nil
 
-        settings?.recordMRU(.indefinitely)
+        onRecordMRU?(.indefinitely)
     }
 
     func activateForProcessWatch() {
@@ -118,7 +117,7 @@ class WakeAssertionManager: ObservableObject {
         selectedDuration = duration
         totalDuration = duration
 
-        settings?.recordMRU(.duration(duration))
+        onRecordMRU?(.duration(duration))
         startCountdown()
     }
 
@@ -140,7 +139,7 @@ class WakeAssertionManager: ObservableObject {
 
         let components = Calendar.current.dateComponents([.hour, .minute], from: targetDate)
         if let hour = components.hour, let minute = components.minute {
-            settings?.recordMRU(.untilTime(hour: hour, minute: minute))
+            onRecordMRU?(.untilTime(hour: hour, minute: minute))
         }
 
         startCountdown()
