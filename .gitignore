@@ -2,6 +2,7 @@
 DerivedData/
 xcuserdata/
 *.xcuserstate
+NotarizedReleaseBundle/
 
 # Swift Package Manager
 .build/
