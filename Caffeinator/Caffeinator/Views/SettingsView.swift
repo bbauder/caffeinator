@@ -118,6 +118,18 @@ struct SettingsView: View {
                 .scrollContentBackground(.hidden)
             }
 
+            HStack(spacing: 6) {
+                Spacer()
+                Text("Caffeinator \(settings.appVersion)")
+                    .foregroundStyle(.secondary)
+                Text("·")
+                    .foregroundStyle(.secondary)
+                Link("GitHub", destination: settings.githubURL)
+                Spacer()
+            }
+            .font(.callout)
+            .padding(.top, 8)
+
             HStack {
                 Spacer()
 

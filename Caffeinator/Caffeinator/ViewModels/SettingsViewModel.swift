@@ -92,6 +92,13 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    // MARK: - App metadata
+
+    let appVersion: String = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
+    let githubURL: URL = URL(string: "https://github.com/bbauder/caffeinator")!
+
+    // MARK: - Dependencies
+
     let persistence: SettingsPersistenceManager
     let mruStore: MRUStore
     let notificationManager: NotificationManager
