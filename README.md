@@ -70,8 +70,6 @@ source=Notarized Developer ID<br>
 ### 🧭 Inactive — Full Menu (Cascaded)
 ![Inactive Full Menu](Screenshots/Inactive-full-menu-cascaded.png)
 
----
-
 ### 🔥 Active — Indefinite Mode
 ![Active Indefinite](Screenshots/Active-indefinite-mode.png)
 
@@ -84,26 +82,28 @@ source=Notarized Developer ID<br>
 ### 👀 Active — Watching Apps (Tooltip Visible)
 ![Active Watching Apps](Screenshots/Active-watching-apps-tooltip-visible.png)
 
----
-
 ### 🕰️ Keep Awake Until — Popover
 ![Keep Awake Until](Screenshots/Keep-Awake-Until-popover.png)
 
 ### ⏱️ Custom Duration — Popover
 ![Custom Duration](Screenshots/Custom-Duration-popover.png)
 
+### 👀 Watch Processes Popover
+![Watch Processes](Screenshots/Watch-Processes-dialog.png)
+
 ---
 
-### ⚙️ Settings — Main
+<details>
+<summary><strong>More Screenshots</strong></summary>
+<br>
+
+### ⚙️ Settings
 ![Settings](Screenshots/Settings-dialog.png)
 
 ### ⚙️ Settings — Scrolled to Bottom
 ![Settings Bottom](Screenshots/Settings-scrolled-to-bottom.png)
 
----
-
-### 🧩 Watch Processes Dialog
-![Watch Processes](Screenshots/Watch-Processes-dialog.png)
+</details>
 
 ---
 
