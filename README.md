@@ -64,7 +64,46 @@ source=Notarized Developer ID<br>
 
 ## 📸 Screenshots
 
-Screenshots coming soon.
+### 💤 Inactive State
+![Inactive](Screenshots/Inactive.png)
+
+### 🧭 Inactive — Full Menu (Cascaded)
+![Inactive Full Menu](Screenshots/Inactive-full-menu-cascaded.png)
+
+---
+
+### 🔥 Active — Indefinite Mode
+![Active Indefinite](Screenshots/Active-indefinite-mode.png)
+
+### ⏳ Active — Counting Down
+![Active Countdown](Screenshots/Active-counting-down.png)
+
+### ⏳ Active — Countdown with Menu Visible
+![Active Countdown Menu](Screenshots/Active-counting-down-menu-visible.png)
+
+### 👀 Active — Watching Apps (Tooltip Visible)
+![Active Watching Apps](Screenshots/Active-watching-apps-tooltip-visible.png)
+
+---
+
+### 🕰️ Keep Awake Until — Popover
+![Keep Awake Until](Screenshots/Keep-Awake-Until-popover.png)
+
+### ⏱️ Custom Duration — Popover
+![Custom Duration](Screenshots/Custom-Duration-popover.png)
+
+---
+
+### ⚙️ Settings — Main
+![Settings](Screenshots/Settings-dialog.png)
+
+### ⚙️ Settings — Scrolled to Bottom
+![Settings Bottom](Screenshots/Settings-scrolled-to-bottom.png)
+
+---
+
+### 🧩 Watch Processes Dialog
+![Watch Processes](Screenshots/Watch-Processes-dialog.png)
 
 ---
 
