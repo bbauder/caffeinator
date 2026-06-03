@@ -1,10 +1,13 @@
-# ☕️ Caffeinator
+<p align="center">
+  <img src="Screenshots/AppIcon.png" width="128" alt="Caffeinator App Icon">
+</p>
 
+# **Caffeinator**
 A polished, lightweight, native macOS menu bar utility to keep your Mac awake when you want, and without fuss.
 
 ---
 
-## ✨ Features
+## Features
 
 - **Menu Bar Control** — One click to keep your Mac awake.
 - **Smart Durations** — Choose from presets or set a custom timer.
@@ -17,7 +20,7 @@ A polished, lightweight, native macOS menu bar utility to keep your Mac awake wh
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### Download
 
@@ -36,7 +39,7 @@ You’ll receive a file named: Caffeinator.zip
 
 ---
 
-## 🖥️ Requirements
+## Requirements
 
 - **macOS 14 Sonoma or later**  
 - **Intel or Apple Silicon**  
@@ -45,7 +48,7 @@ Caffeinator uses modern Swift concurrency features (`MainActor.assumeIsolated`) 
 
 ---
 
-## 🔒 Security & Trust
+## Security & Trust
 
 Caffeinator is production‑grade:
 - Signed with a **Developer ID Application** certificate  
@@ -54,41 +57,42 @@ Caffeinator is production‑grade:
 - Gatekeeper‑friendly  
 
 You can verify the signature manually:
+```
 spctl -v --assess --type exec /Applications/Caffeinator.app
-
+```
 Expected output:<br>
 accepted<br>
 source=Notarized Developer ID<br>
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-### 💤 Inactive State
+### Inactive State
 ![Inactive](Screenshots/Inactive.png)
 
-### 🧭 Inactive — Full Menu (Cascaded)
+### Inactive — Full Menu (Cascaded)
 ![Inactive Full Menu](Screenshots/Inactive-full-menu-cascaded.png)
 
-### 🔥 Active — Indefinite Mode
+### Active — Indefinite Mode
 ![Active Indefinite](Screenshots/Active-indefinite-mode.png)
 
-### ⏳ Active — Counting Down
+### Active — Counting Down
 ![Active Countdown](Screenshots/Active-counting-down.png)
 
-### ⏳ Active — Countdown with Menu Visible
+### Active — Countdown with Menu Visible
 ![Active Countdown Menu](Screenshots/Active-counting-down-menu-visible.png)
 
-### 👀 Active — Watching Apps (Tooltip Visible)
+### Active — Watching Apps (Tooltip Visible)
 ![Active Watching Apps](Screenshots/Active-watching-apps-tooltip-visible.png)
 
-### 🕰️ Keep Awake Until — Popover
+### Keep Awake Until — Popover
 ![Keep Awake Until](Screenshots/Keep-Awake-Until-popover.png)
 
-### ⏱️ Custom Duration — Popover
+### Custom Duration — Popover
 ![Custom Duration](Screenshots/Custom-Duration-popover.png)
 
-### 👀 Watch Processes Popover
+### Watch Processes Popover
 ![Watch Processes](Screenshots/Watch-Processes-dialog.png)
 
 ---
@@ -97,17 +101,17 @@ source=Notarized Developer ID<br>
 <summary><strong>More Screenshots</strong></summary>
 <br>
 
-### ⚙️ Settings
+### Settings
 ![Settings](Screenshots/Settings-dialog.png)
 
-### ⚙️ Settings — Scrolled to Bottom
+### Settings — Scrolled to Bottom
 ![Settings Bottom](Screenshots/Settings-scrolled-to-bottom.png)
 
 </details>
 
 ---
 
-## 🧪 Development
+## Development
 
 Caffeinator is built with:
 - Swift 5.10+  
@@ -122,11 +126,12 @@ User-facing strings have been localized into 23 different locales.<br>
 
 ---
 
-## 🛠️ Building from Source
+## Building from Source
 
 Clone the repo:
+```
 git clone https://github.com/bbauder/caffeinator.git
-
+```
 Open the workspace in Xcode and build the **Caffeinator** target.
 
 ---
