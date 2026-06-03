@@ -94,6 +94,8 @@ class SettingsViewModel: ObservableObject {
 
     // MARK: - App metadata
 
+    // To update the version displayed at the bottom of the Settings dialog:
+    //     - Edit: Caffeinator | Target | General tab | Identity | Version
     let appVersion: String = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "1.0"
     let githubURL: URL = URL(string: "https://github.com/bbauder/caffeinator")!
 
