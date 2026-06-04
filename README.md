@@ -17,6 +17,7 @@ A polished, lightweight, native macOS menu bar utility to keep your Mac awake wh
 - **Launch at Login** — Optional and fully sandbox‑compliant.
 - **Universal Binary** — Runs natively on both Apple Silicon and Intel Macs.
 - **Privacy‑Respecting** — No ads, no telemetry, no network access, no data collection of any kind.
+- **Optional Notifications** — Get alerts when a timer ends, a watched app exits, or Auto‑Disable triggers.
 
 ---
 
