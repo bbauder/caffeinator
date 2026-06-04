@@ -11,12 +11,12 @@ A polished, lightweight, native macOS menu bar utility to keep your Mac awake wh
 
 - **Menu Bar Control** — One click to keep your Mac awake.
 - **Smart Durations** — Choose from presets or set a custom timer.
-- **Watched Apps** — Automatically stay awake when selected apps are running.
+- **Watched Apps** — Automatically stay awake while selected apps are running.
 - **MRU Durations** — Your most-used durations appear automatically.
-- **Animated Icon** — Subtle animation runs while Keep Awake is active.
+- **Animated Icon** — Subtle animation runs while Keep Awake is active, for easy at-a-glance status.
 - **Launch at Login** — Optional and fully sandbox‑compliant.
 - **Universal Binary** — Runs natively on both Apple Silicon and Intel Macs.
-- **Privacy‑Respecting** — No telemetry, no network access, no data collection of any kind.
+- **Privacy‑Respecting** — No ads, no telemetry, no network access, no data collection of any kind.
 
 ---
 
@@ -68,10 +68,10 @@ source=Notarized Developer ID<br>
 
 ## Screenshots
 
-### Inactive State
+### Inactive
 ![Inactive](Screenshots/Inactive.png)
 
-### Inactive — Full Menu (Cascaded)
+### Inactive — Full Menu
 ![Inactive Full Menu](Screenshots/Inactive-full-menu-cascaded.png)
 
 ### Active — Indefinite Mode
@@ -80,19 +80,16 @@ source=Notarized Developer ID<br>
 ### Active — Counting Down
 ![Active Countdown](Screenshots/Active-counting-down.png)
 
-### Active — Countdown with Menu Visible
-![Active Countdown Menu](Screenshots/Active-counting-down-menu-visible.png)
-
-### Active — Watching Apps (Tooltip Visible)
+### Active — Watching Apps w/ToolTip
 ![Active Watching Apps](Screenshots/Active-watching-apps-tooltip-visible.png)
 
-### Keep Awake Until — Popover
+### Keep Awake Until
 ![Keep Awake Until](Screenshots/Keep-Awake-Until-popover.png)
 
-### Custom Duration — Popover
+### Custom Duration
 ![Custom Duration](Screenshots/Custom-Duration-popover.png)
 
-### Watch Processes Popover
+### Watch Processes
 ![Watch Processes](Screenshots/Watch-Processes-dialog.png)
 
 ---
@@ -101,10 +98,13 @@ source=Notarized Developer ID<br>
 <summary><strong>More Screenshots</strong></summary>
 <br>
 
+### Active — Countdown with Menu
+![Active Countdown Menu](Screenshots/Active-counting-down-menu-visible.png)
+
 ### Settings
 ![Settings](Screenshots/Settings-dialog.png)
 
-### Settings — Scrolled to Bottom
+### Settings Cont'd
 ![Settings Bottom](Screenshots/Settings-scrolled-to-bottom.png)
 
 </details>
