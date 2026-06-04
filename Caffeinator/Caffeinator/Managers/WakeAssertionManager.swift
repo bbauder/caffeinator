@@ -44,9 +44,6 @@ class WakeAssertionManager: ObservableObject {
     var onTimerExpired: (() -> Void)?
     var onRecordMRU: ((MRUEntry) -> Void)?
 
-    private let assertions: PowerAssertionProvider
-    private let tickInterval: Duration
-
     private var systemSleepAssertionID: IOPMAssertionID = 0
     private var displaySleepAssertionID: IOPMAssertionID = 0
 
@@ -55,6 +52,9 @@ class WakeAssertionManager: ObservableObject {
 
     private var timerTask: Task<Void, Never>?
     private var totalDuration: TimeInterval?
+
+    private let assertions: PowerAssertionProvider
+    private let tickInterval: Duration
 
     var menuBarTimeLabel: String? {
         return formattedTimeRemaining

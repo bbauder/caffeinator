@@ -12,10 +12,9 @@ import IOKit.ps
 class PowerSourceMonitor {
 
     var onUnplugged: (() -> Void)?
-
-    private let powerStateProvider: () -> Bool
     private var runLoopSource: CFRunLoopSource?
     private(set) var wasOnAC: Bool?
+    private let powerStateProvider: () -> Bool
 
     init(powerStateProvider: @escaping () -> Bool = PowerSourceMonitor.iokitOnAC) {
         self.powerStateProvider = powerStateProvider

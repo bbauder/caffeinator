@@ -15,8 +15,9 @@ final class WatchedProcessStore: ObservableObject {
 
     var onFirstProcessAdded: (() -> Void)?
     var onLastProcessRemoved: (() -> Void)?
-
-    var isEmpty: Bool { processes.isEmpty }
+    var isEmpty: Bool {
+        processes.isEmpty
+    }
 
     var allProcesses: [WatchedProcess] {
         Array(processes.values).sorted {
@@ -26,6 +27,7 @@ final class WatchedProcessStore: ObservableObject {
 
     func add(_ process: WatchedProcess) {
         let wasEmpty = processes.isEmpty
+
         processes[process.id] = process
         if wasEmpty {
             onFirstProcessAdded?()
@@ -36,6 +38,7 @@ final class WatchedProcessStore: ObservableObject {
         guard processes.removeValue(forKey: pid) != nil else {
             return
         }
+
         if processes.isEmpty {
             onLastProcessRemoved?()
         }
@@ -45,6 +48,7 @@ final class WatchedProcessStore: ObservableObject {
         guard !processes.isEmpty else {
             return
         }
+
         processes.removeAll()
         onLastProcessRemoved?()
     }

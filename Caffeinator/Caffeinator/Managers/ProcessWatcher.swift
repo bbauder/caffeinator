@@ -12,7 +12,6 @@ final class ProcessWatcher {
 
     var onProcessTerminated: ((pid_t) -> Void)?
     var onAllProcessesTerminated: (() -> Void)?
-
     private var watchedPIDs = Set<pid_t>()
     private var notificationObserver: Any?
 

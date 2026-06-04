@@ -18,7 +18,9 @@ struct StatusBarIconView: View {
         let fill = isActive ? wakeManager.fillLevel : 0
 
         HStack(spacing: 4) {
-            CaffeinatorIconView(fillLevel: fill, isActive: isActive, animateSteam: settings.animateIcon)
+            CaffeinatorIconView(fillLevel: fill,
+                                isActive: isActive,
+                                animateSteam: settings.animateIcon)
                 .frame(width: 18, height: 18)
                 .offset(y: -1)
 

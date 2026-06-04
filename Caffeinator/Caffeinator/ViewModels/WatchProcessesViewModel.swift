@@ -14,10 +14,10 @@ class WatchProcessesViewModel: ObservableObject {
     @Published private(set) var runningApps: [WatchedProcess] = []
     @Published var pendingSelection = Set<pid_t>()
 
+    private var storeCancellable: AnyCancellable?
     private let discovery: ProcessDiscovery
     private let store: WatchedProcessStore
     private let processWatcher: ProcessWatcher
-    private var storeCancellable: AnyCancellable?
 
     var footerText: String {
         if pendingSelection.isEmpty {

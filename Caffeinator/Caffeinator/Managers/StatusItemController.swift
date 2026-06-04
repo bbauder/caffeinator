@@ -12,13 +12,13 @@ import Combine
 final class StatusItemController: NSObject, NSMenuDelegate {
 
     private var statusItem: NSStatusItem!
+    private var cancellables = Set<AnyCancellable>()
+    private var settingsWindow: NSWindow?
     private let wakeManager: WakeAssertionManager
     private let settings: SettingsViewModel
     private let watchedProcessStore: WatchedProcessStore
     private let watchProcessesViewModel: WatchProcessesViewModel
     private let processWatcher: ProcessWatcher
-    private var cancellables = Set<AnyCancellable>()
-    private var settingsWindow: NSWindow?
 
     init(wakeManager: WakeAssertionManager,
          settings: SettingsViewModel,
@@ -137,12 +137,16 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             let entries = settings.mruStore.entries
 
             if !entries.isEmpty {
-                let header = NSMenuItem(title: L.recents, action: nil, keyEquivalent: "")
+                let header = NSMenuItem(title: L.recents,
+                                        action: nil,
+                                        keyEquivalent: "")
                 header.isEnabled = false
                 menu.addItem(header)
 
                 for entry in entries {
-                    let item = NSMenuItem(title: mruTitle(for: entry), action: #selector(activateMRU(_:)), keyEquivalent: "")
+                    let item = NSMenuItem(title: mruTitle(for: entry),
+                                          action: #selector(activateMRU(_:)),
+                                          keyEquivalent: "")
                     item.target = self
                     item.representedObject = entry
                     item.indentationLevel = 1
@@ -155,7 +159,9 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         // Stop item
         if wakeManager.isActive {
-            let item = NSMenuItem(title: L.stopKeepingAwake, action: #selector(deactivateWake), keyEquivalent: "")
+            let item = NSMenuItem(title: L.stopKeepingAwake,
+                                  action: #selector(deactivateWake),
+                                  keyEquivalent: "")
 
             item.target = self
             menu.addItem(item)
@@ -164,14 +170,19 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         // Keep Awake submenu
         if !hideInactive {
-            let keepAwakeItem = NSMenuItem(title: L.keepAwake, action: nil, keyEquivalent: "")
+            let keepAwakeItem = NSMenuItem(title: L.keepAwake,
+                                           action: nil,
+                                           keyEquivalent: "")
             let keepAwakeSubmenu = NSMenu()
 
             let isIndefinite = wakeManager.isActive &&
                                wakeManager.selectedDuration == nil &&
                                wakeManager.selectedStopTime == nil &&
                                watchedProcessStore.isEmpty
-            let indefiniteItem = NSMenuItem(title: L.indefinitely, action: #selector(toggleIndefinite), keyEquivalent: "")
+
+            let indefiniteItem = NSMenuItem(title: L.indefinitely,
+                                            action: #selector(toggleIndefinite),
+                                            keyEquivalent: "")
 
             indefiniteItem.target = self
             indefiniteItem.state = isIndefinite ? .on : .off
@@ -183,25 +194,34 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
             keepAwakeSubmenu.addItem(.separator())
             
-            let customItem = NSMenuItem(title: L.customDuration, action: #selector(showCustomDurationPicker), keyEquivalent: "")
+            let customItem = NSMenuItem(title: L.customDuration,
+                                        action: #selector(showCustomDurationPicker),
+                                        keyEquivalent: "")
             customItem.target = self
             keepAwakeSubmenu.addItem(customItem)
 
             if let formattedTime = wakeManager.formattedStopTime {
-                let item = NSMenuItem(title: L.untilTime(formattedTime), action: #selector(deactivateWake), keyEquivalent: "")
+                let item = NSMenuItem(title: L.untilTime(formattedTime),
+                                      action: #selector(deactivateWake),
+                                      keyEquivalent: "")
 
                 item.target = self
                 item.state = .on
                 keepAwakeSubmenu.addItem(item)
             } else {
-                let item = NSMenuItem(title: L.until, action: #selector(showStopAtPicker), keyEquivalent: "")
+                let item = NSMenuItem(title: L.until,
+                                      action: #selector(showStopAtPicker),
+                                      keyEquivalent: "")
 
                 item.target = self
                 keepAwakeSubmenu.addItem(item)
             }
 
-            let untilAppItem = NSMenuItem(title: L.untilAppExits, action: #selector(showWatchProcessesPicker), keyEquivalent: "")
+            let untilAppItem = NSMenuItem(title: L.untilAppExits,
+                                          action: #selector(showWatchProcessesPicker),
+                                          keyEquivalent: "")
             untilAppItem.target = self
+
             if !watchedProcessStore.isEmpty {
                 untilAppItem.state = .on
             }
@@ -213,19 +233,25 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         menu.addItem(.separator())
 
-        let settingsItem = NSMenuItem(title: L.settings, action: #selector(openSettings), keyEquivalent: ",")
+        let settingsItem = NSMenuItem(title: L.settings,
+                                      action: #selector(openSettings),
+                                      keyEquivalent: ",")
         settingsItem.target = self
         menu.addItem(settingsItem)
 
         menu.addItem(.separator())
 
-        let quitItem = NSMenuItem(title: L.quitCaffeinator, action: #selector(quitApp), keyEquivalent: "q")
+        let quitItem = NSMenuItem(title: L.quitCaffeinator,
+                                  action: #selector(quitApp),
+                                  keyEquivalent: "q")
         quitItem.target = self
         menu.addItem(quitItem)
     }
 
     private func addDurationItem(to menu: NSMenu, title: String, duration: TimeInterval) {
-        let item = NSMenuItem(title: title, action: #selector(toggleDuration(_:)), keyEquivalent: "")
+        let item = NSMenuItem(title: title,
+                              action: #selector(toggleDuration(_:)),
+                              keyEquivalent: "")
 
         item.target = self
         item.tag = Int(duration)
@@ -357,6 +383,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             case .untilTime(let hour, let minute):
                 if let stopTime = wakeManager.selectedStopTime {
                     let components = Calendar.current.dateComponents([.hour, .minute], from: stopTime)
+
                     if components.hour == hour && components.minute == minute {
                         wakeManager.deactivate()
                         return

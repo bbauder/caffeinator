@@ -12,12 +12,11 @@ import IOKit.ps
 class BatteryMonitor {
 
     var onLowBattery: (() -> Void)?
-
+    var threshold: Int = 20
+    private var batteryTask: Task<Void, Never>?
+    private(set) var hasFired = false
     private let batteryLevelProvider: () -> Int?
     private let isOnACProvider: () -> Bool
-    private var batteryTask: Task<Void, Never>?
-    var threshold: Int = 20
-    private(set) var hasFired = false
 
     init(batteryLevelProvider: @escaping () -> Int? = BatteryMonitor.iokitBatteryLevel,
          isOnACProvider: @escaping () -> Bool = PowerSourceMonitor.iokitOnAC) {

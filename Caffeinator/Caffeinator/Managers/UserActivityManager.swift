@@ -14,7 +14,6 @@ class UserActivityManager {
     typealias DeclareActivity = (inout IOPMAssertionID) -> Void
 
     var isEnabled: Bool = false
-
     private let declareActivity: DeclareActivity
     private let interval: Duration
     private(set) var task: Task<Void, Never>?
