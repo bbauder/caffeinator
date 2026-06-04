@@ -131,7 +131,7 @@ Expected output:
 
 Caffeinator is built with:
 
-- Swift 5.10+  
+- Swift 5.10+ (Swift 6 ready)
 - SwiftUI  
 - Xcode 26.5  
 - Modern macOS APIs  
