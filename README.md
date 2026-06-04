@@ -39,6 +39,18 @@ You’ll receive a file named **Caffeinator.zip**.
 3. Launch it from Applications  
 4. (Optional) Enable **Launch at Login** in Settings  
 
+## Installation via Homebrew
+
+[![Homebrew Tap](https://img.shields.io/badge/Homebrew-Tap-blue)](https://github.com/bbauder/homebrew-caffeinator)
+
+You can install Caffeinator using Homebrew:
+
+```sh
+brew tap bbauder/caffeinator
+brew install caffeinator
+```
+Note: On first launch, macOS will show a standard Gatekeeper confirmation dialog because Caffeinator is distributed outside the App Store. The app is fully signed, notarized, and stapled by Apple.
+
 ---
 
 ## Requirements
