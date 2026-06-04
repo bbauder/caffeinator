@@ -62,26 +62,6 @@ Caffeinator uses modern Swift concurrency features (`MainActor.assumeIsolated`) 
 
 ---
 
-## Security & Trust
-
-Caffeinator is production‑grade:
-
-- Signed with a **Developer ID Application** certificate  
-- Notarized by Apple  
-- Stapled for offline verification  
-- Fully Gatekeeper‑compatible  
-
-Verify the signature manually:
-```
-spctl -v --assess --type exec /Applications/Caffeinator.app
-```
-
-Expected output:  
-`accepted`  
-`source=Notarized Developer ID`
-
----
-
 ## Screenshots
 
 ### Inactive
@@ -149,6 +129,26 @@ git clone https://github.com/bbauder/caffeinator.git
 ```
 
 Open the workspace in Xcode and build the **Caffeinator** target.
+
+---
+
+## Security & Trust
+
+Caffeinator is production‑grade:
+
+- Signed with a **Developer ID Application** certificate  
+- Notarized by Apple  
+- Stapled for offline verification  
+- Fully Gatekeeper‑compatible  
+
+Verify the signature manually:
+```
+spctl -v --assess --type exec /Applications/Caffeinator.app
+```
+
+Expected output:  
+`accepted`  
+`source=Notarized Developer ID`
 
 ---
 
