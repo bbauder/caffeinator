@@ -3,6 +3,7 @@
 </p>
 
 # **Caffeinator**
+
 Caffeinator is a small, unobtrusive menu bar utility that keeps your Mac awake when you need it. It launches at login and blends into the background, displaying at‑a‑glance status with a subtle animated icon, clear activity labels, and optional notifications — all with minimal clicks and a modern, native macOS design.
 
 ---
@@ -29,7 +30,7 @@ Grab the latest notarized release from GitHub:
 
 ➡️ **[Download Caffeinator](https://github.com/bbauder/caffeinator/releases/latest)**
 
-You’ll receive a file named: Caffeinator.zip
+You’ll receive a file named **Caffeinator.zip**.
 
 ### Install
 
@@ -52,18 +53,20 @@ Caffeinator uses modern Swift concurrency features (`MainActor.assumeIsolated`) 
 ## Security & Trust
 
 Caffeinator is production‑grade:
+
 - Signed with a **Developer ID Application** certificate  
 - Notarized by Apple  
 - Stapled for offline verification  
-- Gatekeeper‑friendly  
+- Fully Gatekeeper‑compatible  
 
-You can verify the signature manually:
+Verify the signature manually:
 ```
 spctl -v --assess --type exec /Applications/Caffeinator.app
 ```
-Expected output:<br>
-accepted<br>
-source=Notarized Developer ID<br>
+
+Expected output:  
+`accepted`  
+`source=Notarized Developer ID`
 
 ---
 
@@ -81,7 +84,7 @@ source=Notarized Developer ID<br>
 ### Active — Counting Down
 ![Active Countdown](Screenshots/Active-counting-down.png)
 
-### Active — Watching Apps w/ToolTip
+### Active — Watching Apps (Tooltip)
 ![Active Watching Apps](Screenshots/Active-watching-apps-tooltip-visible.png)
 
 ### Keep Awake Until
@@ -105,7 +108,7 @@ source=Notarized Developer ID<br>
 ### Settings
 ![Settings](Screenshots/Settings-dialog.png)
 
-### Settings Cont'd
+### Settings (Scrolled)
 ![Settings Bottom](Screenshots/Settings-scrolled-to-bottom.png)
 
 </details>
@@ -115,15 +118,14 @@ source=Notarized Developer ID<br>
 ## Development
 
 Caffeinator is built with:
+
 - Swift 5.10+  
 - SwiftUI  
 - Xcode 26.5  
 - Modern macOS APIs  
-- A clean, modular architecture built on the MVVM (Model-View-ViewModel) pattern
+- A clean, modular MVVM architecture  
 
-The project structure follows a modern layout emphasizing clear separation of concerns.<br>
-The workspace contains 162 unit tests.<br>
-User-facing strings have been localized into 23 different locales.<br>
+The workspace includes **162 unit tests**, and all user‑facing strings are localized into **23 languages**.
 
 ---
 
@@ -133,6 +135,7 @@ Clone the repo:
 ```
 git clone https://github.com/bbauder/caffeinator.git
 ```
+
 Open the workspace in Xcode and build the **Caffeinator** target.
 
 ---
