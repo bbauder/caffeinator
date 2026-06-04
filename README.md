@@ -3,7 +3,7 @@
 </p>
 
 # **Caffeinator**
-A polished, lightweight, native macOS menu bar utility to keep your Mac awake when you want, and without fuss.
+Caffeinator is a small, unobtrusive menu bar utility that keeps your Mac awake when you need it. It launches at login and blends into the background, displaying at‑a‑glance status with a subtle animated icon, clear activity labels, and optional notifications — all with minimal clicks and a modern, native macOS design.
 
 ---
 
