@@ -9,15 +9,15 @@ Caffeinator is a small, unobtrusive menu bar utility that keeps your Mac awake w
 
 ## Features
 
-- **Menu Bar Control** — One click to keep your Mac awake.
-- **Smart Durations** — Choose from presets or set a custom timer.
-- **Watched Apps** — Automatically stay awake while selected apps are running.
-- **MRU Durations** — Your most-used durations appear automatically.
-- **Animated Icon** — Subtle animation runs while Keep Awake is active, for easy at-a-glance status.
-- **Launch at Login** — Optional and fully sandbox‑compliant.
+- **One‑Click Activation** — Streamlined controls designed for common keep‑awake workflows with minimal clicks.
+- **Smart Durations** — Choose from quick presets or set a custom timer.
+- **Recent Durations** — Your most‑used durations surface automatically for faster access.
+- **At‑a‑Glance Status** — A subtle animated icon and clear activity labels make it obvious when Keep Awake is active.
+- **Optional Notifications** — Alerts for timer completion, app‑based activation changes, and Auto‑Disable events.
+- **App‑Based Activation** — Automatically stay awake while selected apps are running.
+- **Launch at Login** — Always available when you need it, with a simple toggle in Settings.
 - **Universal Binary** — Runs natively on both Apple Silicon and Intel Macs.
-- **Privacy‑Respecting** — No ads, no telemetry, no network access, no data collection of any kind.
-- **Optional Notifications** — Get alerts when a timer ends, a watched app exits, or Auto‑Disable triggers.
+- **Privacy‑Respecting** — No ads, no telemetry, no network access, and no data collection of any kind.
 
 ---
 
