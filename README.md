@@ -4,21 +4,21 @@
 
 # **Caffeinator**
 
-Caffeinator is a small, unobtrusive menu bar utility that keeps your Mac awake when you need it. It launches at login and blends into the background, displaying at‑a‑glance status with a subtle animated icon, clear activity labels, and optional notifications — all with minimal clicks and a modern, native macOS design.
+Caffeinator is a small, unobtrusive menu bar utility that keeps your Mac awake when you need it. It launches at login and blends into the background, displaying at‑a‑glance status with a subtle animated icon, clear activity labels, and optional notifications--all with minimal clicks and a modern, native macOS design.
 
 ---
 
 ## Features
 
-- **One‑Click Activation** — Streamlined controls designed for common keep‑awake workflows with minimal clicks.
-- **Smart Durations** — Choose from quick presets or set a custom timer.
-- **Recent Durations** — Your most‑used durations surface automatically for faster access.
-- **At‑a‑Glance Status** — A subtle animated icon and clear activity labels make it obvious when Keep Awake is active.
-- **Optional Notifications** — Alerts for timer completion, app‑based activation changes, and Auto‑Disable events.
-- **App‑Based Activation** — Automatically stay awake while selected apps are running.
-- **Launch at Login** — Always available when you need it, with a simple toggle in Settings.
-- **Universal Binary** — Runs natively on both Apple Silicon and Intel Macs.
-- **Privacy‑Respecting** — No ads, no telemetry, no network access, and no data collection of any kind.
+- **One‑Click Activation**: Streamlined controls designed for common keep‑awake workflows with minimal clicks.
+- **Smart Durations**: Choose from quick presets or set a custom timer.
+- **Recent Durations**: Your most‑used durations surface automatically for faster access.
+- **At‑a‑Glance Status**: A subtle animated icon and clear activity labels make it obvious when Keep Awake is active.
+- **Optional Notifications**: Alerts for timer completion, app‑based activation changes, and Auto‑Disable events.
+- **App‑Based Activation**: Automatically stay awake while selected apps are running.
+- **Launch at Login**: Always available when you need it, with a simple toggle in Settings.
+- **Universal Binary**: Runs natively on both Apple Silicon and Intel Macs.
+- **Privacy‑Respecting**: No ads, no telemetry, no network access, and no data collection of any kind.
 
 ---
 
@@ -43,7 +43,7 @@ You’ll receive a file named **Caffeinator.zip**.
 
 [![Homebrew Tap](https://img.shields.io/badge/Homebrew-Tap-blue)](https://github.com/bbauder/homebrew-caffeinator)
 
-You can install Caffeinator using Homebrew:
+You can also install Caffeinator using Homebrew:
 
 ```sh
 brew tap bbauder/caffeinator
@@ -117,7 +117,7 @@ Caffeinator is built with:
 - Modern macOS APIs  
 - A clean, modular MVVM architecture  
 
-The workspace includes **162 unit tests**, and all user‑facing strings are localized into **23 languages**.
+The workspace includes **162 unit tests**, and all user‑facing strings have been localized into **23 languages**.
 
 ---
 
