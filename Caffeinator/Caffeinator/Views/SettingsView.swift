@@ -54,7 +54,7 @@ struct SettingsView: View {
 
                         HStack(spacing: 6) {
                             Text(L.settingsThreshold)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(settings.autoDisableOnLowBattery ? .primary : .secondary)
                             Slider(
                                 value: Binding(
                                     get: { Double(settings.lowBatteryThreshold) },
@@ -66,6 +66,7 @@ struct SettingsView: View {
                             Text("\(settings.lowBatteryThreshold)%")
                                 .monospacedDigit()
                                 .frame(width: 36, alignment: .trailing)
+                                .foregroundStyle(settings.autoDisableOnLowBattery ? .primary : .secondary)
 
                             HStack(spacing: 2) {
                                 Button {
