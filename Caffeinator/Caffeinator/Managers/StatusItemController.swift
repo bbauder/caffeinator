@@ -19,17 +19,20 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     private let watchedProcessStore: WatchedProcessStore
     private let watchProcessesViewModel: WatchProcessesViewModel
     private let processWatcher: ProcessWatcher
+    private let updateChecker: UpdateChecker
 
     init(wakeManager: WakeAssertionManager,
          settings: SettingsViewModel,
          watchedProcessStore: WatchedProcessStore,
          watchProcessesViewModel: WatchProcessesViewModel,
-         processWatcher: ProcessWatcher) {
+         processWatcher: ProcessWatcher,
+         updateChecker: UpdateChecker) {
         self.wakeManager = wakeManager
         self.settings = settings
         self.watchedProcessStore = watchedProcessStore
         self.watchProcessesViewModel = watchProcessesViewModel
         self.processWatcher = processWatcher
+        self.updateChecker = updateChecker
         super.init()
 
         setupStatusItem()
@@ -428,6 +431,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         let view = SettingsView()
             .environmentObject(settings)
+            .environmentObject(updateChecker)
         let hostingController = NSHostingController(rootView: view)
 
         let window = NSWindow(contentViewController: hostingController)

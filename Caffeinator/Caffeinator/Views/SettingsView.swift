@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
 
     @EnvironmentObject private var settings: SettingsViewModel
+    @EnvironmentObject private var updateChecker: UpdateChecker
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -114,6 +115,35 @@ struct SettingsView: View {
                             InfoButton(popoverText: L.settingsNotifyOnWatchedAppsFinishedHelp)
                         }
                     }
+
+                    Section(L.settingsUpdates) {
+                        HStack {
+                            Toggle(L.settingsCheckForUpdates, isOn: $settings.checkForUpdates)
+                            InfoButton(popoverText: L.settingsCheckForUpdatesHelp)
+                        }
+
+                        HStack(spacing: 8) {
+                            Button(L.settingsCheckNow) {
+                                Task { await updateChecker.checkNow(force: true) }
+                            }
+                            .disabled(!settings.checkForUpdates || updateChecker.isChecking)
+
+                            if updateChecker.isChecking {
+                                ProgressView()
+                                    .controlSize(.small)
+                                Text(L.settingsCheckingForUpdates)
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                updateStatusText
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(2)
+                            }
+
+                            Spacer()
+                        }
+                        .padding(.leading, 20)
+                        .padding(.top, 4)
+                    }
                 }
                 .formStyle(.grouped)
                 .scrollContentBackground(.hidden)
@@ -151,5 +181,28 @@ struct SettingsView: View {
             // Dismiss when the user hits Esc
             dismiss()
         }
+    }
+
+    @ViewBuilder
+    private var updateStatusText: some View {
+        switch updateChecker.lastCheckOutcome {
+            case .failed:
+                Text(L.settingsUpdateCheckFailed)
+            case .upToDate:
+                Text("\(lastCheckedString) · \(L.settingsUpToDate)")
+            case .updateFound:
+                Text(lastCheckedString)
+            case nil:
+                Text(lastCheckedString)
+        }
+    }
+
+    private var lastCheckedString: String {
+        guard let date = updateChecker.lastCheckedAt else {
+            return L.settingsNeverChecked
+        }
+
+        let relative = date.formatted(.relative(presentation: .named, unitsStyle: .wide))
+        return L.settingsLastUpdateCheck(relative)
     }
 }

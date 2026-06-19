@@ -83,3 +83,20 @@
 "notificationWatchedAppsFinishedTitle" = "[Ŵàţçĥéð Àṕṕš Ƒìñìšĥéð one two]";
 "notificationWatchedAppsFinishedBody" = "[Àļļ ŵàţçĥéð àṕṕš ĥàṽé éxìţéð àñð Ķééṕ Àŵàķé ìš ñöŵ öƒƒ. one two three four five]";
 "watchProcessesTitleWithCount" = "[Ŵàţçĥ Ṕŕöçéššéš: %d one two]";
+
+"settingsUpdates" = "[Ûṕðàţéš one]";
+"settingsCheckForUpdates" = "[Çĥéçķ ƒöŕ ûṕðàţéš àûţöṁàţìçàļļý one two three]";
+"settingsCheckForUpdatesHelp" = "[Ŵĥéñ éñàƀļéð, Çàƒƒéìñàţöŕ ṕéŕìöðìçàļļý çĥéçķš ĜìţĤûƀ ƒöŕ ñéŵ ŕéļéàšéš àñð ñöţìƒìéš ýöû ŵĥéñ öñé ìš àvàìļàƀļé. one two three four five six]";
+"updateAvailableTitle" = "[Çàƒƒéìñàţöŕ %@ ìš àvàìļàƀļé one two]";
+"updateAvailableMessage" = "[Ýöû àŕé çûŕŕéñţļý ŕûññìñĝ véŕšìöñ %@. Vìšìţ ţĥé ṕŕöĵéçţ ṕàĝé ţö ðöŵñļöàð ţĥé ļàţéšţ ŕéļéàšé. one two three four five]";
+"updateAvailableHomebrewHint" = "[Ìƒ ýöû ìñšţàļļéð vìà Ĥöṁéƀŕéŵ, ŕûñ ţĥìš çöṁṁàñð ţö ûṕðàţé: one two three]";
+"updateAvailableViewButton" = "[Vìéŵ öñ ĜìţĤûƀ one]";
+"updateAvailableCopyHomebrewButton" = "[Çöṕý Ĥöṁéƀŕéŵ Çöṁṁàñð one two]";
+"updateAvailableSkipButton" = "[Šķìṕ Ţĥìš Véŕšìöñ one two]";
+"updateAvailableLater" = "[Ļàţéŕ one]";
+"settingsCheckNow" = "[Çĥéçķ Ñöŵ one]";
+"settingsCheckingForUpdates" = "[Çĥéçķìñĝ… one]";
+"settingsLastUpdateCheck" = "[Ļàšţ çĥéçķéð %@ one]";
+"settingsNeverChecked" = "[Ñévéŕ çĥéçķéð one]";
+"settingsUpToDate" = "[Ýöû'ŕé ûṕ ţö ðàţé one two]";
+"settingsUpdateCheckFailed" = "[Çöûļðñ'ţ ŕéàçĥ ĜìţĤûƀ one]";

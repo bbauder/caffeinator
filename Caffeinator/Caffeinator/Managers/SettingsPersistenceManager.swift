@@ -80,6 +80,24 @@ class SettingsPersistenceManager {
         }
     }
 
+    var checkForUpdates: Bool {
+        didSet {
+            defaults.set(checkForUpdates, forKey: "checkForUpdates")
+        }
+    }
+
+    var lastUpdateCheckDate: Date? {
+        didSet {
+            defaults.set(lastUpdateCheckDate, forKey: "lastUpdateCheckDate")
+        }
+    }
+
+    var skippedUpdateVersion: String? {
+        didSet {
+            defaults.set(skippedUpdateVersion, forKey: "skippedUpdateVersion")
+        }
+    }
+
     var mruEntries: [MRUEntry] {
         didSet {
             if let data = try? JSONEncoder().encode(mruEntries) {
@@ -104,6 +122,7 @@ class SettingsPersistenceManager {
             "declareUserActivity": false,
             "notifyOnTimerExpired": false,
             "notifyOnWatchedAppsFinished": false,
+            "checkForUpdates": true,
         ])
 
         hideActivationOptionsWhileActive = defaults.bool(forKey: "hideActivationOptionsWhileActive")
@@ -117,6 +136,9 @@ class SettingsPersistenceManager {
         autoDisableNotificationsEnabled = defaults.bool(forKey: "autoDisableNotificationsEnabled")
         notifyOnTimerExpired = defaults.bool(forKey: "notifyOnTimerExpired")
         notifyOnWatchedAppsFinished = defaults.bool(forKey: "notifyOnWatchedAppsFinished")
+        checkForUpdates = defaults.bool(forKey: "checkForUpdates")
+        lastUpdateCheckDate = defaults.object(forKey: "lastUpdateCheckDate") as? Date
+        skippedUpdateVersion = defaults.string(forKey: "skippedUpdateVersion")
 
         launchAtLogin = launchAtLoginResolver()
 

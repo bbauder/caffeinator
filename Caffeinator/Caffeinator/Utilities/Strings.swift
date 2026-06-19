@@ -174,4 +174,33 @@ enum L {
         }
         return String(format: NSLocalizedString("statusWatchingApps", comment: ""), count)
     }
+
+    static let settingsUpdates = NSLocalizedString("settingsUpdates", comment: "")
+    static let settingsCheckForUpdates = NSLocalizedString("settingsCheckForUpdates", comment: "")
+    static let settingsCheckForUpdatesHelp = NSLocalizedString("settingsCheckForUpdatesHelp", comment: "")
+
+    static func updateAvailableTitle(_ version: String) -> String {
+        String(format: NSLocalizedString("updateAvailableTitle", comment: ""), version)
+    }
+
+    static func updateAvailableMessage(_ currentVersion: String) -> String {
+        String(format: NSLocalizedString("updateAvailableMessage", comment: ""), currentVersion)
+    }
+
+    static let updateAvailableHomebrewHint = NSLocalizedString("updateAvailableHomebrewHint", comment: "")
+    static let updateAvailableViewButton = NSLocalizedString("updateAvailableViewButton", comment: "")
+    static let updateAvailableCopyHomebrewButton = NSLocalizedString("updateAvailableCopyHomebrewButton", comment: "")
+    static let updateAvailableSkipButton = NSLocalizedString("updateAvailableSkipButton", comment: "")
+    static let updateAvailableLater = NSLocalizedString("updateAvailableLater", comment: "")
+
+    static let settingsCheckNow = NSLocalizedString("settingsCheckNow", comment: "")
+    static let settingsCheckingForUpdates = NSLocalizedString("settingsCheckingForUpdates", comment: "")
+
+    static func settingsLastUpdateCheck(_ relative: String) -> String {
+        String(format: NSLocalizedString("settingsLastUpdateCheck", comment: ""), relative)
+    }
+
+    static let settingsNeverChecked = NSLocalizedString("settingsNeverChecked", comment: "")
+    static let settingsUpToDate = NSLocalizedString("settingsUpToDate", comment: "")
+    static let settingsUpdateCheckFailed = NSLocalizedString("settingsUpdateCheckFailed", comment: "")
 }

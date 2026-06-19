@@ -78,6 +78,12 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var checkForUpdates: Bool {
+        didSet {
+            updateUpdateChecking()
+        }
+    }
+
     typealias LaunchAtLoginUpdater = (Bool) -> Bool
     @Published var launchAtLogin: Bool {
         didSet {
@@ -117,6 +123,8 @@ class SettingsViewModel: ObservableObject {
         }
     }
 
+    weak var updateChecker: UpdateChecker?
+
     init(persistence: SettingsPersistenceManager,
          mruStore: MRUStore,
          notificationManager: NotificationManager,
@@ -143,6 +151,7 @@ class SettingsViewModel: ObservableObject {
         autoDisableNotificationsEnabled = persistence.autoDisableNotificationsEnabled
         notifyOnTimerExpired = persistence.notifyOnTimerExpired
         notifyOnWatchedAppsFinished = persistence.notifyOnWatchedAppsFinished
+        checkForUpdates = persistence.checkForUpdates
         launchAtLogin = persistence.launchAtLogin
 
         notificationManager.notificationsEnabled = autoDisableNotificationsEnabled
@@ -263,6 +272,16 @@ class SettingsViewModel: ObservableObject {
             powerSourceMonitor.startMonitoring()
         } else {
             powerSourceMonitor.stopMonitoring()
+        }
+    }
+
+    private func updateUpdateChecking() {
+        persistence.checkForUpdates = checkForUpdates
+
+        if checkForUpdates {
+            updateChecker?.start()
+        } else {
+            updateChecker?.stop()
         }
     }
 
