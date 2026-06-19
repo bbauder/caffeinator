@@ -94,6 +94,21 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             }
             .store(in: &cancellables)
 
+        // Invariant: watched apps cannot persist while wake is inactive.
+        // Catches auto-disable paths (unplug, low battery, future triggers)
+        // that deactivate without going through clearWatchState() first.
+        wakeManager.$isActive
+            .removeDuplicates()
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isActive in
+                guard let self, !isActive, !self.watchedProcessStore.isEmpty else {
+                    return
+                }
+                self.clearWatchState()
+            }
+            .store(in: &cancellables)
+
         updateTooltip()
     }
 
