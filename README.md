@@ -51,6 +51,12 @@ brew install caffeinator
 ```
 Note: On first launch, macOS will show a standard Gatekeeper confirmation dialog because Caffeinator is distributed outside the App Store. The app is fully signed, notarized, and stapled by Apple.
 
+If you've already installed Caffeinator using Homebrew and want to upgrade your version to the latest one in GitHub:
+
+```sh
+brew upgrade caffeinator
+```
+
 ---
 
 ## Requirements
