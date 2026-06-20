@@ -123,7 +123,7 @@ Caffeinator is built with:
 - Modern macOS APIs  
 - A clean, modular MVVM architecture  
 
-The workspace includes **162 unit tests**, and all user‑facing strings have been localized into **23 languages**.
+The workspace includes **179 unit tests**, and all user‑facing strings have been localized into **23 languages**.
 
 ---
 
