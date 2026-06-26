@@ -299,25 +299,3 @@ private struct CupMetrics {
         }
     }
 }
-
-// MARK: - Previews
-
-#Preview("Menu Bar Size") {
-    HStack(spacing: 16) {
-        CaffeinatorIconView(fillLevel: 0.0)
-            .frame(width: 18, height: 18)
-
-        CaffeinatorIconView(fillLevel: 0.5)
-            .frame(width: 18, height: 18)
-
-        CaffeinatorIconView(fillLevel: 1.0)
-            .frame(width: 18, height: 18)
-    }
-    .padding()
-}
-
-#Preview("Large Preview") {
-    CaffeinatorIconView(fillLevel: 0.75)
-        .frame(width: 64, height: 64)
-        .padding()
-}
